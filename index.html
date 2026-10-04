@@ -470,6 +470,26 @@ body{width:100%;overflow-x:hidden;min-width:0}
  body.battle-mode .battle-questions .puzzle-choice{min-height:38px!important}
 }
 
+
+/* Persistent, visible nine-step region quest: 2 encounters + boss, repeated three times. */
+.region-progress{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin:12px 0}
+.quest-stage{background:#17374a;border:1px solid #9dcac688;border-radius:13px;padding:10px 8px;color:#f5f4e6;text-align:center;font-size:12px}
+.quest-stage.current{border:2px solid #ffda84;background:#46614a;box-shadow:0 0 0 2px #e9d89b25}
+.quest-stage.finished{background:#245b51;border-color:#7bf0b0}
+.quest-stage .quest-icons{font-size:22px;letter-spacing:3px;margin:6px 0}
+.quest-stage .quest-status{font-size:11px;color:#d6f4df}
+.map-progress{background:#122e45;border:1px solid #a0dfb988;border-radius:15px;padding:10px 12px;margin:10px 0;font-size:13px}
+.map-progress strong{color:#ffe5a7}
+@media(max-width:540px){.region-progress{gap:5px}.quest-stage{padding:9px 4px;font-size:11px}.quest-stage .quest-icons{font-size:19px;letter-spacing:0}}
+
+/* More math representations; comfortable on narrow mobile screens. */
+.math-array{display:flex;flex-direction:column;gap:2px;align-items:center;max-height:108px;overflow:hidden;margin:4px auto;color:#fad872;font-size:17px;line-height:18px;letter-spacing:4px}
+.math-journey-summary{border:1px solid #5b638e;background:linear-gradient(135deg,#29315a,#26394e);border-radius:16px;padding:16px;margin:15px 0;color:#fff}
+.math-journey-summary p{font-size:13px;color:#e1e8fb;margin:7px 0 12px}
+.math-stage-row{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:10px}
+.math-stage{border:1px solid #66708a;border-radius:18px;padding:7px 10px;background:#272b49;color:#d5d8e3;font-size:12px;font-weight:700}
+.math-stage.ready{background:#315d50;color:#eaffdd;border-color:#76c5ae}
+@media(max-width:480px){.math-journey-summary{padding:11px}.math-stage{font-size:11px;padding:6px 9px}.math-array{max-height:82px;font-size:13px;letter-spacing:2px;line-height:15px}}
 </style>
 </head>
 <body><div id="app" class="shell"><section style="max-width:600px;margin:8vh auto;padding:24px;background:#263653;border:2px solid #9bdfca;border-radius:22px;color:#fff8e7;font-family:system-ui"><h1 style="margin:0 0 12px;font-size:28px">✨ The Infinite Adventures</h1><p>Loading your adventure…</p><p style="font-size:14px;opacity:.85">If the game stays on this message, reload the page. Your saved levels and pets will not be reset.</p><button onclick="location.reload()" style="padding:12px 24px;border:0;border-radius:12px;font-weight:bold;background:#ffe3aa;color:#27314b">↻ Reload game</button></section></div><div id="toast" role="status" aria-live="polite"></div>
@@ -505,13 +525,13 @@ const ZONES=[
  {name:'Frozen Pass',short:'Snow',emoji:'🏔️',desc:'Snowy tunnels wind between icy mountains.',bg:'linear-gradient(145deg,#557d9c,#74759e)',enemies:[['Snow Fox','🦊'],['Ice Badger','🦡'],['Winter Owl','🦉'],['Frost Hare','🐇']],boss:['Glacier King','🦣'],colors:['#ecf7ff','#c4e1f1','#849db9'],props:['❄️','🌲','🧊']},
  {name:'Wildwood Ruins',short:'Ruins',emoji:'🏛️',desc:'An ancient garden has grown over a mysterious lost city.',bg:'linear-gradient(145deg,#587951,#6d6a53)',enemies:[['Vine Panther','🐈'],['Ruins Guard','🗿'],['Moss Beetle','🪲'],['Ancient Owl','🦉']],boss:['Root Guardian','🌳'],colors:['#dbe3ac','#99b57c','#697d5a'],props:['🌿','🏛️','🗿']},
  {name:'Midnight Carnival',short:'Carnival',emoji:'🎡',desc:'The gates are open at a carnival full of playful surprises.',bg:'linear-gradient(145deg,#42326b,#864e74)',enemies:[['Jester Fox','🦊'],['Lantern Bat','🦇'],['Ticket Toad','🐸'],['Parade Lion','🦁']],boss:['Big Top Beast','🎪'],colors:['#ebc8e1','#ac87b4','#705a8b'],props:['🎡','🎪','🎈']},
- {name:'The Open Road',short:'Beyond',emoji:'🧭',desc:'An endless trail of new places. Each five bosses opens a new chapter.',bg:'linear-gradient(145deg,#235e64,#36577f)',enemies:[['Trail Explorer','🦊'],['Wandering Golem','🗿'],['Wild Dragon','🐲'],['Mysterious Stranger','🦉']],boss:['Road Keeper','👑'],colors:['#b6ddce','#8cbdac','#498e95'],props:['🌾','🌲','🪨']}
+ {name:'The Open Road',short:'Beyond',emoji:'🧭',desc:'An endless trail of new places. Each final Gatekeeper opens a new chapter.',bg:'linear-gradient(145deg,#235e64,#36577f)',enemies:[['Trail Explorer','🦊'],['Wandering Golem','🗿'],['Wild Dragon','🐲'],['Mysterious Stranger','🦉']],boss:['Road Keeper','👑'],colors:['#b6ddce','#8cbdac','#498e95'],props:['🌾','🌲','🪨']}
 ];
 function zoneInfo(index=S.zone){const z=ZONES[index]||ZONES[0];if(index!==ZONES.length-1)return z;
 const themes=[['Verdant Basin','🌿',['#b3ddb8','#6fab91','#4a796b'],['🌳','🍃','🌻']],['Sunset Outpost','🏕️',['#efccaa','#c88e79','#97646d'],['🌵','⛺','🪨']],['Rainy Port','🌧️',['#b3d6e3','#81acbc','#5a779c'],['🌧️','⛵','⚓']],['Silver Valley','🗻',['#d8e3eb','#9eaec3','#5d819b'],['🌲','🏔️','❄️']]];
-const chap=Math.max(1,1+Math.floor(Math.max(0,S.bossWins-50)/5)),t=themes[(chap-1)%themes.length];return {...z,name:`${t[0]} · Chapter ${chap}`,emoji:t[1],colors:t[2],props:t[3]};}
+const chap=Math.max(1,Number(S.openRoadChapter)||1),t=themes[(chap-1)%themes.length];return {...z,name:`${t[0]} · Chapter ${chap}`,emoji:t[1],colors:t[2],props:t[3]};}
 const STYLES=['Spiky','Short','Curly','Long'];const SKINS=['#f4d0b4','#d7a079','#a46c4d','#69402f'];const HAIRS=['#392339','#67402d','#e4b24c','#273866','#f5eff1'];const ROBES=['#7354d3','#259ab4','#db665e','#55a978','#dfad4e'];
-const INITIAL=()=>({walkPos:{},lastPuzzleKind:'',reasoning:{tier:1,streak:0,misses:0,solved:0},retryOpponent:null,started:false,tutorialDone:false,screen:'creator',avatar:{name:'',skin:0,hair:0,style:0,robe:0},level:1,maxHp:250,hp:250,attackBonus:0,armor:0,completed:0,bossWins:0,zone:0,pets:[],equipped:[],loot:[],battle:null,question:null,tries:0,totalAnswered:0,endlessWins:0,notice:'',lastRecruit:null,soundOn:false,realism:30,musicOn:true,musicVolume:70,musicStyle:'orchestra',learning:null,pendingGrade:null});
+const INITIAL=()=>({walkPos:{},lastPuzzleKind:'',reasoning:{tier:1,streak:0,misses:0,solved:0},retryOpponent:null,started:false,tutorialDone:false,screen:'creator',avatar:{name:'',skin:0,hair:0,style:0,robe:0},level:1,maxHp:250,hp:250,attackBonus:0,armor:0,completed:0,bossWins:0,zone:0,pets:[],equipped:[],loot:[],battle:null,question:null,tries:0,totalAnswered:0,endlessWins:0,notice:'',lastRecruit:null,regionProgress:null,openRoadChapter:1,soundOn:false,realism:30,musicOn:true,musicVolume:70,musicStyle:'orchestra',learning:null,pendingGrade:null});
 let S=load();let previewName=S.avatar.name;let animating=false;
 function load(){try{const a=JSON.parse(localStorage.getItem(SAVE_KEY));if(a&&typeof a==='object'&&a.avatar&&Number.isFinite(a.level))return {...INITIAL(),...a,musicOn:a.musicOn!==false,musicVolume:Number.isFinite(Number(a.musicVolume))?Math.max(0,Math.min(100,Number(a.musicVolume))):65,realism:Number.isFinite(Number(a.realism))?Math.max(0,Math.min(100,Number(a.realism))):30,walkPos:a.walkPos||{},avatar:{...INITIAL().avatar,...a.avatar}}}catch(e){}return INITIAL()}
 function save(){try{localStorage.setItem(SAVE_KEY,JSON.stringify(S))}catch(e){}}
@@ -522,28 +542,126 @@ function recordPuzzle(mistakes){const a=reasoning();a.solved++;if(mistakes===0){
 const rand=(a,b)=>Math.floor(Math.random()*(b-a+1))+a;
 function toast(t){const o=document.getElementById('toast');o.textContent=t;clearTimeout(toast.t);toast.t=setTimeout(()=>o.textContent='',2600)}
 function avatarSVG({skin=0,hair=0,style=0,robe=0}={},mini=false){const face=SKINS[skin]||SKINS[0],hc=HAIRS[hair]||HAIRS[0],rc=ROBES[robe]||ROBES[0];const hairShapes=[`<path d="M71 91 Q65 52 87 52 L101 42 L107 55 L125 39 L130 56 Q160 45 159 91 Q145 73 131 76 Q104 61 78 87Z" fill="${hc}"/>`,`<path d="M71 90 Q63 44 116 47 Q165 46 160 91 L149 81 Q109 65 78 86Z" fill="${hc}"/>`,`<g fill="${hc}"><circle cx="82" cy="68" r="17"/><circle cx="100" cy="54" r="18"/><circle cx="124" cy="53" r="20"/><circle cx="143" cy="63" r="17"/><circle cx="152" cy="83" r="13"/><circle cx="74" cy="86" r="12"/></g>`,`<path d="M71 79 Q69 44 112 47 Q156 41 162 79 L164 164 L149 157 L144 85 Q102 62 78 87 L77 162 L61 167Z" fill="${hc}"/>`];return `<svg aria-label="Your wizard" role="img" class="${mini?'avatar-svg avatar-mini':'avatar-svg'}" viewBox="0 0 230 265"><ellipse cx="115" cy="246" rx="66" ry="12" fill="#12122a" opacity=".35"/><path d="M76 167 Q111 147 154 164 L178 237 Q116 254 50 235Z" fill="${rc}" stroke="#181e49" stroke-width="5"/><path d="M107 162 L116 236 L125 162" fill="#eac6ff" opacity=".8"/><path d="M78 179 L44 209 Q35 217 45 225 Q57 228 64 217 L96 195Z" fill="${rc}"/><path d="M153 180 L185 211 Q194 216 188 227 Q177 234 166 218 L136 197Z" fill="${rc}"/><circle cx="51" cy="220" r="10" fill="${face}"/><circle cx="181" cy="221" r="10" fill="${face}"/><path d="M63 237 L64 249 L88 249 L95 235 M135 237 L143 249 L165 249 L169 234" fill="#41336a" stroke="#292247" stroke-width="5"/><circle cx="115" cy="108" r="47" fill="${face}" stroke="#272044" stroke-width="4"/><path d="M84 110 Q92 102 101 111 M129 111 Q138 102 146 111" stroke="#303146" stroke-width="5" stroke-linecap="round" fill="none"/><circle cx="94" cy="111" r="3" fill="#fff"/><circle cx="138" cy="111" r="3" fill="#fff"/><path d="M108 130 Q115 137 123 130" stroke="#985a6a" stroke-width="3" fill="none" stroke-linecap="round"/>${hairShapes[style]||hairShapes[0]}<path d="M186 215 L213 101" stroke="#7f5b3b" stroke-width="7" stroke-linecap="round"/><circle cx="216" cy="93" r="13" fill="#ffe480"/><path d="M216 66 L221 80 L235 86 L222 91 L217 106 L212 92 L199 86 L210 80Z" fill="#fff7c1"/><path d="M72 182 Q110 197 155 182" fill="none" stroke="#fff" opacity=".2" stroke-width="4"/>${Number(S.realism||0)>0?`<g opacity="${(Number(S.realism||0)/100).toFixed(2)}" stroke="#e4d5fa" fill="none" stroke-width="2.2"><path d="M94 175 Q85 207 91 240 M130 180 Q136 207 135 239 M73 216 Q87 229 104 222"/><path d="M80 89 Q105 72 136 85" stroke="#fff" opacity=".55"/></g>`:''}</svg>`}
-function header(){return `<header class="top"><div class="brand"><div class="logo">✨</div><div><div class="eyebrow">Explore • Discover • Think</div><h1>The Infinite Adventures <span class="versionlabel">📚 Learning Worlds</span></h1></div></div><div class="stats"><div class="chip">⚔️ Battles <b>${S.completed}</b></div><div class="chip">⭐ Level <b>${S.level}</b></div><div class="chip">👑 Bosses <b>${S.bossWins}</b></div>${S.learning?.gradeSet?`<div class="chip learning-chip">🧠 Learning <b>${learning().rating}</b></div>`:''}</div></header>`}
+function header(){return `<header class="top"><div class="brand"><div class="logo">✨</div><div><div class="eyebrow">Explore • Discover • Think</div><h1>The Infinite Adventures <span class="versionlabel">🧮 Math Adventure · 3-Boss Worlds</span></h1></div></div><div class="stats"><div class="chip">⚔️ Battles <b>${S.completed}</b></div><div class="chip">⭐ Level <b>${S.level}</b></div><div class="chip">👑 Bosses <b>${S.bossWins}</b></div>${S.learning?.gradeSet?`<div class="chip learning-chip">🧠 Learning <b>${learning().rating}</b></div>`:''}</div></header>`}
 function toolbar(){if(!S.started)return '';return `<div class="sectionnav"><button class="btn ghost smallbtn" data-do="home">🏠 Adventure</button><button class="btn ghost smallbtn" data-do="map">🗺️ World Map</button><button class="btn ghost smallbtn" data-do="pets">🐾 Pet Helpers (${S.equipped.length}/2)</button><button class="btn teal smallbtn" data-do="learning">📚 Learning Journey</button><button class="btn ghost smallbtn" data-do="music">${S.musicOn?'🎶 Music On':'🔇 Music Off'}</button><button class="btn teal smallbtn" data-do="export">💾 Backup Save</button><button class="btn purple smallbtn" data-do="look">🎨 Realisticness Bar</button><button class="btn ghost smallbtn" data-do="settings">⚙️ Settings</button></div>`}
-function sidebar(){const pets=S.equipped.map(i=>S.pets.find(p=>p.id===i)).filter(Boolean);return `<aside class="rightcol"><section class="panel"><div class="eyebrow">YOUR WIZARD</div><div class="row">${avatarSVG(S.avatar,true)}<div><h3>${escapeHtml(S.avatar.name||'Adventurer')}</h3><div class="tiny">Level ${S.level} • Spellcaster</div><div class="tiny">🗡️ Power ${power()}<br>🛡️ Armor ${S.armor}<br>🧠 ${S.learning?.gradeSet?learningBadge():'Set your grade to begin'}</div></div></div><div class="healthtxt"><span>❤️ Health</span><span class="number">${S.hp.toLocaleString()}/${S.maxHp.toLocaleString()}</span></div><div class="progresswrap"><div class="progressfill" style="width:${Math.max(0,100*S.hp/S.maxHp)}%"></div></div><div style="height:17px"></div><div class="eyebrow">EQUIPPED PET HELPERS</div><div class="helperpills">${pets.length?pets.map(p=>`<span class="helperpill">${p.emoji} ${escapeHtml(p.name)}</span>`).join(''):'<span class="tiny">Defeat monsters to collect pets!</span>'}</div></section><section class="panel"><div class="eyebrow">WORLD PROGRESS</div><h3>${zoneInfo().emoji} ${zoneInfo().name}</h3><p class="small">Every 3rd battle is a boss! Every 5 boss wins unlocks another world.</p><div class="healthtxt"><span>Next new world</span><span>${Math.min(5,S.bossWins%5)}/5 bosses</span></div><div class="progresswrap"><div class="progressfill" style="width:${S.zone===ZONES.length-1?100:(S.bossWins%5)*20}%;background:linear-gradient(90deg,#77efb1,#87dffa)"></div></div>${S.zone===3?'<p class="small">♾️ Endless mode unlocked!</p>':''}</section></aside>`}
+function sidebar(){const pets=S.equipped.map(i=>S.pets.find(p=>p.id===i)).filter(Boolean);return `<aside class="rightcol"><section class="panel"><div class="eyebrow">YOUR WIZARD</div><div class="row">${avatarSVG(S.avatar,true)}<div><h3>${escapeHtml(S.avatar.name||'Adventurer')}</h3><div class="tiny">Level ${S.level} • Spellcaster</div><div class="tiny">🗡️ Power ${power()}<br>🛡️ Armor ${S.armor}<br>🧠 ${S.learning?.gradeSet?learningBadge():'Set your grade to begin'}</div></div></div><div class="healthtxt"><span>❤️ Health</span><span class="number">${S.hp.toLocaleString()}/${S.maxHp.toLocaleString()}</span></div><div class="progresswrap"><div class="progressfill" style="width:${Math.max(0,100*S.hp/S.maxHp)}%"></div></div><div style="height:17px"></div><div class="eyebrow">EQUIPPED PET HELPERS</div><div class="helperpills">${pets.length?pets.map(p=>`<span class="helperpill">${p.emoji} ${escapeHtml(p.name)}</span>`).join(''):'<span class="tiny">Defeat monsters to collect pets!</span>'}</div></section><section class="panel"><div class="eyebrow">WORLD PROGRESS</div><h3>${zoneInfo().emoji} ${zoneInfo().name}</h3><p class="small">Two regular battles, then a boss — three times per region. The third boss guards the gate.</p><div class="healthtxt"><span>Region checkpoints</span><span>${regionCleared().length}/9</span></div><div class="progresswrap"><div class="progressfill" style="width:${regionCleared().length/9*100}%;background:linear-gradient(90deg,#77efb1,#87dffa)"></div></div>${S.zone===10?'<p class="small">♾️ Endless chapters unlocked!</p>':''}</section></aside>`}
 function swatches(key,colors){return `<div class="swatches">${colors.map((c,i)=>`<button aria-label="${key} color ${i+1}" title="${key} color ${i+1}" class="swatch ${S.avatar[key]===i?'selected':''}" data-do="choose" data-key="${key}" data-value="${i}" style="background:${c}"></button>`).join('')}</div>`}
 function creator(){return `<div class="panel wide"><span class="tag">🪄 STEP 1 · DESIGN YOUR HERO</span><div class="herohead"><h2>Create your magical character!</h2><p>Pick your look, name your wizard, and begin your adventure.</p></div><div class="creatorgrid"><div><div class="avatararea"><span class="star">✦</span><span class="star">✦</span><span class="star">✦</span>${avatarSVG(S.avatar)}</div><label class="formlabel" for="hero-name">YOUR WIZARD NAME</label><input id="hero-name" class="nameinput" required maxlength="16" value="${escapeHtml(S.avatar.name)}" placeholder="Name your wizard"/></div><div><label class="formlabel" for="creator-grade">YOUR GRADE AT SCHOOL</label><select id="creator-grade" class="nameinput grade-select" aria-label="Choose your school grade">${learningGradeOptions(S.pendingGrade,S.pendingGrade===null||S.pendingGrade===undefined)}</select><p class="small">This is just where questions begin. You can advance far beyond this grade!</p><label class="formlabel">CHOOSE SKIN COLOR</label>${swatches('skin',SKINS)}<label class="formlabel">HAIR STYLE</label><div class="row">${STYLES.map((v,i)=>`<button class="stylepick ${i===S.avatar.style?'selected':''}" data-do="choose" data-key="style" data-value="${i}">${v}</button>`).join('')}</div><label class="formlabel">HAIR COLOR</label>${swatches('hair',HAIRS)}<label class="formlabel">WIZARD ROBE COLOR</label>${swatches('robe',ROBES)}<div class="buttonrow"><button class="btn" data-do="start">✨ Start Adventure!</button></div></div></div><div class="safe-box" style="margin-top:22px"><h3>💾 Already have an adventure?</h3><p>Keep your levels, pet helpers and equipment! Restore your original save instead of starting again.</p><div class="row"><label for="import-file" class="btn teal smallbtn" style="cursor:pointer;display:inline-flex;align-items:center">⬆️ Restore Save File</label><input id="import-file" class="filepick" type="file" accept=".json,application/json"/></div><details style="margin-top:12px"><summary style="cursor:pointer;font-weight:800">Or paste your old saved game text</summary><textarea class="save-paste" id="save-paste" placeholder="Paste save JSON from Dad's backup"></textarea><button class="btn teal smallbtn" data-do="paste-save">Restore My Adventure</button></details></div></div>`}
 function tutorial(){return `<section class="panel"><span class="tag">🕯️ THE BEGINNING</span><h2>Welcome to the Magic Cave!</h2><p class="story">A tiny lantern flickers. A friendly wizard appears in front of you...</p><div class="avatararea" style="background:radial-gradient(circle,#6453a880,transparent 60%),linear-gradient(150deg,#2b293d,#151a34)"><span class="star">✧</span><span class="star">✦</span><span style="font-size:100px">🧙‍♂️</span></div><div class="banner"><strong>Grandmaster Glimmer:</strong> “Hello, ${escapeHtml(S.avatar.name)}! To cast a spell, solve a math problem. You can try as many times as you want, and mistakes help me find what to teach you next. Let's practice!”</div><div class="buttonrow"><button class="btn" data-do="practice">🪄 Try a practice battle</button></div></section>`}
 function power(){return Math.floor(125+S.level*73+S.attackBonus)}
-function unlocked(){return Math.min(ZONES.length-1,Math.floor(S.bossWins/5))}
+// Nine visible map checkpoints per region. Each stage has two normal encounters then a boss.
+const QUEST_POSITIONS=[
+ [355,530],[475,660],[590,465],
+ [730,335],[865,608],[1010,475],
+ [1135,326],[1250,630],[1405,454]
+];
+const QUEST_ALL=Array.from({length:9},(_,i)=>'node-'+i);
+const JACK_TRANSFER_KEY='jackNextRegionTransfer20261004';
+migrateRegionProgress(S);
+// One-time, player-specific region transfer requested after Jack beat his third boss.
+// Back up the untouched original browser save before making any change.
+try{
+ if(isJackTransferEligible(S)){
+  const previous=localStorage.getItem(SAVE_KEY);
+  if(previous&&!localStorage.getItem(SAVE_KEY+'-before-next-region-20261004'))
+   localStorage.setItem(SAVE_KEY+'-before-next-region-20261004',previous);
+  if(transferJackToNextRegionOnce(S))save();
+ }
+}catch(error){console.warn('Next-region transfer deferred:',error);}
+function questKey(zone=S.zone,player=S){return String(zone===10?'10:'+Math.max(1,Number(player.openRoadChapter)||1):zone);}
+function migrateRegionProgress(player){
+ if(player.regionProgress&&typeof player.regionProgress==='object'&&!Array.isArray(player.regionProgress))return;
+ const regions={};const oldZone=Math.max(0,Math.min(10,Number(player.zone)||0));
+ const oldUnlocked=Math.max(oldZone,Math.min(10,Math.floor((Number(player.bossWins)||0)/5)));
+ // Old saves never recorded which map creatures were defeated. Give full credit for
+ // previously reached regions, and approximate checkpoints within the current one.
+ for(let i=0;i<oldUnlocked;i++)regions[String(i)]=[...QUEST_ALL];
+ const priorInRegion=Math.max(0,Math.min(4,(Number(player.bossWins)||0)-oldZone*5));
+ const bosses=Math.min(2,Math.floor(priorInRegion*3/5));
+ if(oldZone>=oldUnlocked)regions[String(oldZone)]=QUEST_ALL.slice(0,bosses*3);
+ player.regionProgress=regions;
+ if(!Number.isInteger(Number(player.openRoadChapter))||Number(player.openRoadChapter)<1)player.openRoadChapter=1;
+}
+// This upgrade moves JACK one region ONCE when his existing browser save is loaded
+// (or a prior save is imported). The marker is stored inside the save JSON, so
+// installing another build or reloading cannot transport him a second time.
+function isJackTransferEligible(player){
+ return Boolean(player&&player.started&&player.tutorialDone&&
+   /^jack(?:\b|$)/i.test(String(player.avatar?.name||'').trim())&&
+   Number.isFinite(Number(player.bossWins))&&Number(player.bossWins)>=3&&
+   !player[JACK_TRANSFER_KEY]&&player.screen!=='battle'&&player.screen!=='reward');
+}
+function transferJackToNextRegionOnce(player){
+ if(!isJackTransferEligible(player))return false;
+ migrateRegionProgress(player);
+ const from=Math.max(0,Math.min(ZONES.length-1,Number(player.zone)||0));
+ const chapter=Math.max(1,Number(player.openRoadChapter)||1);
+ // Credit all completed checkpoints in previous regions and the Gatekeeper
+ // that Jack has already defeated. Preserve all unrelated game data.
+ for(let z=0;z<=from;z++){
+  const key=z===10?'10:'+chapter:String(z);
+  const existing=Array.isArray(player.regionProgress[key])?player.regionProgress[key]:[];
+  player.regionProgress[key]=Array.from(new Set([...existing,...QUEST_ALL]));
+ }
+ if(from<ZONES.length-1){
+  player.zone=from+1;
+  player.walkPos={...(player.walkPos||{}),[player.zone]:{x:235,y:465}};
+ }else{
+  player.openRoadChapter=chapter+1;
+ }
+ player.screen='adventure';player.battle=null;player.question=null;
+ player.retryOpponent=null;player.tries=0;
+ player[JACK_TRANSFER_KEY]={from,to:player.zone,chapter:player.openRoadChapter};
+ const destination=from<ZONES.length-1?ZONES[player.zone].name:'the next Open Road chapter';
+ player.notice='🏆 You beat the third boss! The gate opened and transported you to '+destination+'!';
+ return true;
+}
+function regionCleared(zone=S.zone,player=S){migrateRegionProgress(player);const a=player.regionProgress[questKey(zone,player)];return Array.isArray(a)?a.filter(x=>QUEST_ALL.includes(x)):[];}
+function questStage(zone=S.zone){const done=regionCleared(zone);for(let st=0;st<3;st++)if(!done.includes('node-'+(st*3+2)))return st;return 3;}
+function questStatus(index,zone=S.zone){
+ const done=regionCleared(zone);if(done.includes('node-'+index))return 'cleared';
+ const st=Math.floor(index/3),current=questStage(zone);
+ if(st!==current)return 'locked';
+ if(index%3===2){return done.includes('node-'+(st*3))&&done.includes('node-'+(st*3+1))?'available':'locked';}
+ return 'available';
+}
+function questSlots(zone=S.zone){
+ const z=zoneInfo(zone);
+ return QUEST_POSITIONS.map(([x,y],index)=>{
+  const stage=Math.floor(index/3),boss=index%3===2,final=boss&&stage===2;
+  const n=boss?z.boss:z.enemies[(stage*2+(index%3))%z.enemies.length];
+  const name=boss?`${n[0]} ${final?'Gatekeeper':stage===0?'Warden':'Champion'}`:n[0];
+  return {id:'node-'+index,index,stage,boss,final,x,y,name,emoji:n[1],status:questStatus(index,zone)};
+ });
+}
+function nextQuest(){return questSlots().find(n=>n.status==='available')||null;}
+function questProgressPanel(){
+ const done=regionCleared(),stage=questStage(),total=done.length;
+ return `<div class="map-progress"><strong>🗺️ Region progress: ${total}/9 checkpoints</strong> · ${Math.min(3,done.filter(x=>Number(x.slice(5))%3===2).length)}/3 bosses defeated${stage===3?' · 🚪 Gate open!':''}</div>
+ <div class="region-progress">${Array.from({length:3},(_,s)=>{const doneCount=[s*3,s*3+1].filter(i=>done.includes('node-'+i)).length,bossDone=done.includes('node-'+(s*3+2));
+ return `<div class="quest-stage ${bossDone?'finished':s===stage?'current':''}"><strong>${s===2?'🚪 Final gate':`⭐ Stage ${s+1}`}</strong><div class="quest-icons">${[s*3,s*3+1].map(i=>done.includes('node-'+i)?'✅':'👾').join('')} ${bossDone?'🏆':doneCount===2?'👑':'🔒'}</div><div class="quest-status">${bossDone?'Boss defeated':doneCount===2?'Boss unlocked':doneCount+'/2 encounters won'}</div></div>`}).join('')}</div>`;
+}
+function unlocked(){let highest=0;for(let z=0;z<10;z++){if(QUEST_ALL.every(n=>regionCleared(z).includes(n)))highest=z+1;else break;}return Math.min(10,highest);}
+
 function tryFight(isPractice=false,pick=null){
  if(!isPractice&&!S.tutorialDone){S.screen='tutorial';render();return;}
- const boss=!isPractice&&(S.completed+1)%3===0,z=zoneInfo();
- const [name,emoji]=isPractice?['Training Slime','🫧']:boss?z.boss:(pick?.name?[pick.name,pick.emoji]:z.enemies[rand(0,z.enemies.length-1)]);
+ const z=zoneInfo();
+ const node=isPractice?null:(pick?.id?questSlots().find(n=>n.id===pick.id):nextQuest());
+ if(!isPractice&&(!node||node.status!=='available')){
+  toast(!node?'🏆 Region complete! The gate is open.':'🔒 Beat the two opponents before challenging this boss!');return;
+ }
+ const boss=Boolean(node?.boss);
+ const [name,emoji]=isPractice?['Training Slime','🫧']:[node.name,node.emoji];
  const team=S.equipped.map(id=>S.pets.find(p=>p.id===id)).filter(Boolean);
  const total=power()+team.reduce((n,p)=>n+Math.round(p.strength+S.level*14),0);
- const hp=isPractice?250:Math.min(4000000,Math.max(boss?1000:350,Math.round(total*(boss?6.9+S.zone*.24:3.0+S.zone*.13))));
- const attack=isPractice?14:Math.max(Math.ceil(S.maxHp*(boss?.28:.22))+S.armor,Math.floor(20+S.level*29+S.zone*30+(boss?S.level*6:0)));
+ const hp=isPractice?250:Math.min(4000000,Math.max(boss?1000:350,Math.round(total*(boss?6.9+S.zone*.24:3.0+S.zone*.13)*(node.final?1.38:1))));
+ const attack=isPractice?14:Math.round(Math.max(Math.ceil(S.maxHp*(boss?.28:.22))+S.armor,Math.floor(20+S.level*29+S.zone*30+(boss?S.level*6:0)))*(node?.final?1.22:1));
  const choices=(z.enemies||[]).filter(e=>e[0]!==name);
  const second=isPractice?['Training Imp','👿']:choices.length?choices[rand(0,choices.length-1)]:['Shadow Beast','👾'];
  const eachHp=boss?hp:Math.max(isPractice?105:175,Math.round(hp*.54));
  const enemies=[{id:'enemy-0',name,emoji,hp:boss?hp:eachHp,maxHp:boss?hp:eachHp,attack:boss?attack:Math.round(attack*.55)+S.armor,isBoss:boss}];
  if(!boss)enemies.push({id:'enemy-1',name:second[0],emoji:second[1],hp:eachHp,maxHp:eachHp,attack:Math.round(attack*.55)+S.armor,isBoss:false});
- S.battle={name,emoji,isBoss:boss,isPractice,hp:enemies.reduce((sum,e)=>sum+e.hp,0),maxHp:hp,attack,enemies,petHealth:Object.fromEntries(team.map(p=>[p.id,capturedHealth(p)])),phase:'heroes',currentEnemy:null,turn:0,nextIndex:0,hits:[],activePet:null,fallenPets:[],petHp:0,petMaxHp:0,feed:`${boss?'The boss':'Two monsters'} ${boss?'challenges':'challenge'} your team! Your hero goes first, then each pet. Every enemy casts its OWN magic after your team.`};
+ S.battle={name,emoji,nodeId:node?.id||null,regionKey:questKey(),isFinalBoss:!!node?.final,isBoss:boss,isPractice,hp:enemies.reduce((sum,e)=>sum+e.hp,0),maxHp:hp,attack,enemies,petHealth:Object.fromEntries(team.map(p=>[p.id,capturedHealth(p)])),phase:'heroes',currentEnemy:null,turn:0,nextIndex:0,hits:[],activePet:null,fallenPets:[],petHp:0,petMaxHp:0,feed:`${boss?'The boss':'Two monsters'} ${boss?'challenges':'challenge'} your team! Your hero goes first, then each pet. Every enemy casts its OWN magic after your team.`};
  const l=learning();l.battleSolved=0;l.battleMisses=0;
  S.tries=0;S.question=makeQuestion();S.screen='battle';save();render();
 }
@@ -566,7 +684,7 @@ function domainLearningLevel(domain){return Math.round(learning().domainRatings?
 
 function freshLearning(grade=1){grade=Math.max(0,Math.min(6,Number(grade)||0));
  const rating=ratingFromChallenge(grade*4+2);
- return {version:3,grade,gradeSet:true,rating,challenge:challengeFromRating(rating),domainRatings:{number:rating,visual:rating,verbal:rating},solved:0,firstTry:0,battles:0,battleSolved:0,battleMisses:0,skills:{},review:[],lastSkills:[],domainCounts:{number:0,visual:0,verbal:0},history:[],ratingHistory:[]};}
+ return {version:4,grade,gradeSet:true,rating,challenge:challengeFromRating(rating),domainRatings:{number:rating,visual:rating,verbal:rating},solved:0,firstTry:0,battles:0,battleSolved:0,battleMisses:0,skills:{},review:[],lastSkills:[],domainCounts:{number:0,visual:0,verbal:0},history:[],ratingHistory:[],arithmetic:defaultArithmetic(grade)};}
 
 function learning(){
  if(!S.learning||typeof S.learning!=='object'){S.learning=freshLearning(1);S.learning.gradeSet=false;}
@@ -583,13 +701,14 @@ function learning(){
   l.rating=ratingFromChallenge(Number.isFinite(prior)?prior:l.grade*4+2);
  }
  setLearningRating(l,l.rating);
- l.version=Math.max(3,Number(l.version)||0);
+ l.version=Math.max(4,Number(l.version)||0);
  if(!l.domainRatings||typeof l.domainRatings!=='object')l.domainRatings={};
  for(const d of Object.keys(DOMAINS)){
   const v=Number(l.domainRatings[d]);l.domainRatings[d]=Math.round(Number.isFinite(v)&&v>=1&&v<=1000?v:l.rating);
  }
  l.ratingHistory=Array.isArray(l.ratingHistory)?l.ratingHistory.slice(-150):[];
  l.solved=Number(l.solved)||0;l.firstTry=Number(l.firstTry)||0;l.battles=Number(l.battles)||0;
+ ensureArithmetic(l);
  return l;
 }
 function learnedGrade(){const l=learning(),v=Math.max(0,Math.floor((l.challenge-1)/4));return v===0?'Early foundations':v<=6?'Exploring Grade '+v:'Beyond Grade 6';}
@@ -669,39 +788,243 @@ const BANK=[
  textItem('cause-effect','verbal',8,s=>{const a=choose([['The wind blows the leaves.','The leaves move.','The leaves turn to metal.','Night starts.','Fish swim away.'],['The sun warms a puddle.','Some water evaporates.','The water becomes stone.','The puddle sings.','The sun disappears.'],['A child waters a drooping plant.','The plant may perk up.','The plant becomes a car.','The pot gets smaller instantly.','It begins to snow.']]);return {prompt:`${a[0]} Which result makes the MOST sense?`,answer:a[1],distractors:a.slice(2),hint1:'Think about what normally happens next.',hint2:a[1]}}),
  textItem('complex-analogy','verbal',12,s=>{const a=choose([['author','novel','composer','song','bridge','window','cup'],['caterpillar','butterfly','tadpole','frog','lizard','fish','bird'],['thermometer','temperature','ruler','length','color','time','taste']]);return {prompt:`${a[0]} is to ${a[1]} as ${a[2]} is to ...?`,answer:a[3],distractors:a.slice(4),hint1:'Name the exact relationship.',hint2:`${a[2]} corresponds to ${a[3]}.`}})
 ];
+// ARITHMETIC ADVENTURE: original, procedurally varied math with fact recall and mastery gates.
+// Kept separate from hero level and alongside the 1–1000 learning ratings in the same backup JSON.
+const OP_ORDER=['add','sub','mul','div'];
+const OP_LABELS={add:'Addition',sub:'Subtraction',mul:'Multiplication',div:'Division'};
+function initialArithmeticBand(grade){return grade<=0?0:grade<=2?1:grade===3?2:3;}
+function mathItem(id,operation,stage,build){const v=numeric(id,stage,build);v.operation=operation;v.isArithmetic=true;return v;}
+function safeInt(n,a,b){return Math.round(clamp(n,a,b));}
+function factId(op,a,b){if(op==='add'||op==='mul'){const u=Math.min(a,b);return `${op}:${u}:${Math.max(a,b)}`;}return `${op}:${a}:${b}`;}
+function mathFacts(op,s){
+ const limit=op==='mul'||op==='div'?safeInt(3+Math.floor(s*.57),3,12):safeInt(6+Math.floor(s*2.4),8,100);
+ if(op==='mul'||op==='div'){const a=rand(2,limit),b=rand(2,limit);return {a,b,answer:a*b,key:factId('mul',a,b)};}
+ const a=rand(1,limit),b=rand(1,limit);return {a,b,answer:a+b,key:factId('add',a,b)};
+}
+function factPractice(key,s){
+ const [kind,as,bs]=String(key).split(':');let a=Number(as),b=Number(bs);
+ if(kind==='mul'&&Math.random()<.5)[a,b]=[b,a];
+ if(!['add','mul','sub','div'].includes(kind)||!Number.isInteger(a)||!Number.isInteger(b)||a<0||b<1||a>100000||b>100000)return null;
+ const symbol=kind==='add'?' + ':kind==='sub'?' − ':kind==='mul'?' × ':' ÷ ';
+ const result=kind==='add'?a+b:kind==='sub'?a-b:kind==='mul'?a*b:Math.floor(a/b);
+ if(result<0||!Number.isFinite(result)||(kind==='div'&&a%b!==0))return null;
+ const mode=rand(0,5);let prompt,media='',hint1='',hint2='';
+ if(mode===0)prompt=`${a}${symbol}${b} = ?`;
+ else if(mode===1)prompt=`Find the missing number: ${a}${symbol}${b} = □`;
+ else if(kind==='mul'){
+  if(mode===2)prompt=`${a} groups of ${b} stars. How many stars altogether?`;
+  else if(mode===3)prompt=`A dragon puts ${b} gems in each of ${a} chests. How many gems?`;
+  else if(mode===4)prompt=`Which number is ${a} times ${b}?`;
+  else prompt=a<=6?`${b} + `.repeat(a).replace(/ \+ $/,'')+' = ?':`What is ${a} times ${b}?`;
+ }else if(kind==='add'){
+  if(mode===2)prompt=`A wizard has ${a} crystals and finds ${b} more. How many now?`;
+  else if(mode===3)prompt=`Start at ${a} and count forward ${b}. Where do you land?`;
+  else if(mode===4)prompt=`What is the sum of ${a} and ${b}?`;
+  else prompt=`${b} + ${a} = ?`;
+ }else if(kind==='sub'){
+  if(mode===2)prompt=`There are ${a} crystals. ${b} are spent. How many remain?`;
+  else if(mode===3)prompt=`How many fewer is ${a-b} than ${a}?`;
+  else if(mode===4)prompt=`${a} − ? = ${a-b}. What number is missing?`;
+  else prompt=`Start at ${a}. Take ${b} away. What is left?`;
+ }else{
+  if(mode===2)prompt=`Share ${a} treasure coins among ${b} adventurers. Each gets how many?`;
+  else if(mode===3)prompt=`Put ${a} stars in groups of ${b}. How many groups?`;
+  else if(mode===4)prompt=`${b} × ? = ${a}. What number is missing?`;
+  else prompt=`How many times does ${b} fit into ${a}?`;
+ }
+ // Missing-operand stories are marked with the actual desired solution.
+ const actual=kind==='sub'&&mode===4?b:result;
+ hint1=kind==='mul'?'Try skip-counting or equal groups.':kind==='div'?'Turn it into a multiplication fact.':kind==='sub'?'Think of adding back what was taken away.':'Count on or make a ten.';
+ hint2=kind==='sub'&&mode===4?`${a-b} + ${b} = ${a}.`:`${a}${symbol}${b} = ${result}.`;
+ return {...noptions(actual),prompt,media,hint1,hint2,factKey:key,operation:kind};
+}
+const ARITH_BANK=[
+ mathItem('arith-add-facts','add',0,s=>{const f=mathFacts('add',s);return {...factPractice(f.key,s),answer:f.answer,step:1};}),
+ mathItem('arith-add-doubles','add',1,s=>{const a=rand(1,safeInt(4+s,5,65));return {prompt:`Double ${a}. What is ${a} + ${a}?`,answer:a*2,factKey:factId('add',a,a),hint1:'A double adds the same number twice.',hint2:`${a}+${a}=${a*2}.`};}),
+ mathItem('arith-add-near-double','add',3,s=>{const a=rand(2,safeInt(7+s,8,55)),b=a+choose([-1,1]);return {prompt:`Use a near double: ${a} + ${b} = ?`,answer:a+b,factKey:factId('add',a,b),hint1:`Double ${a}, then adjust by one.`,hint2:`${a}+${a}=${a*2}, so ${a}+${b}=${a+b}.`};}),
+ mathItem('arith-make-ten','add',0,s=>{const a=rand(1,9);return {prompt:`${a} + ? = 10`,answer:10-a,factKey:factId('add',a,10-a),hint1:'Fill up the ten-frame in your mind.',hint2:`${a}+${10-a}=10.`};}),
+ mathItem('arith-build-twenty','add',2,s=>{const total=choose([12,15,18,20]),a=rand(2,total-2);return {prompt:`Find the missing number: ${a} + □ = ${total}`,answer:total-a,factKey:factId('add',a,total-a),hint1:'Count up to the total.',hint2:`${total}−${a}=${total-a}.`};}),
+ mathItem('arith-add-three','add',4,s=>{const a=rand(1,9),b=rand(1,9),c=rand(1,9);return {prompt:`${a} + ${b} + ${c} = ?`,answer:a+b+c,hint1:'Look for two numbers that make ten.',hint2:`${a}+${b}+${c}=${a+b+c}.`};}),
+ mathItem('arith-add-tens','add',3,s=>{const a=rand(2,8)*10,b=rand(1,8)*10;return {prompt:`${a} + ${b} = ?`,answer:a+b,step:10,hint1:'Add the tens, then put the zero back.',hint2:`${a}+${b}=${a+b}.`};}),
+ mathItem('arith-add-tens-ones','add',5,s=>{const a=rand(10,59),b=rand(2,39);return {prompt:`${a} + ${b} = ?`,answer:a+b,hint1:'Add tens first, then ones.',hint2:`${a}+${b}=${a+b}.`};}),
+ mathItem('arith-add-regroup','add',8,s=>{const a=rand(2,8)*10+rand(6,9),b=rand(1,6)*10+rand(5,9);return {prompt:`Add carefully: ${a} + ${b} = ?`,answer:a+b,hint1:'The ones make more than ten, so regroup.',hint2:`${a}+${b}=${a+b}.`};}),
+ mathItem('arith-add-three-digit','add',13,s=>{const a=rand(105,750),b=rand(42,225);return {prompt:`${a} + ${b} = ?`,answer:a+b,hint1:'Line up the hundreds, tens and ones.',hint2:`${a}+${b}=${a+b}.`};}),
+ mathItem('arith-add-round-trip','add',7,s=>{const a=rand(10,55),b=rand(2,20),c=rand(2,12);return {prompt:`A wizard collects ${a} stars, then ${b}, then ${c} more. How many total?`,answer:a+b+c,hint1:'Add one group at a time.',hint2:`${a}+${b}+${c}=${a+b+c}.`};}),
+ mathItem('arith-add-money','add',15,s=>{const a=rand(5,85)*5,b=rand(2,35)*5;return {prompt:`A potion costs ${a}¢ and a wand costs ${b}¢. How many cents altogether?`,answer:a+b,step:5,hint1:'Add the costs, treating cents like numbers.',hint2:`${a}+${b}=${a+b} cents.`};}),
+ mathItem('arith-sub-facts','sub',2,s=>{const f=mathFacts('add',s),a=f.a+f.b,b=choose([f.a,f.b]);return {prompt:`${a} − ${b} = ?`,answer:a-b,factKey:factId('sub',a,b),hint1:'Think: what plus the answer equals the larger number?',hint2:`${a}−${b}=${a-b}.`};}),
+ mathItem('arith-sub-ten','sub',2,s=>{const a=rand(1,9);return {prompt:`10 − ${a} = ?`,answer:10-a,factKey:factId('sub',10,a),hint1:'Think of two numbers making ten.',hint2:`10−${a}=${10-a}.`};}),
+ mathItem('arith-sub-missing','sub',3,s=>{const total=rand(7,safeInt(11+s*3,16,80)),left=rand(2,total-2);return {prompt:`${total} − □ = ${left}. What belongs in the box?`,answer:total-left,factKey:factId('sub',total,total-left),hint1:`How far from ${left} to ${total}?`,hint2:`${total}−${total-left}=${left}.`};}),
+ mathItem('arith-sub-difference','sub',3,s=>{const b=rand(2,15),a=b+rand(2,safeInt(s*2,8,60));return {prompt:`How much bigger is ${a} than ${b}?`,answer:a-b,hint1:'Find the difference between them.',hint2:`${a}−${b}=${a-b}.`};}),
+ mathItem('arith-sub-tens','sub',4,s=>{const a=rand(5,12)*10,b=rand(1,4)*10;return {prompt:`${a} − ${b} = ?`,answer:a-b,step:10,hint1:'Subtract tens from tens.',hint2:`${a}−${b}=${a-b}.`};}),
+ mathItem('arith-sub-change','sub',5,s=>{const a=rand(12,48),b=rand(2,Math.min(11,a));return {prompt:`There were ${a} brave explorers. ${b} went home. How many stayed?`,answer:a-b,hint1:'The total gets smaller.',hint2:`${a}−${b}=${a-b}.`};}),
+ mathItem('arith-sub-count-up','sub',6,s=>{const from=rand(17,64),diff=rand(4,23);return {prompt:`Start at ${from}. How many steps forward to reach ${from+diff}?`,answer:diff,hint1:'Count the gap between numbers.',hint2:`${from+diff}−${from}=${diff}.`};}),
+ mathItem('arith-sub-borrow','sub',8,s=>{const tens=rand(3,8)*10,ones=rand(0,3),a=tens+ones,b=rand(1,2)*10+rand(ones+1,9);return {prompt:`Find the difference: ${a} − ${b} = ?`,answer:a-b,hint1:'Trade one ten for ten ones.',hint2:`${a}−${b}=${a-b}.`};}),
+ mathItem('arith-sub-three-digit','sub',13,s=>{const a=rand(300,850),b=rand(45,Math.min(290,a-1));return {prompt:`${a} − ${b} = ?`,answer:a-b,hint1:'Line up each place value.',hint2:`${a}−${b}=${a-b}.`};}),
+ mathItem('arith-sub-two-steps','sub',10,s=>{const a=rand(30,90),b=rand(5,15),c=rand(4,Math.min(20,a-b));return {prompt:`You start with ${a} coins, use ${b}, then use ${c} more. How many remain?`,answer:a-b-c,hint1:'Subtract each amount in turn.',hint2:`${a}−${b}−${c}=${a-b-c}.`};}),
+ mathItem('arith-mul-facts','mul',6,s=>{const f=mathFacts('mul',s);return {prompt:`${f.a} × ${f.b} = ?`,answer:f.answer,factKey:f.key,hint1:'Skip-count or picture equal groups.',hint2:`${f.a}×${f.b}=${f.answer}.`};}),
+ mathItem('arith-mul-reverse','mul',8,s=>{const f=mathFacts('mul',s);return {prompt:`${f.b} × ${f.a} = ?`,answer:f.answer,factKey:f.key,hint1:'Changing the order does not change the product.',hint2:`${f.b}×${f.a}=${f.answer}.`};}),
+ mathItem('arith-mul-groups','mul',6,s=>{const f=mathFacts('mul',s);return {prompt:`${f.a} baskets hold ${f.b} crystals each. How many crystals are there?`,answer:f.answer,factKey:f.key,hint1:'Think of repeated equal groups.',hint2:`${f.a}×${f.b}=${f.answer}.`};}),
+ mathItem('arith-mul-rows','mul',7,s=>{const f=mathFacts('mul',s);return {prompt:`A garden has ${f.a} rows with ${f.b} flowers in each row. How many flowers?`,answer:f.answer,factKey:f.key,hint1:'Rows times flowers per row.',hint2:`${f.a}×${f.b}=${f.answer}.`};}),
+ mathItem('arith-mul-array','mul',9,s=>{const a=rand(2,6),b=rand(2,8),f={a,b,answer:a*b,key:factId('mul',a,b)},rows=a,cols=b;return {prompt:`An array has ${f.a} rows of ${f.b} dots. How many dots in the full array?`,media:`<div class="math-array" aria-label="Picture of ${rows} rows and ${cols} columns">${Array.from({length:rows},()=>'<span>'+('●'.repeat(cols))+'</span>').join('')}</div>`,answer:f.answer,factKey:f.key,hint1:'Each row has the same number. Multiply rows by columns.',hint2:`${f.a}×${f.b}=${f.answer}.`};}),
+ mathItem('arith-mul-missing','mul',9,s=>{const f=mathFacts('mul',s);return {prompt:`${f.a} × □ = ${f.answer}. Find □.`,answer:f.b,factKey:f.key,hint1:`What times ${f.a} equals ${f.answer}?`,hint2:`${f.a}×${f.b}=${f.answer}.`};}),
+ mathItem('arith-mul-quiz','mul',10,s=>{const f=mathFacts('mul',s);return {prompt:`Find the PRODUCT of ${f.a} and ${f.b}.`,answer:f.answer,factKey:f.key,hint1:'A product is a multiplication answer.',hint2:`${f.a}×${f.b}=${f.answer}.`};}),
+ mathItem('arith-mul-double','mul',10,s=>{const a=rand(2,safeInt(2+s*.5,4,12)),b=2;return {prompt:`What is double ${a}? (Use the 2 times table.)`,answer:a*b,factKey:factId('mul',a,b),hint1:'Doubling means two equal groups.',hint2:`2×${a}=${2*a}.`};}),
+ mathItem('arith-mul-five-ten','mul',11,s=>{const a=choose([5,10]),b=rand(2,12);return {prompt:`${a} × ${b} = ?`,answer:a*b,factKey:factId('mul',a,b),hint1:'For fives count 5, 10, 15…; for tens add a zero.',hint2:`${a}×${b}=${a*b}.`};}),
+ mathItem('arith-mul-distribute','mul',15,s=>{const a=rand(3,9),b=rand(3,9),c=rand(2,6);return {prompt:`${a} × (${b} + ${c}) = ?`,answer:a*(b+c),hint1:'Multiply each number inside, then add.',hint2:`${a}×${b}+${a}×${c}=${a*(b+c)}.`};}),
+ mathItem('arith-mul-tens','mul',17,s=>{const a=rand(2,9)*10,b=rand(2,9);return {prompt:`${a} × ${b} = ?`,answer:a*b,step:10,hint1:'Multiply without the zero, then add it back.',hint2:`${a}×${b}=${a*b}.`};}),
+ mathItem('arith-mul-two-digit','mul',21,s=>{const a=rand(11,29),b=rand(3,9);return {prompt:`${a} × ${b} = ?`,answer:a*b,hint1:'Split the larger factor into tens and ones.',hint2:`${a}×${b}=${a*b}.`};}),
+ mathItem('arith-div-facts','div',9,s=>{const f=mathFacts('mul',s);return {prompt:`${f.answer} ÷ ${f.a} = ?`,answer:f.b,factKey:factId('div',f.answer,f.a),hint1:`Think: ${f.a} times what makes ${f.answer}?`,hint2:`${f.answer}÷${f.a}=${f.b}.`};}),
+ mathItem('arith-div-share','div',9,s=>{const f=mathFacts('mul',s);return {prompt:`Share ${f.answer} berries equally among ${f.a} friends. How many per friend?`,answer:f.b,factKey:factId('div',f.answer,f.a),hint1:'Count equal groups.',hint2:`${f.answer}÷${f.a}=${f.b}.`};}),
+ mathItem('arith-div-group','div',10,s=>{const f=mathFacts('mul',s);return {prompt:`Pack ${f.answer} potions into boxes holding ${f.a} each. How many full boxes?`,answer:f.b,factKey:factId('div',f.answer,f.a),hint1:'How many groups fit?',hint2:`${f.answer}÷${f.a}=${f.b}.`};}),
+ mathItem('arith-div-inverse','div',11,s=>{const f=mathFacts('mul',s);return {prompt:`${f.a} × □ = ${f.answer}. Find □ using division.`,answer:f.b,factKey:factId('div',f.answer,f.a),hint1:'The unknown factor is the total divided by the known factor.',hint2:`${f.answer}÷${f.a}=${f.b}.`};}),
+ mathItem('arith-div-half-quarter','div',12,s=>{const d=choose([2,4]),a=d*rand(4,19);return {prompt:`What is one ${d===2?'half':'quarter'} of ${a}?`,answer:a/d,factKey:factId('div',a,d),hint1:`Split into ${d} equal groups.`,hint2:`${a}÷${d}=${a/d}.`};}),
+ mathItem('arith-div-missing','div',13,s=>{const f=mathFacts('mul',s);return {prompt:`${f.answer} ÷ □ = ${f.b}. What is □?`,answer:f.a,factKey:factId('div',f.answer,f.b),hint1:`What multiplied by ${f.b} makes ${f.answer}?`,hint2:`${f.answer}÷${f.a}=${f.b}.`};}),
+ mathItem('arith-div-tens','div',17,s=>{const f=mathFacts('mul',s),n=f.answer*10;return {prompt:`${n} ÷ ${f.a} = ?`,answer:f.b*10,step:10,hint1:'Divide the smaller number and put back the zero.',hint2:`${n}÷${f.a}=${f.b*10}.`};}),
+ mathItem('arith-div-remainders','div',19,s=>{const d=rand(3,9),q=rand(3,12),r=rand(1,d-1),total=q*d+r;return {prompt:`${total} candies are shared into bags of ${d}. How many FULL bags?`,answer:q,hint1:'Only count complete groups. Some candies will be left.',hint2:`${d}×${q}=${d*q}, with ${r} left over.`};}),
+ mathItem('arith-div-two-steps','div',22,s=>{const d=rand(2,9),per=rand(3,12),add=rand(2,12),total=d*per+add;return {prompt:`There are ${total} crystals. Use ${add} for a spell, then share the rest between ${d} adventurers. How many each?`,answer:per,hint1:'Subtract the used crystals, then divide equally.',hint2:`(${total}−${add})÷${d}=${per}.`};})
+];
+function arithmetic(){
+ const l=learning(),a=l.arithmetic;
+ // Helpers may be accessed for imported older save files; bootstrap via learning() once.
+ return a;
+}
+function defaultArithmetic(grade){return {version:1,band:initialArithmeticBand(grade),operations:Object.fromEntries(OP_ORDER.map(op=>[op,{seen:0,first:0,recent:[]}])),facts:{},factDue:[],recentQuestions:[],recentFacts:[],mathSolved:0};}
+function ensureArithmetic(l){
+ if(!l.arithmetic||typeof l.arithmetic!=='object')l.arithmetic=defaultArithmetic(l.grade);
+ const a=l.arithmetic;a.version=1;a.band=safeInt(Number(a.band)||0,0,3);
+ if(!a.operations||typeof a.operations!=='object')a.operations={};
+ for(const op of OP_ORDER){const st=a.operations[op]||(a.operations[op]={seen:0,first:0,recent:[]});st.seen=Number(st.seen)||0;st.first=Number(st.first)||0;st.recent=Array.isArray(st.recent)?st.recent.slice(-22):[];}
+ a.facts=a.facts&&typeof a.facts==='object'&&!Array.isArray(a.facts)?a.facts:{};
+ a.factDue=Array.isArray(a.factDue)?a.factDue.filter(x=>x&&typeof x.key==='string').slice(-220):[];
+ a.recentQuestions=Array.isArray(a.recentQuestions)?a.recentQuestions.slice(-80):[];
+ a.recentFacts=Array.isArray(a.recentFacts)?a.recentFacts.slice(-14):[];
+ a.mathSolved=Number(a.mathSolved)||0;return a;
+}
+function mathSkillAvailable(def,l,a){if(!def.isArithmetic)return false;
+ const unlocked=OP_ORDER.indexOf(def.operation)<=a.band;
+ const level=challengeFromRating(domainLearningLevel('number'));
+ return unlocked&&def.stage<=level+3.8;
+}
+function legacyOperationLocked(b,a){
+ const need={ 'equal-groups':2,'multiplication':2,'area':2,'division-sharing':3,'fraction-of':3,'operations-mix':2,'ratio-intro':2 }[b.id];
+ return need!==undefined&&a.band<need;
+}
+function chooseArithmeticDef(l){
+ const a=ensureArithmetic(l),level=challengeFromRating(domainLearningLevel('number'));
+ const ops=a.band===0?['add']:a.band===1?['add','sub','sub']:a.band===2?['add','sub','mul','mul','mul']:['add','sub','mul','mul','div','div','div','div'];
+ const op=choose(ops);
+ const avail=ARITH_BANK.filter(x=>x.operation===op&&mathSkillAvailable(x,l,a));
+ const pool=avail.length?avail:ARITH_BANK.filter(x=>x.operation==='add'&&x.stage<=level+3.8);
+ const weighted=[];
+ for(const b of pool){const stats=skillStats(b.id),recent=l.lastSkills.includes(b.id),almost=level-b.stage>=-1&&level-b.stage<=5;
+  const w=(stats.seen===0?6:3)+(almost?3:0)+(stats.mastery<3?2:0)-(recent?5:0);
+  for(let j=0;j<Math.max(1,w);j++)weighted.push(b);
+ }
+ return choose(weighted.length?weighted:pool);
+}
+function fingerprint(q){return String(q.prompt)+'|'+JSON.stringify(q.media||q.pattern||q.cells||q.numbers||'')+'|'+JSON.stringify(q.choices?.[q.answer]);}
+function arithmeticDueQuestion(l){
+ const a=ensureArithmetic(l),due=a.factDue.filter(x=>Number(x.due)<=l.solved);
+ if(!due.length)return null;
+ due.sort((x,y)=>Number(x.due)-Number(y.due));
+ const selected=due.find(x=>{const op=x.key.split(':')[0];return OP_ORDER.indexOf(op)<=a.band&&!a.recentFacts.slice(-4).includes(x.key)})||due.find(x=>OP_ORDER.indexOf(x.key.split(':')[0])<=a.band);
+ if(!selected)return null;
+ let q=null;
+ for(let tries=0;tries<15;tries++){
+  const next=factPractice(selected.key,Math.floor(challengeFromRating(domainLearningLevel('number'))));
+  if(!next)return null;
+  q=next;
+  if(!a.recentQuestions.includes(fingerprint(q)))break;
+ }
+ a.factDue=a.factDue.filter(x=>x!==selected);
+ q.skillId='arith-fact-'+selected.key.split(':')[0];q.domain='number';q.review=true;q.reviewPass=Number(selected.pass)||0;q.stage=6;q.isArithmetic=true;q.operation=selected.key.split(':')[0];
+ return q;
+}
+function recordArithmetic(question,mistakes,l){
+ if(!question.operation)return;
+ const a=ensureArithmetic(l),op=question.operation,stats=a.operations[op];if(!stats)return;
+ stats.seen++;stats.first+=(mistakes===0?1:0);stats.recent.push(mistakes===0?1:0);stats.recent=stats.recent.slice(-22);a.mathSolved++;
+ if(question.factKey){
+  const key=question.factKey,f=a.facts[key]||(a.facts[key]={seen:0,first:0,streak:0,mastered:false});
+  f.seen++;f.lastSeen=l.solved;if(mistakes===0){f.first++;f.streak++;}else f.streak=0;
+  f.mastered=f.streak>=3;
+  a.factDue=a.factDue.filter(x=>x.key!==key);
+  const delay=mistakes?4:f.streak===1?14:f.streak===2?35:Math.min(240,75+f.streak*25);
+  a.factDue.push({key,due:l.solved+delay,pass:f.streak});
+  if(Object.keys(a.facts).length>1300){
+   const keep=Object.entries(a.facts).sort((x,y)=>(y[1].lastSeen||0)-(x[1].lastSeen||0)).slice(0,1100);
+   a.facts=Object.fromEntries(keep);
+   a.factDue=a.factDue.filter(x=>Object.hasOwn(a.facts,x.key));
+  }
+  if(a.factDue.length>220)a.factDue=a.factDue.slice(-220);
+ }
+ const current=OP_ORDER[a.band],top=a.operations[current];
+ // Require evidence on the current operation; this is not just an XP counter.
+ const needed=a.band===0?8:a.band===1?10:12;
+ const window=top.recent.slice(-needed),correct=window.reduce((sum,x)=>sum+x,0);
+ if(a.band<3&&window.length===needed&&correct/needed>=.82){a.band++;a.operations[OP_ORDER[a.band]].recent=[];toast('🌟 New math magic unlocked: '+OP_LABELS[OP_ORDER[a.band]]+'!');}
+ else if(a.band>0&&window.length>=10&&correct/window.length<=.3){a.band--;top.recent=[];toast('🧠 Let’s strengthen those earlier math skills!');}
+}
+
 function skillStats(id){const l=learning();return l.skills[id]||(l.skills[id]={seen:0,first:0,mistakes:0,streak:0,reviewed:0,mastery:0});}
 function makeQuestion(){
- const l=learning();const due=l.review.filter(r=>r&&r.due<=l.solved && BANK.some(b=>b.id===r.id));
- // Roughly 1 in 3 puzzles is deliberate spaced retrieval when reviews are due.
- let itemDef=null,review=false,reviewPass=0;
- if(due.length&&(l.solved%3===0||due.some(x=>x.priority>=2))){const entry=due.sort((a,b)=>(b.priority||0)-(a.priority||0)||a.due-b.due)[0];itemDef=BANK.find(x=>x.id===entry.id);review=!!itemDef;reviewPass=Number(entry.pass)||0;l.review=l.review.filter(x=>x!==entry);}
- if(!itemDef){
-  const possible=BANK.filter(b=>b.stage<=challengeFromRating(domainLearningLevel(b.domain))+1.3);
-  // Revisit weak concepts and underserved domains, but never show the same template twice in a row.
-  const pool=possible.filter(b=>b.id!==l.lastSkills[l.lastSkills.length-1]);const list=pool.length?pool:possible;
-  let weighted=[];
-  for(const b of list){const st=skillStats(b.id),recent=l.lastSkills.includes(b.id),near=b.stage>=l.challenge-3;
-   let weight=(st.seen===0?5:2)+Math.max(0,Math.min(3,3-st.mastery))+(near?2:0)+(recent?-4:0);
-   if(domainLearningLevel(b.domain)<l.rating-30)weight+=3;
-   weight+=Math.max(0,3-Math.floor((l.domainCounts[b.domain]||0)/Math.max(1,l.solved/3)));
-   for(let i=0;i<Math.max(1,Math.floor(weight));i++)weighted.push(b);
-  }
-  itemDef=choose(weighted.length?weighted:list);
+ const l=learning(),a=ensureArithmetic(l),due=l.review.filter(r=>r&&r.due<=l.solved&&[...BANK,...ARITH_BANK].some(b=>b.id===r.id&&(!b.isArithmetic||mathSkillAvailable(b,l,a))));
+ // Three out of five new questions emphasize numbers, with most of those drawn
+ // from the expanded arithmetic path; other domains continue to be tested.
+ const slot=l.solved%5,planned=slot===1?'visual':slot===3?'verbal':'number';
+ let def=null,review=false,reviewPass=0,forcedQuestion=null;
+ const dueFact=a.factDue.some(x=>x.due<=l.solved);
+ if(planned==='number'&&dueFact&&(Math.random()<.65||a.factDue.some(x=>l.solved-x.due>=9)))forcedQuestion=arithmeticDueQuestion(l);
+ // Prioritize important missed skill reviews without allowing them to monopolize play.
+ if(!forcedQuestion&&due.length&&(l.solved%3===0||due.some(x=>x.priority>=2&&x.due<l.solved-3))){
+  const entry=due.sort((x,y)=>(y.priority||0)-(x.priority||0)||x.due-y.due)[0];
+  def=[...BANK,...ARITH_BANK].find(x=>x.id===entry.id);review=!!def;reviewPass=Number(entry.pass)||0;
+  l.review=l.review.filter(x=>x!==entry);
  }
- // Fresh random parameters on each review: a skill is tested, not a memorized answer.
- const q=itemDef.generate(Math.floor(challengeFromRating(domainLearningLevel(itemDef.domain))));
- q.skillId=itemDef.id;q.domain=itemDef.domain;q.review=review;q.reviewPass=review?reviewPass:0;q.stage=itemDef.stage;
+ if(!def&&!forcedQuestion){
+  if(planned==='number'&&Math.random()<.82)def=chooseArithmeticDef(l);
+  if(!def){
+   let possible=BANK.filter(b=>b.domain===planned&&b.stage<=challengeFromRating(domainLearningLevel(b.domain))+1.5&&!legacyOperationLocked(b,a));
+   if(!possible.length)possible=BANK.filter(b=>b.stage<=challengeFromRating(domainLearningLevel(b.domain))+1.5&&!legacyOperationLocked(b,a));
+   const pool=possible.filter(b=>!l.lastSkills.slice(-4).includes(b.id)),list=pool.length?pool:possible;
+   const weighted=[];
+   for(const b of list){const st=skillStats(b.id),recent=l.lastSkills.includes(b.id),near=b.stage>=l.challenge-3;
+    const weight=Math.max(1,(st.seen===0?5:2)+Math.max(0,3-st.mastery)+(near?2:0)-(recent?4:0));
+    for(let i=0;i<weight;i++)weighted.push(b);
+   }
+   def=choose(weighted.length?weighted:list);
+  }
+ }
+ let q=forcedQuestion;
+ if(!q){
+  // Retry different parameters; if the finite story bank is exhausted, select
+  // another template rather than asking the EXACT same question immediately.
+  for(let attempt=0;attempt<32;attempt++){
+   if(attempt>12&&!review){
+    if(def?.isArithmetic)def=chooseArithmeticDef(l);
+    else {const alt=BANK.filter(b=>b.domain===def.domain&&b.stage<=challengeFromRating(domainLearningLevel(b.domain))+1.5&&!legacyOperationLocked(b,a));def=choose(alt.length?alt:BANK);}
+   }
+   const produced=def.generate(Math.floor(challengeFromRating(domainLearningLevel(def.domain))));
+   const sig=fingerprint(produced);
+   if(!a.recentQuestions.includes(sig)||attempt===31){q=produced;break;}
+  }
+  q.skillId=def.id;q.domain=def.domain;q.review=review;q.reviewPass=review?reviewPass:0;q.stage=def.stage;
+  if(def.isArithmetic){q.isArithmetic=true;q.operation=def.operation;}
+ }
  q.kind=q.kind||'learning';
- const answers=new Set(q.choices.map(c=>typeof c==='object'?JSON.stringify(c):String(c)));
- if(q.choices.length!==4||answers.size!==4||!(q.answer>=0&&q.answer<4))throw Error('Question choices invalid: '+itemDef.id);
- l.lastSkills.push(itemDef.id);l.lastSkills=l.lastSkills.slice(-6);
- l.domainCounts[itemDef.domain]=(l.domainCounts[itemDef.domain]||0)+1;
+ const choices=q.choices||[],answers=new Set(choices.map(c=>typeof c==='object'?JSON.stringify(c):String(c)));
+ if(choices.length!==4||answers.size!==4||!(q.answer>=0&&q.answer<4))throw Error('Question choices invalid: '+q.skillId);
+ a.recentQuestions.push(fingerprint(q));a.recentQuestions=a.recentQuestions.slice(-80);
+ if(q.factKey){a.recentFacts.push(q.factKey);a.recentFacts=a.recentFacts.slice(-14);}
+ l.lastSkills.push(q.skillId);l.lastSkills=l.lastSkills.slice(-6);
+ l.domainCounts[q.domain]=(l.domainCounts[q.domain]||0)+1;
  return q;
 }
 function recordLearning(question,mistakes){
  if(!question?.skillId)return;
  const l=learning(),s=skillStats(question.skillId),correctFirst=mistakes===0;
  l.solved++;l.firstTry+=correctFirst?1:0;l.battleSolved=(l.battleSolved||0)+1;l.battleMisses=(l.battleMisses||0)+(correctFirst?0:1);
+ recordArithmetic(question,mistakes,l);
  s.seen++;s.first+=correctFirst?1:0;s.mistakes+=mistakes;
  if(correctFirst){s.streak++;s.mastery=clamp(s.mastery+1,0,5);if(question.review)s.reviewed++;}
  else{s.streak=0;s.mastery=Math.max(0,s.mastery-2);}
@@ -711,8 +1034,8 @@ function recordLearning(question,mistakes){
  const change=correctFirst?(3+Math.max(0,Math.round(stretch))):(mistakes>=2?-9:-6);
  l.domainRatings[question.domain]=Math.round(clamp(local+change,SCORE_MIN,SCORE_MAX));
  // Two spaced fresh successes are needed to count an earlier miss as learned.
- if(!correctFirst){l.review=l.review.filter(r=>r.id!==question.skillId);l.review.push({id:question.skillId,due:l.solved+2,priority:2,pass:0});}
- else if(question.review){
+ if(!correctFirst&&!String(question.skillId).startsWith('arith-fact-')){l.review=l.review.filter(r=>r.id!==question.skillId);l.review.push({id:question.skillId,due:l.solved+2,priority:2,pass:0});}
+ else if(question.review&&!String(question.skillId).startsWith('arith-fact-')){
   const nextPass=(Number(question.reviewPass)||0)+1;
   if(nextPass<2)l.review.push({id:question.skillId,due:l.solved+7,priority:1,pass:1});
   else l.review.push({id:question.skillId,due:l.solved+24,priority:0,pass:2});
@@ -737,12 +1060,13 @@ function finishLearningBattle(isPractice){if(isPractice)return;const l=learning(
 function learningGradeOptions(current,placeholder=false){return `${placeholder?'<option value="" disabled selected>Choose a grade…</option>':''}${GRADE_NAMES.map((g,i)=>`<option value="${i}" ${!placeholder&&current===i?'selected':''}>${g}</option>`).join('')}`;}
 function gradeSetup(){return `<section class="panel wide learning-setup"><div class="levelburst">📚✨</div><span class="tag">YOUR LEARNING ADVENTURE</span><h2>What grade are you in?</h2><p>This sets your starting Learning Level (1–1000). As you learn, your level can rise far beyond your grade. Your adventure level, pets and items stay exactly as they are.</p><label class="formlabel" for="learning-grade-setup">CHOOSE YOUR GRADE</label><select id="learning-grade-setup" class="nameinput grade-select" aria-label="Choose school grade">${learningGradeOptions(null,true)}</select><p class="small">Questions explore pictures, word relationships, number puzzles, math and stories. Missed ideas return later for extra practice.</p><div class="buttonrow"><button class="btn" data-do="grade-confirm">✨ Start Learning!</button></div></section>`;}
 function learningDashboard(){const l=learning(),entries=Object.entries(l.skills),done=entries.filter(([_,s])=>s.mastery>=4).length;
- const grouped=Object.keys(DOMAINS).map(d=>{const ids=BANK.filter(b=>b.domain===d),observed=entries.filter(([id])=>ids.some(t=>t.id===id)),first=observed.reduce((n,[_,s])=>n+s.first,0),seen=observed.reduce((n,[_,s])=>n+s.seen,0);return {d,seen,first,skills:observed.length};});
+ const grouped=Object.keys(DOMAINS).map(d=>{const ids=[...BANK,...ARITH_BANK].filter(b=>b.domain===d),observed=entries.filter(([id])=>ids.some(t=>t.id===id)),first=observed.reduce((n,[_,s])=>n+s.first,0),seen=observed.reduce((n,[_,s])=>n+s.seen,0);return {d,seen,first,skills:observed.length};});
  const weak=entries.filter(([id,s])=>s.seen>=2&&s.mastery<3).sort((a,b)=>(b[1].mistakes/(b[1].seen||1))-(a[1].mistakes/(a[1].seen||1))).slice(0,5);
  return `<section class="panel wide"><span class="tag">🧠 YOUR LEARNING JOURNEY</span><h2>Look how your thinking grows!</h2><p>The game mixes skills, starts from your selected grade, and adjusts up or down after each battle based on how the questions went. It schedules fresh examples of missed concepts for review.</p>
  <div class="learning-rating-feature" role="status"><div><small>YOUR LEARNING LEVEL</small><strong>${l.rating}<em> / 1000</em></strong><span>Saved with your adventure • Separate from combat level ${S.level}</span></div><div class="rating-track"><div style="width:${l.rating/10}%"></div></div></div>
  <div class="learning-metrics"><div><b>${GRADE_NAMES[l.grade]}</b><span>Starting grade</span></div><div><b>${l.solved}</b><span>Questions solved</span></div><div><b>${l.solved?Math.round(100*l.firstTry/l.solved):0}%</b><span>First-try correct</span></div><div><b>${done}</b><span>Strong skills</span></div></div>
  <p class="banner">🌟 <b>${learningBadge()}</b> · ${learnedGrade()} · ${l.review.length} scheduled reviews. These are internal learning indicators, <b>not standardized scores, IQ, or a grade placement test.</b></p>
+ <div class="math-journey-summary"><b>🧮 Arithmetic Journey</b><p>Addition → Subtraction → Multiplication → Division. Each operation unlocks through first-try understanding, not just game wins.</p><div class="math-stage-row">${OP_ORDER.map((op,i)=>`<span class="math-stage ${i<=ensureArithmetic(l).band?'ready':''}">${i<ensureArithmetic(l).band?'✅':i===ensureArithmetic(l).band?'✨':'🔒'} ${OP_LABELS[op]} · ${ensureArithmetic(l).operations[op].seen} tried</span>`).join('')}</div><div class="tiny">${Object.values(ensureArithmetic(l).facts).filter(f=>f.mastered).length} facts recalled confidently · ${ensureArithmetic(l).factDue.length} facts scheduled for later review</div></div>
  <div class="learning-domains">${grouped.map(g=>`<div class="learning-domain"><b>${DOMAINS[g.d]}</b><div class="domain-rating">Level ${domainLearningLevel(g.d)} / 1000</div><div class="learning-bar"><span style="width:${g.seen?Math.round(100*g.first/g.seen):0}%"></span></div><small>${g.seen} answered · ${g.seen?Math.round(100*g.first/g.seen):0}% first try</small></div>`).join('')}</div>
  <h3>We'll practice these again</h3><p>${weak.length?weak.map(([id])=>escapeHtml(id.replace(/-/g,' '))).join(' · '):'Keep solving! New skills will show up here after enough questions.'}</p>
  <p class="tiny">Concepts reviewed until two clean spaced attempts; then periodically revisited. Incorrect guesses count as learning signals even if the child eventually chooses the right answer.</p>
@@ -924,7 +1248,7 @@ function activateNextPet(){
 }
 function lostBattle(){
  const b=S.battle;if(!b)return;
- S.retryOpponent={name:b.name,emoji:b.emoji,isPractice:b.isPractice};
+ S.retryOpponent={name:b.name,emoji:b.emoji,id:b.nodeId,isPractice:b.isPractice};
  S.battle=null;S.question=null;S.hp=0;S.screen='defeat';
  S.notice='Your team was defeated! Your level, pets, rewards, and explored areas are still saved. Heal and try again.';
  save();
@@ -1032,7 +1356,20 @@ function animateSidekick(idx,dmg,done,targetIndex=0){
 }
 
 function recruit(b){const pet={capturedHp:b.maxHp,id:Date.now().toString(36)+Math.random().toString(36).slice(2,6),name:b.name,emoji:b.emoji,level:S.level,strength:Math.round(power()*(b.isBoss?.95:.45)),special:b.isBoss?'Meteor Burst':(S.zone===0?'Leaf Beam':S.zone===1?'Flame Wave':S.zone===2?'Thunder Flash':'Star Storm')};S.pets.push(pet);if(S.equipped.length<2)S.equipped.push(pet.id);S.lastRecruit=pet;}
-function wonBattle(assists,hit,deferRender=false){const b=S.battle;finishLearningBattle(b.isPractice);S.completed+=b.isPractice?0:1;S.level+=b.isPractice?0:1;S.maxHp+=b.isPractice?0:100;S.hp=S.maxHp;S.notice=b.isPractice?`You passed training! Grandmaster Glimmer opens the forest gate.`:`Your attack hit for ${hit}! ${assists.join(' ')} Victory! +1 level and +100 maximum health!`;if(!b.isPractice){recruit(b);if(b.isBoss)S.bossWins++}else S.tutorialDone=true;S.battle=null;S.question=null;S.screen=b.isBoss?'reward':'victory';save();if(!deferRender)render();}
+function wonBattle(assists,hit,deferRender=false){
+ const b=S.battle;finishLearningBattle(b.isPractice);
+ S.completed+=b.isPractice?0:1;S.level+=b.isPractice?0:1;S.maxHp+=b.isPractice?0:100;S.hp=S.maxHp;
+ S.notice=b.isPractice?'You passed training! Grandmaster Glimmer opens the forest gate.':`Your attack hit for ${hit}! ${assists.join(' ')} Victory! +1 level and +100 maximum health!`;
+ if(!b.isPractice){
+  recruit(b);if(b.isBoss)S.bossWins++;
+  if(b.nodeId){migrateRegionProgress(S);const key=b.regionKey||questKey();const cleared=S.regionProgress[key]||[];
+   if(!cleared.includes(b.nodeId))S.regionProgress[key]=[...cleared,b.nodeId];
+   if(b.isFinalBoss){S.notice+=' 🚪 The final Gatekeeper is defeated. Your gate is now OPEN!';
+    if(S.zone===10){S.openRoadChapter=(Number(S.openRoadChapter)||1)+1;S.notice+=' An endless new chapter awaits!';}}
+  }
+ }else S.tutorialDone=true;
+ S.battle=null;S.question=null;S.screen=b.isBoss?'reward':'victory';save();if(!deferRender)render();
+}
 function defeat(){return `<section class="panel"><span class="tag">💔 TEAM DEFEATED</span><div class="levelburst">🩹</div><h2>Time to regroup!</h2><p class="story">${escapeHtml(S.notice)}</p><div class="banner">⭐ Your Level ${S.level} is safe! All ${S.pets.length} pets and ${S.bossWins} boss victories are saved.</div><p>Your whole team can heal, then you can challenge the same monster again.</p><div class="buttonrow"><button class="btn" data-do="retry">❤️ Heal & Try Again</button><button class="btn ghost" data-do="recover">🏕️ Return to Camp</button></div></section>`}
 function turnRibbon(){
  const b=S.battle,actors=currentActors(),idx=b?.nextIndex||0,enemies=b?.enemies||[];
@@ -1205,21 +1542,20 @@ function playTone(type){
 }
 function hint(){const q=S.question;return q.op==='+'?'Hint: Try starting with the bigger number and counting up.':q.op==='-'?'Hint: Count backwards from the first number.':'Hint: Multiplication means equal groups. Try counting groups!'}
 function adventure(){
- const z=zoneInfo(),isBoss=(S.completed+1)%3===0;
- return `<section class="panel"><span class="tag">${z.emoji} REGION ${S.zone+1} ${S.zone===ZONES.length-1?' • ENDLESS CHAPTERS':''}</span><h2>Explore ${escapeHtml(z.name)}!</h2><p class="story">${escapeHtml(z.desc)}</p>
- <div class="explore-scene"><canvas id="explore-canvas" width="960" height="520" tabindex="0" aria-label="Explore ${escapeHtml(z.name)} using your keyboard arrow keys. Tap or click creatures to challenge them when nearby."></canvas><div class="explore-hud" id="explore-hud">🎮 Arrow keys move • Tap a nearby creature to battle</div></div>
- <div class="explore-ui"><div class="miniquest"><strong>${isBoss?'👑 Boss encounter next!':'🔎 Your mission: discover a creature'}</strong><div class="explore-help">Use the keyboard arrow keys or the arrows here. Move close to a creature, then click or tap it to challenge it. Your two pets follow beside you.</div></div>
+ const z=zoneInfo(),available=nextQuest(),complete=questStage()===3;
+ return `<section class="panel"><span class="tag">${z.emoji} REGION ${S.zone+1} ${S.zone===10?' • ENDLESS CHAPTERS':''}</span><h2>Explore ${escapeHtml(z.name)}!</h2><p class="story">${escapeHtml(z.desc)}</p>
+ ${S[JACK_TRANSFER_KEY]&&S[JACK_TRANSFER_KEY].to===S.zone?'<div class="banner" role="status">🏆 THIRD BOSS DEFEATED! 🚪 The portal carried you to your next region. Your pets, gear, and Learning Level are safe!</div>':''}
+ ${questProgressPanel()}
+ <div class="explore-scene"><canvas id="explore-canvas" width="960" height="520" tabindex="0" aria-label="A map with six enemy checkpoints and three boss checkpoints. Defeated foes show checkmarks; locked bosses have padlocks."></canvas><div class="explore-hud" id="explore-hud">🎮 Arrow keys move · Defeated enemies get ✅ marks</div></div>
+ <div class="explore-ui"><div class="miniquest"><strong>${complete?'🚪 Gate open!':available?.boss?'👑 Boss checkpoint unlocked!':'👾 Defeat the next two regular opponents'}</strong><div class="explore-help">Each defeated foe stays on the map with a ✅. Two wins unlock the boss for that stage. The final boss waits beside the gate.</div></div>
  <div class="move-pad" aria-label="Move your character"><button class="up" data-move="ArrowUp" aria-label="Move up">↑</button><button class="left" data-move="ArrowLeft" aria-label="Move left">←</button><button class="down" data-move="ArrowDown" aria-label="Move down">↓</button><button class="right" data-move="ArrowRight" aria-label="Move right">→</button></div></div>
- <div class="buttonrow"><button class="btn teal" data-do="map">🗺️ World Map</button><button class="btn ghost" data-do="pets">🐾 Choose Companions</button><button class="btn" data-do="fight">⚔️ Start a Battle</button></div>
- <p class="tiny">This world is yours to roam: enemies do not attack until you choose a battle. Every third victory is a boss. Enemy strength grows with your level, while puzzles adjust gradually to how you're doing. You can lose a fight without losing your level.</p></section>`;
+ <div class="buttonrow"><button class="btn teal" data-do="map">🗺️ World Map</button><button class="btn ghost" data-do="pets">🐾 Choose Companions</button>${!complete?`<button class="btn" data-do="fight">${available?.boss?'👑 Fight Unlocked Boss':'⚔️ Next Available Battle'}</button>`:S.zone<unlocked()?'<button class="btn" data-do="next-zone">🚪 Enter Next Region</button>':'<button class="btn" data-do="new-chapter">🧭 Explore Next Chapter</button>'}</div>
+ <p class="tiny">Your enemies remain visible when defeated but cannot be battled again. Normal encounters have two monsters; each boss fight has one boss. Your learning level adjusts independently of the map.</p></section>`;
 }
 const worldKeys=new Set();let worldFrame=null,worldCanvas=null,worldEntities=[],worldLast=0,worldSaveClock=0,worldPosition=null;
 const WORLD_W=1600,WORLD_H=900;
 function seeded(i){const t=Math.sin(i*12.9898+S.zone*88.61)*43758.5453;return t-Math.floor(t)}
-function worldActors(){const z=zoneInfo(),boss=(S.completed+1)%3===0;
- let names=boss?[z.boss]:z.enemies;
- return Array.from({length:5},(_,i)=>{const a=names[i%names.length];return {name:a[0],emoji:a[1],boss,x:[530,755,990,1280,1120][i]+Math.sin((S.completed+i)*1.2)*25,y:[405,315,600,445,735][i]}});
-}
+function worldActors(){return questSlots();}
 function startExplore(){stopExplore();const c=document.getElementById('explore-canvas');if(!c)return;
  worldCanvas=c;const previous=(S.walkPos||{})[S.zone];worldPosition={x:Math.max(80,Math.min(WORLD_W-80,previous?.x??235)),y:Math.max(260,Math.min(WORLD_H-65,previous?.y??465))};
  worldEntities=worldActors();worldLast=0;worldSaveClock=0;
@@ -1228,9 +1564,13 @@ function startExplore(){stopExplore();const c=document.getElementById('explore-c
   const r=c.getBoundingClientRect(),sx=(e.clientX-r.left)/r.width*960,sy=(e.clientY-r.top)/r.height*520;
   const cam=worldCamera(),x=sx+cam.x,y=sy+cam.y;
   const target=worldEntities.find(a=>Math.hypot(a.x-x,a.y-y)<66);
-  if(target){if(Math.hypot(target.x-worldPosition.x,target.y-worldPosition.y)>225){toast('Get a little closer, then tap the creature! 🐾');return;}
-    rememberWalk();stopExplore();tryFight(false,target);return;}
-  const portal=worldPortal();if(Math.hypot(x-portal.x,y-portal.y)<85){if(S.zone<unlocked()){rememberWalk();stopExplore();S.zone++;save();render();toast('You discovered another region! 🧭')}else toast('Defeat five more bosses to open this gate!');return;}
+  if(target){
+   if(target.status==='cleared'){toast('✅ Already defeated! This checkpoint is complete.');return;}
+   if(target.status==='locked'){toast(target.boss?'🔒 Defeat both regular opponents to unlock this boss!':'🔒 Defeat the previous boss to unlock this stage.');return;}
+   if(Math.hypot(target.x-worldPosition.x,target.y-worldPosition.y)>225){toast('Move closer to the highlighted checkpoint, then tap! 🐾');return;}
+   rememberWalk();stopExplore();tryFight(false,target);return;
+  }
+  const portal=worldPortal();if(Math.hypot(x-portal.x,y-portal.y)<85){if(S.zone<unlocked()){rememberWalk();stopExplore();S.zone++;save();render();toast('🚪 You reached a NEW region! 🧭')}else toast('🔒 Defeat the third, final boss next to this gate to open it!');return;}
   toast('Explore with the arrow keys. Tap a creature when nearby!');
  });
  worldFrame=requestAnimationFrame(exploreFrame);
@@ -1282,9 +1622,29 @@ function drawWorld(t,walking){const c=worldCanvas,ctx=c?.getContext('2d');if(!ct
  ctx.shadowColor='#fff4bf';ctx.shadowBlur=20;ctx.beginPath();ctx.arc(0,-40,42,Math.PI,0);ctx.lineTo(42,44);ctx.lineTo(-42,44);ctx.closePath();ctx.strokeStyle=S.zone<unlocked()?'#f9da85':'#a39f96';ctx.lineWidth=13;ctx.stroke();ctx.shadowBlur=0;
  ctx.fillStyle=S.zone<unlocked()?'#d6f5ca':'#68767c';ctx.beginPath();ctx.moveTo(-30,43);ctx.lineTo(-30,-33);ctx.arc(0,-33,30,Math.PI,0);ctx.lineTo(30,43);ctx.closePath();ctx.fill();rounded(ctx,-68,52,137,27,9,'#233a4f','#fbe5a2',2);ctx.fillStyle='#fff3d1';ctx.textAlign='center';ctx.font='bold 14px system-ui';ctx.fillText(S.zone<unlocked()?'NEXT REGION':'LOCKED GATE',0,70);ctx.restore();
  // Enemies wander visually but never begin a battle automatically.
- for(const a of worldEntities){const bob=Math.sin(t/330+a.x*.1)*5;drawMonsterMap(ctx,a.x,a.y+bob,a,cs);
-  rounded(ctx,a.x-73,a.y-100+bob,146,24,8,'#23384add','#fff9',1);ctx.fillStyle='#fffbe5';ctx.font='bold 13px system-ui';ctx.textAlign='center';ctx.fillText(a.boss?'👑 '+a.name:a.name,a.x,a.y-83+bob);
-  if(Math.hypot(a.x-worldPosition.x,a.y-worldPosition.y)<225){rounded(ctx,a.x-40,a.y-131+bob,80,26,8,'#fff1b6','#566477',2);ctx.fillStyle='#294250';ctx.fillText('TAP ⚔️',a.x,a.y-113+bob);}}
+ for(const a of worldEntities){
+  const cleared=a.status==='cleared',locked=a.status==='locked',ready=a.status==='available';
+  const bob=cleared?0:Math.sin(t/410+a.x*.1)*3;
+  ctx.save();
+  if(cleared){ctx.globalAlpha=.5;ctx.filter='grayscale(1)';}
+  else if(locked){ctx.globalAlpha=.52;ctx.filter='grayscale(.6)';}
+  // Bosses get glowing pedestals; the gate's final guardian has a special golden marker.
+  if(a.boss){
+   ctx.beginPath();ctx.ellipse(a.x,a.y+25,a.final?60:49,16,0,0,Math.PI*2);
+   ctx.fillStyle=a.final?'#ffc967b9':'#b7a6ff9b';ctx.fill();
+   ctx.lineWidth=a.final?5:3;ctx.strokeStyle=a.final?'#ffdc73':'#f8e8d6';ctx.stroke();
+  }
+  drawMonsterMap(ctx,a.x,a.y+bob,a,cs);ctx.restore();
+  rounded(ctx,a.x-69,a.y-103+bob,138,27,9,cleared?'#30574edb':a.boss?'#443657ef':'#23384add',cleared?'#a1ecc3':ready?'#ffe09f':'#eef0e089',ready?2:1);
+  ctx.fillStyle='#fffbe5';ctx.font='bold 11px system-ui';ctx.textAlign='center';
+  const caption=cleared?'✅ DEFEATED':locked?(a.boss?'🔒 BOSS LOCKED':'🔒 LOCKED'):a.final?'👑 FINAL BOSS':a.boss?'👑 BOSS READY':`⚔️ OPPONENT ${a.index+1}`;
+  ctx.fillText(caption,a.x,a.y-85+bob);
+  if(ready){ctx.beginPath();ctx.arc(a.x,a.y-22+bob,46,0,7);ctx.lineWidth=3;ctx.strokeStyle='#fce398';ctx.stroke();}
+  if(ready&&Math.hypot(a.x-worldPosition.x,a.y-worldPosition.y)<225){
+   rounded(ctx,a.x-40,a.y-135+bob,80,26,8,'#fff1b6','#566477',2);
+   ctx.fillStyle='#294250';ctx.font='bold 13px system-ui';ctx.fillText('TAP ⚔️',a.x,a.y-116+bob);
+  }
+ }
  // Followers look like miniature adventurers, and stay by the player's side.
  const team=S.equipped.map(id=>S.pets.find(p=>p.id===id)).filter(Boolean);
  team.forEach((p,i)=>drawHeroMap(ctx,worldPosition.x+(i===0?-77:71),worldPosition.y+12+Math.sin(t/230+i)*3,.65,i+1,walking,p.emoji));
@@ -1292,7 +1652,7 @@ function drawWorld(t,walking){const c=worldCanvas,ctx=c?.getContext('2d');if(!ct
  ctx.restore();
  // A fixed little minimap provides a sense of exploration.
  rounded(ctx,794,445,149,56,12,'#192d3bbb','#f4eac0a0',2);ctx.fillStyle='#ecf5e3';ctx.font='bold 12px system-ui';ctx.textAlign='left';ctx.fillText('EXPLORE',807,463);ctx.font='12px system-ui';ctx.fillText(`${Math.round(worldPosition.x/16)} · ${Math.round(worldPosition.y/9)}`,807,482);
- const hint=document.getElementById('explore-hud');if(hint){const close=worldEntities.find(a=>Math.hypot(a.x-worldPosition.x,a.y-worldPosition.y)<225);const message=close?`⚔️ ${close.name} nearby! Tap the creature to battle.`:'🎮 Use arrow keys to explore • Tap a creature when close';if(hint.textContent!==message)hint.textContent=message;}
+ const hint=document.getElementById('explore-hud');if(hint){const close=worldEntities.find(a=>a.status==='available'&&Math.hypot(a.x-worldPosition.x,a.y-worldPosition.y)<225);const message=close?`⚔️ ${close.name} available — tap to fight!`:`🗺️ ${regionCleared().length}/9 cleared · ✅ defeated · 🔒 locked · 👑 bosses`;if(hint.textContent!==message)hint.textContent=message;}
 }
 function drawMonsterMap(ctx,x,y,mob,cs){
  const boss=Boolean(mob.boss),fam=creatureFamily(mob),r=Math.max(0,Math.min(100,Number(S.realism??30)))/100,size=boss?1.26:1;
@@ -1331,11 +1691,11 @@ document.addEventListener('pointerdown',e=>{const b=e.target.closest('button[dat
 document.addEventListener('pointerup',e=>{const b=e.target.closest('button[data-move]');if(b)worldKeys.delete(b.dataset.move)});
 document.addEventListener('pointercancel',e=>{const b=e.target.closest('button[data-move]');if(b)worldKeys.delete(b.dataset.move)});
 function victory(){const p=S.lastRecruit;const newZone=unlocked();return `<section class="panel"><span class="tag">🎊 ${S.tutorialDone&&S.completed===0?'TRAINING COMPLETE':'YOU WON!'}</span><div class="levelburst">✨🌟✨</div><h2>${S.completed===0?'The forest awaits!':'Level '+S.level+'! Incredible!'}</h2><p class="story">${escapeHtml(S.notice)}</p>${p?`<div class="banner">🐾 New magical helper recruited: <strong>${p.emoji} ${escapeHtml(p.name)}</strong>! ${S.equipped.includes(p.id)?'Automatically added to your team.':'Find it in Pet Helpers.'}</div>`:''}<div class="menuitems"><div class="menuitem"><span class="menuicon">💗</span><span>${S.completed===0?'Your health is full!':`Maximum health increased to ${S.maxHp.toLocaleString()}!`}</span></div><div class="menuitem"><span class="menuicon">✨</span><span>Next attack power: ${power().toLocaleString()}</span></div></div>${newZone>S.zone?`<div class="banner">🔓 NEW WORLD UNLOCKED: ${ZONES[newZone].emoji} ${ZONES[newZone].name}!</div>`:''}<div class="buttonrow"><button class="btn" data-do="continue">${newZone>S.zone?'🗺️ See New World':'⚔️ Continue Adventure'}</button><button class="btn purple" data-do="pets">🐾 Pet Helpers</button></div></section>`}
-function getRewards(){const t=S.level;const tier=Math.floor(S.bossWins/5)+1;return[{id:'blade',emoji:'⚔️',name:`Starlight Sword +${tier}`,desc:`Add ${Math.floor(90+t*22)} power to every math spell!`,value:Math.floor(90+t*22)}, {id:'armor',emoji:'🛡️',name:`Moonstone Armor +${tier}`,desc:`Block ${Math.floor(12+t*6)} damage from each monster strike.`,value:Math.floor(12+t*6)}, {id:'heart',emoji:'💎',name:`Heart Crystal +${tier}`,desc:`Gain ${100+t*12} extra maximum health forever!`,value:100+t*12}]}
+function getRewards(){const t=S.level;const tier=Math.floor(S.bossWins/3)+1;return[{id:'blade',emoji:'⚔️',name:`Starlight Sword +${tier}`,desc:`Add ${Math.floor(90+t*22)} power to every math spell!`,value:Math.floor(90+t*22)}, {id:'armor',emoji:'🛡️',name:`Moonstone Armor +${tier}`,desc:`Block ${Math.floor(12+t*6)} damage from each monster strike.`,value:Math.floor(12+t*6)}, {id:'heart',emoji:'💎',name:`Heart Crystal +${tier}`,desc:`Gain ${100+t*12} extra maximum health forever!`,value:100+t*12}]}
 function reward(){return `<section class="panel"><span class="tag">👑 BOSS DEFEATED!</span><div class="levelburst">🏆</div><h2>Choose ONE amazing reward!</h2><p>Each boss drops stronger gear as you level up. Pick the reward you like best.</p><div class="banner">✨ Level ${S.level} reached! +100 maximum health. 🐾 You also recruited ${S.lastRecruit?.emoji||''} ${escapeHtml(S.lastRecruit?.name||'a helper')}!</div><div class="rewardgrid">${getRewards().map(r=>`<article class="reward"><div class="big">${r.emoji}</div><strong>${escapeHtml(r.name)}</strong><p>${escapeHtml(r.desc)}</p><button class="btn smallbtn" data-do="reward" data-value="${r.id}">Choose ${r.emoji}</button></article>`).join('')}</div>${unlocked()>S.zone?`<div class="banner">🔓 ${ZONES[unlocked()].emoji} A new world is unlocked, too!</div>`:''}</section>`}
-function worldmap(){const gate=unlocked();return `<section class="panel"><span class="tag">🗺️ WORLD MAP</span><h2>Places to explore</h2><p>Every five boss victories unlocks another place. The final road has endlessly changing chapters—you never have to stay in one boring arena.</p>
+function worldmap(){const gate=unlocked();return `<section class="panel"><span class="tag">🗺️ WORLD MAP</span><h2>Places to explore</h2><p>Defeat three bosses and six regular encounters to unlock the next region. The final road has endlessly changing chapters—you never have to stay in one boring arena.</p>
  <div class="mapgrid"><article class="mapitem"><div class="mapicon">🕯️</div><div><h3>Training Cave ✅</h3><p class="small">Your first lesson in thinking puzzles and friendly battles.</p></div></article>
- ${ZONES.map((raw,i)=>{const z=zoneInfo(i),locked=i>gate;return `<article class="mapitem ${i===S.zone?'active':''} ${locked?'locked':''}"><div class="mapicon">${locked?'🔒':z.emoji}</div><div style="flex:1"><h3>${escapeHtml(z.name)} ${i===S.zone?'📍':''}</h3><p class="small">${escapeHtml(z.desc)}</p>${locked?`<div class="tiny">Unlock with ${i*5} boss wins • You have ${S.bossWins}</div>`:`<button class="btn ${i===S.zone?'ghost':'teal'} smallbtn" data-do="travel" data-value="${i}">${i===S.zone?'Continue Exploring':'Travel Here 🧭'}</button>`}</div></article>`}).join('')}
+ ${ZONES.map((raw,i)=>{const z=zoneInfo(i),locked=i>gate;return `<article class="mapitem ${i===S.zone?'active':''} ${locked?'locked':''}"><div class="mapicon">${locked?'🔒':z.emoji}</div><div style="flex:1"><h3>${escapeHtml(z.name)} ${i===S.zone?'📍':''}</h3><p class="small">${escapeHtml(z.desc)}</p>${locked?`<div class="tiny">Finish the previous region’s three bosses to unlock this place</div>`:`<button class="btn ${i===S.zone?'ghost':'teal'} smallbtn" data-do="travel" data-value="${i}">${i===S.zone?'Continue Exploring':'Travel Here 🧭'}</button>`}</div></article>`}).join('')}
  </div><div class="buttonrow"><button class="btn purple" data-do="home">← Back to Exploring</button></div></section>`;}
 function pets(){return `<section class="panel"><span class="tag">🐾 YOUR MAGIC COLLECTION</span><h2>Pet Helpers</h2><p>You can equip <b>two</b> magic helpers. Each has a powerful special attack. Defeat new monsters to collect them all!</p><div class="banner">Equipped: <b>${S.equipped.length} of 2</b> • Collected: ${S.pets.length} creatures</div><div class="petlist">${S.pets.length?S.pets.map(p=>`<article class="petitem"><span class="peticon">${p.emoji}</span><div style="flex:1"><h3>${escapeHtml(p.name)}</h3><div class="tiny">Level ${p.level} • ${escapeHtml(p.special)} • Power ${Math.round(p.strength+S.level*14)}</div></div><button class="btn ${S.equipped.includes(p.id)?'ghost':'teal'} smallbtn" data-do="equip" data-value="${p.id}">${S.equipped.includes(p.id)?'✓ Equipped':'Equip'}</button></article>`).join(''):'<p>Once you win your first real battle, your new pet will appear here!</p>'}</div><div class="buttonrow"><button class="btn purple" data-do="home">← Back</button></div></section>`}
 function realismLabel(){const n=Number(S.realism??30);return n<25?'🎨 Playful cartoons':n<65?'📖 Illustrated storybook':'✨ Detailed fantasy creatures';}
@@ -1351,7 +1711,7 @@ function settings(){return `<section class="panel"><span class="tag">⚙️ PREF
  </section><div class="row"><button class="btn ghost smallbtn" data-do="sound">${S.soundOn?'🔊 Sound: On':'🔇 Sound: Off'}</button></div>
  <div class="buttonrow"><button class="btn purple" data-do="home">← Keep Playing</button><button class="btn ghost" data-do="reset">🗑️ Reset My Adventure</button></div><p class="tiny danger">Reset erases this browser's progress. Download a backup before using it.</p></section>`}
 function downloadSave(){
- try{save();const text=JSON.stringify({game:'jacks-magic-battles',format:2,learningVersion:3,learningRating:S.learning?.rating??null,exportedAt:new Date().toISOString(),save:S},null,2);
+ try{save();const text=JSON.stringify({game:'jacks-magic-battles',format:2,learningVersion:4,learningRating:S.learning?.rating??null,exportedAt:new Date().toISOString(),save:S},null,2);
  const blob=new Blob([text],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=`infinite-adventures-hero-${S.level}-learning-${S.learning?.rating||'new'}.json`;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),15000);toast('Your adventure backup is downloading! 💾');}
  catch(e){toast('Could not download. Try Chrome on your computer.')}
 }
@@ -1371,15 +1731,18 @@ function validateSave(obj){
   l.challenge=challengeFromRating(l.rating);
   if(!l.domainRatings||typeof l.domainRatings!=='object')l.domainRatings={number:l.rating,visual:l.rating,verbal:l.rating};
   for(const d of Object.keys(DOMAINS)){const v=Number(l.domainRatings[d]);l.domainRatings[d]=Number.isFinite(v)&&v>=1&&v<=1000?Math.round(v):l.rating;}
-  l.version=3;
+  l.version=4;
  }
+ migrateRegionProgress(clean);
  clean.equipped=clean.equipped.filter(x=>clean.pets.some(p=>p.id===x)).slice(0,2);
  return clean;
 }
 function importSave(text){
  try{if(text.length>5_000_000)throw Error('Save too large.');const candidate=validateSave(JSON.parse(text));
  if(S.started&&!window.confirm(`Restore ${candidate.avatar.name}'s Level ${candidate.level} adventure? This will replace this browser's current Level ${S.level} save. Download a backup first if you want to keep both.`))return;
- S=candidate;save();render();beginMusicFromGesture();toast(`Save restored! Welcome back, ${S.avatar.name}! ⭐`);
+ S=candidate;
+ if(isJackTransferEligible(S))transferJackToNextRegionOnce(S);
+ save();render();beginMusicFromGesture();toast(`Save restored! Welcome back, ${S.avatar.name}! ⭐`);
  }catch(e){toast('Could not restore: '+e.message);}
 }
 function renderUnsafe(){stopExplore();syncMusic();document.body.classList.toggle('battle-mode',S.started&&S.screen==='battle');let main;if(!S.started)main=creator();else if(!learning().gradeSet)main=gradeSetup();else if(S.screen==='tutorial')main=tutorial();else if(S.screen==='battle')main=battle();else if(S.screen==='victory')main=victory();else if(S.screen==='reward')main=reward();else if(S.screen==='defeat')main=defeat();else if(S.screen==='map')main=worldmap();else if(S.screen==='pets')main=pets();else if(S.screen==='learning')main=learningDashboard();else if(S.screen==='settings')main=settings();else main=adventure();el().innerHTML=header()+(S.started?`<div class="toolbar-wrap" style="margin-bottom:16px">${toolbar()}</div>`:'')+`<main class="layout ${S.screen==='battle'?'layout-battle':''}">${main}${S.started&&S.screen!=='battle'?sidebar():''}</main><div class="footnote">The Infinite Adventures • Original cartoon world • Your adventure saves automatically • Backup in Settings</div>`;if(S.started&&S.screen==='adventure')requestAnimationFrame(startExplore);}
@@ -1410,7 +1773,7 @@ document.addEventListener('click',e=>{const b=e.target.closest('button[data-do]'
   S.learning=freshLearning(v);
   if(S.screen==='battle'){S.question=makeQuestion();S.tries=0;}
   save();render();toast('Your new learning starting point is ready!');break;
- }case'choose':{const key=b.dataset.key;if(!['skin','hair','style','robe'].includes(key))return;S.avatar[key]=Number(v);const i=document.getElementById('hero-name');if(i)S.avatar.name=i.value.slice(0,16);save();render();break}case'start':{const i=document.getElementById('hero-name');if(!i?.value.trim()){toast('Choose a name for your hero first! ✨');i?.focus();return;}const grade=document.getElementById('creator-grade')?.value;if(grade===undefined||grade===''){toast('Choose your grade so your thinking journey starts at the right place! 📚');return;}S.learning=freshLearning(grade);S.pendingGrade=null;S.avatar.name=i.value.trim().slice(0,16);S.started=true;S.screen='tutorial';save();render();beginMusicFromGesture();break}case'retry':{const opponent=S.retryOpponent;S.hp=S.maxHp;tryFight(Boolean(opponent?.isPractice),opponent);break}case'recover':S.hp=S.maxHp;S.screen=S.tutorialDone?'adventure':'tutorial';save();render();break;case'practice':tryFight(true);break;case'fight':tryFight(false);break;case'puzzle':answerPuzzle(Number(v));break;case'home':goHome();break;case'map':S.screen='map';save();render();break;case'pets':S.screen='pets';save();render();break;case'settings':S.screen='settings';save();render();break;case'look':S.screen='settings';save();render();document.getElementById('look-lab')?.scrollIntoView({behavior:'smooth',block:'center'});break;case'continue':S.screen=unlocked()>S.zone?'map':'adventure';save();render();break;case'travel':{const i=Number(v);if(i>unlocked()){toast('Beat more bosses to unlock that place!');break}if(S.battle){toast('Finish your current battle first!');S.screen='battle';render();break}S.zone=i;S.screen='adventure';save();render();break}case'equip':{const id=v;if(!S.pets.some(p=>p.id===id))return;const at=S.equipped.indexOf(id);if(at>=0)S.equipped.splice(at,1);else if(S.equipped.length<2)S.equipped.push(id);else {toast('You can equip only 2 pets! Unequip one first.');return}save();render();break}case'reward':{if(S.screen!=='reward')return;const r=getRewards().find(x=>x.id===v);if(!r)return;if(r.id==='blade')S.attackBonus+=r.value;else if(r.id==='armor')S.armor+=r.value;else if(r.id==='heart'){S.maxHp+=r.value;S.hp=S.maxHp}S.loot.push({name:r.name,id:r.id,value:r.value});S.notice=`You earned ${r.name}! Your next magical adventure awaits.`;S.screen='victory';save();render();break}case'export':downloadSave();break;case'paste-save':{importSave(document.getElementById('save-paste')?.value.trim()||'');break}case'sound':S.soundOn=!S.soundOn;save();render();break;case'music':S.musicOn=!S.musicOn;save();syncMusic();if(S.musicOn)beginMusicFromGesture();render();break;case'reset':{if(window.confirm('DANGER: Reset ALL levels, pets, and gear? Download a backup first.')){S=INITIAL();save();render()};break}}});
+ }case'choose':{const key=b.dataset.key;if(!['skin','hair','style','robe'].includes(key))return;S.avatar[key]=Number(v);const i=document.getElementById('hero-name');if(i)S.avatar.name=i.value.slice(0,16);save();render();break}case'start':{const i=document.getElementById('hero-name');if(!i?.value.trim()){toast('Choose a name for your hero first! ✨');i?.focus();return;}const grade=document.getElementById('creator-grade')?.value;if(grade===undefined||grade===''){toast('Choose your grade so your thinking journey starts at the right place! 📚');return;}S.learning=freshLearning(grade);S.pendingGrade=null;S.avatar.name=i.value.trim().slice(0,16);S.started=true;S.screen='tutorial';save();render();beginMusicFromGesture();break}case'retry':{const opponent=S.retryOpponent;S.hp=S.maxHp;tryFight(Boolean(opponent?.isPractice),opponent);break}case'recover':S.hp=S.maxHp;S.screen=S.tutorialDone?'adventure':'tutorial';save();render();break;case'practice':tryFight(true);break;case'fight':tryFight(false,nextQuest());break;case'next-zone':if(S.zone<unlocked()){S.zone++;save();render();}else toast('Defeat the final boss first!');break;case'new-chapter':S.screen='adventure';save();render();break;case'puzzle':answerPuzzle(Number(v));break;case'home':goHome();break;case'map':S.screen='map';save();render();break;case'pets':S.screen='pets';save();render();break;case'settings':S.screen='settings';save();render();break;case'look':S.screen='settings';save();render();document.getElementById('look-lab')?.scrollIntoView({behavior:'smooth',block:'center'});break;case'continue':S.screen=unlocked()>S.zone?'map':'adventure';save();render();break;case'travel':{const i=Number(v);if(i>unlocked()){toast('Beat more bosses to unlock that place!');break}if(S.battle){toast('Finish your current battle first!');S.screen='battle';render();break}S.zone=i;S.screen='adventure';save();render();break}case'equip':{const id=v;if(!S.pets.some(p=>p.id===id))return;const at=S.equipped.indexOf(id);if(at>=0)S.equipped.splice(at,1);else if(S.equipped.length<2)S.equipped.push(id);else {toast('You can equip only 2 pets! Unequip one first.');return}save();render();break}case'reward':{if(S.screen!=='reward')return;const r=getRewards().find(x=>x.id===v);if(!r)return;if(r.id==='blade')S.attackBonus+=r.value;else if(r.id==='armor')S.armor+=r.value;else if(r.id==='heart'){S.maxHp+=r.value;S.hp=S.maxHp}S.loot.push({name:r.name,id:r.id,value:r.value});S.notice=`You earned ${r.name}! Your next magical adventure awaits.`;S.screen='victory';if(isJackTransferEligible(S))transferJackToNextRegionOnce(S);save();render();break}case'export':downloadSave();break;case'paste-save':{importSave(document.getElementById('save-paste')?.value.trim()||'');break}case'sound':S.soundOn=!S.soundOn;save();render();break;case'music':S.musicOn=!S.musicOn;save();syncMusic();if(S.musicOn)beginMusicFromGesture();render();break;case'reset':{if(window.confirm('DANGER: Reset ALL levels, pets, and gear? Download a backup first.')){S=INITIAL();save();render()};break}}});
 document.addEventListener('change',async e=>{if(e.target.id==='import-file'){const file=e.target.files?.[0];if(!file)return;try{if(file.size>5000000)throw Error('File is too large.');importSave(await file.text())}catch(err){toast('Could not read save file: '+err.message)}e.target.value=''}});
 document.addEventListener('submit',e=>{if(e.target.id==='math-form'){e.preventDefault();mathSubmit()}});
 document.addEventListener('input',e=>{
