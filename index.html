@@ -372,6 +372,104 @@ body{width:100%;overflow-x:hidden;min-width:0}
  .battle-questions .puzzle-choice{min-width:0;overflow-wrap:anywhere}
  .battle-stage .arena-scene{contain:layout paint}
 }
+
+/* The Learning Journey: concise grade picker and readable diagrams. */
+.grade-select{width:min(100%,420px);display:block;margin:8px 0 16px;padding:13px 16px;font-size:17px;color:#fff6e4;background:#213956}
+.grade-select option{background:#17263d;color:white}
+.learning-setup{max-width:760px;margin:auto}
+.learning-setup h2{font-size:clamp(26px,4vw,38px)}
+.learning-settings{margin:14px 0;background:#143e5080;border:1px solid #9debd188;padding:19px;border-radius:18px}
+.learning-settings h3{color:#caffdf;margin:0 0 6px}
+.learning-settings .grade-select{margin:13px 0}
+.learning-visual{font-size:clamp(22px,3.1vw,37px);font-weight:950;letter-spacing:.025em;color:#fff2cf;line-height:1.8;overflow-wrap:anywhere;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:8px;padding:9px}
+.learning-visual.direction{font-size:clamp(34px,5vw,56px)}
+.learning-visual small,.learning-visual span{font-size:16px;color:#e2effc}
+.two-count{display:grid;gap:8px;justify-items:start;max-width:98%;margin:auto;font-size:24px;line-height:1.5;overflow-wrap:anywhere}
+.mini-grid{display:grid;gap:3px;justify-content:center;margin:12px auto}.mini-grid span{width:19px;height:19px;background:#aee5d4;border:1px solid #50847c;border-radius:3px}
+.fraction-tiles{display:flex;justify-content:center;gap:3px;margin:16px 0}.fraction-tile{width:30px;height:56px;background:#f8f2e8;border:2px solid #576b77;border-radius:4px}.fraction-tile.filled{background:#81d6c4}
+.learning-metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;margin:15px 0}.learning-metrics div{background:#e8ffed12;border:1px solid #b4edcb58;border-radius:12px;padding:13px;text-align:center}.learning-metrics b{display:block;font-size:clamp(15px,2vw,22px);color:#ffdb8d}.learning-metrics span{font-size:11px;color:#d4e8e4}
+.learning-domains{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:17px 0}.learning-domain{background:#bfe0ed0c;border-radius:14px;border:1px solid #ffffff24;padding:12px}.learning-domain b{font-size:13px}.learning-domain small{display:block;color:#c6dfdf}.learning-bar{background:#182e42;height:13px;margin:11px 0;border-radius:15px;overflow:hidden}.learning-bar span{background:linear-gradient(90deg,#91c9e7,#a8f2be);display:block;height:100%;border-radius:15px}
+.battle-questions .puzzle-heading{font-size:clamp(19px,2.2vw,25px)!important;line-height:1.38!important;font-weight:900!important;padding:8px 4px;color:#233754}
+.battle-questions .puzzle-choice{font-size:clamp(18px,1.8vw,24px)!important}
+@media(max-width:600px){.learning-metrics{grid-template-columns:repeat(2,1fr)}.learning-domains{grid-template-columns:1fr}.learning-visual{font-size:22px;line-height:1.5}.grade-select{font-size:16px}.battle-questions .puzzle-heading{font-size:21px!important}.battle-questions .puzzle-choice{font-size:19px!important}}
+
+/* Learning Levels v3: clear, save-stable 1–1000 metric and 3 domain sublevels. */
+.learning-rating-feature{background:linear-gradient(120deg,#234871,#245d59);border:1px solid #b4f0d3a6;border-radius:18px;padding:17px 19px;margin:15px 0;color:#fff}
+.learning-rating-feature small{display:block;font-weight:900;letter-spacing:.12em;color:#d8ffe8;font-size:11px}
+.learning-rating-feature strong{display:block;font-size:clamp(33px,5vw,48px);line-height:1.25;color:#ffdfa2;font-variant-numeric:tabular-nums}
+.learning-rating-feature em{font-style:normal;font-size:17px;color:#c7e7e3}
+.learning-rating-feature span{display:block;font-size:12px;color:#ebf8f3}
+.rating-track{height:8px;border-radius:12px;background:#112437;margin-top:11px;overflow:hidden}
+.rating-track div{height:100%;border-radius:12px;background:linear-gradient(90deg,#7fead4,#ffdf87)}
+.domain-rating{font-size:13px;color:#ffe6a9;font-weight:900;margin:7px 0}
+/* Picture puzzles must have dark ink against the cream question card. */
+.battle-questions .learning-visual,.battle-questions .learning-visual small,.battle-questions .learning-visual span{color:#263d56!important;text-shadow:none!important}
+.battle-questions .two-count{color:#243c51}
+/* Mobile battle focus: the arena stays visible during every question and animation. */
+@media(max-width:899px){
+ body.battle-mode{height:100dvh;min-height:0;overflow:hidden!important;overscroll-behavior:none}
+ body.battle-mode .shell{height:100dvh;max-height:100dvh;display:flex;flex-direction:column;overflow:hidden!important;padding:env(safe-area-inset-top,0px) max(7px,env(safe-area-inset-right,0px)) env(safe-area-inset-bottom,0px) max(7px,env(safe-area-inset-left,0px))!important}
+ body.battle-mode .top,body.battle-mode .sectionnav,body.battle-mode .footnote{display:none!important}
+ body.battle-mode .toolbar-wrap{display:none!important}
+ body.battle-mode .layout-battle{display:flex!important;flex:1;min-height:0;overflow:hidden;gap:0}
+ body.battle-mode .battle-panel{min-height:0;min-width:0;height:100%;width:100%;display:flex;flex-direction:column;padding:6px!important;border-radius:12px;overflow:hidden}
+ body.battle-mode .battle-header{flex:0 0 auto;min-height:23px;margin:0 0 3px;gap:3px;padding:0 3px}
+ body.battle-mode .battle-header .tag{font-size:9px;padding:2px 6px;margin:0;letter-spacing:0}
+ body.battle-mode .battle-header h2{display:none}
+ body.battle-mode .battle-microstats{font-size:10px;white-space:nowrap;color:#ffe3ac}
+ body.battle-mode .battle-split{display:flex!important;flex-direction:column;flex:1 1 0;min-height:0;gap:4px;overflow:hidden}
+ body.battle-mode .battle-stage{display:flex;flex-direction:column;flex:none;min-height:0;overflow:visible}
+ body.battle-mode .battle-stage .arena-scene{height:clamp(118px,22dvh,183px)!important;min-height:0;margin:0!important;border-radius:11px}
+ body.battle-mode .arena-team-label{top:3px;font-size:9px;padding:2px 5px}
+ body.battle-mode .arena-damage{font-size:clamp(15px,4vw,21px)!important;white-space:nowrap;right:12%;top:23%;z-index:10}
+ body.battle-mode .battle-health-teams{margin:3px 0 2px;gap:5px;align-items:stretch}
+ body.battle-mode .team-health{padding:4px!important;border-radius:9px}
+ body.battle-mode .team-health-title{font-size:9px!important;margin:0 0 2px!important}
+ body.battle-mode .health-cards{gap:2px}
+ body.battle-mode .health-cards .hp-card{padding:2px 4px!important;border-radius:4px}
+ body.battle-mode .health-cards .healthtxt{display:flex;flex-direction:row!important;justify-content:space-between;align-items:center;gap:1px;margin:0 0 1px!important;line-height:1.15;flex-wrap:nowrap}
+ body.battle-mode .health-cards .healthtxt span:first-child{font-size:9px!important;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+ body.battle-mode .health-cards .healthtxt span:last-child{font-size:0!important;display:none} /* Health percentages remain visually available via bars; full values in ARIA */
+ body.battle-mode .health-cards .progresswrap{height:5px!important;border:0}
+ body.battle-mode .battle-feedback{font-size:10px!important;line-height:1.18;padding:3px 6px;margin:2px 0 1px;max-height:28px;overflow:hidden}
+ body.battle-mode .battle-questions{display:flex;flex-direction:column;flex:1 1 0;min-height:0;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;padding:3px 3px 7px!important;order:2}
+ body.battle-mode .turn-strip{flex:none;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;padding:3px;margin:0 0 3px;gap:2px;border-radius:7px}
+ body.battle-mode .turn-strip::-webkit-scrollbar{display:none}
+ body.battle-mode .turn-pill{font-size:9px;padding:3px 5px;border-radius:5px}
+ body.battle-mode .turn-arrow{font-size:8px}
+ body.battle-mode .turn-heading{flex:none;font-size:12px!important;margin:0 0 3px!important;line-height:1.15}
+ body.battle-mode .puzzle-card{flex:0 0 auto;min-height:0;padding:8px 9px!important;border-radius:12px!important;box-shadow:none!important;margin:0 0 4px!important}
+ body.battle-mode .puzzle-kicker{font-size:9px;margin-bottom:2px}
+ body.battle-mode .puzzle-heading{font-size:clamp(16px,4.5vw,20px)!important;line-height:1.19!important;margin:0 0 7px!important;padding:0!important}
+ body.battle-mode .puzzle-choices{grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;margin:5px 0 2px}
+ body.battle-mode .puzzle-choice{min-height:clamp(40px,7.2dvh,56px)!important;padding:5px 7px!important;border-width:1px!important;border-radius:9px!important;font-size:clamp(14px,3.8vw,18px)!important;box-shadow:0 2px 0 #abb4b9!important}
+ body.battle-mode .puzzle-choice .letter{min-width:20px;min-height:20px;font-size:11px}
+ body.battle-mode .puzzle-pattern{min-height:0;margin:3px auto!important;gap:3px}
+ body.battle-mode .puzzle-tile{width:42px;height:40px;box-shadow:none}
+ body.battle-mode .puzzle-grid{margin:2px auto 6px!important;gap:3px}
+ body.battle-mode .puzzle-grid .puzzle-tile{width:42px;height:40px}
+ body.battle-mode .symbol-pic{height:35px;width:35px}
+ body.battle-mode .learning-visual{font-size:clamp(15px,3.6vw,20px);margin:2px;line-height:1.25;padding:3px!important;gap:4px}
+ body.battle-mode .learning-visual small,body.battle-mode .learning-visual span{font-size:13px}
+ body.battle-mode .fraction-tiles{margin:4px 0}
+ body.battle-mode .fraction-tile{width:22px;height:32px}
+ body.battle-mode .puzzle-note{display:none}
+ body.battle-mode .puzzle-hint{font-size:11px;margin:3px 0 1px;padding:3px 6px}
+ body.battle-mode .enemy-wait{min-height:65px;margin:5px 0;padding:7px}
+}
+@media(max-width:899px) and (max-height:700px){
+ body.battle-mode .battle-stage .arena-scene{height:clamp(102px,17dvh,125px)!important}
+ body.battle-mode .battle-stage .player-actor{height:104px;bottom:18px}
+ body.battle-mode .battle-stage .player-actor .avatar-svg,body.battle-mode .battle-stage .player-actor .beast-svg{height:100px}
+ body.battle-mode .battle-stage .arena-pets{bottom:18px}
+ body.battle-mode .battle-stage .arena-pets .sidekick{height:67px}
+ body.battle-mode .battle-stage .arena-pets .sidekick .pet-art,body.battle-mode .battle-stage .sidekick .pet-art .creature-svg{height:55px}
+ body.battle-mode .battle-stage .enemy-lineup{bottom:18px;height:104px}
+ body.battle-mode .battle-stage .enemy-unit{height:98px}
+ body.battle-mode .battle-stage .enemy-unit .creature-svg{height:78px}
+ body.battle-mode .battle-questions .puzzle-choice{min-height:38px!important}
+}
+
 </style>
 </head>
 <body><div id="app" class="shell"><section style="max-width:600px;margin:8vh auto;padding:24px;background:#263653;border:2px solid #9bdfca;border-radius:22px;color:#fff8e7;font-family:system-ui"><h1 style="margin:0 0 12px;font-size:28px">✨ The Infinite Adventures</h1><p>Loading your adventure…</p><p style="font-size:14px;opacity:.85">If the game stays on this message, reload the page. Your saved levels and pets will not be reset.</p><button onclick="location.reload()" style="padding:12px 24px;border:0;border-radius:12px;font-weight:bold;background:#ffe3aa;color:#27314b">↻ Reload game</button></section></div><div id="toast" role="status" aria-live="polite"></div>
@@ -413,7 +511,7 @@ function zoneInfo(index=S.zone){const z=ZONES[index]||ZONES[0];if(index!==ZONES.
 const themes=[['Verdant Basin','🌿',['#b3ddb8','#6fab91','#4a796b'],['🌳','🍃','🌻']],['Sunset Outpost','🏕️',['#efccaa','#c88e79','#97646d'],['🌵','⛺','🪨']],['Rainy Port','🌧️',['#b3d6e3','#81acbc','#5a779c'],['🌧️','⛵','⚓']],['Silver Valley','🗻',['#d8e3eb','#9eaec3','#5d819b'],['🌲','🏔️','❄️']]];
 const chap=Math.max(1,1+Math.floor(Math.max(0,S.bossWins-50)/5)),t=themes[(chap-1)%themes.length];return {...z,name:`${t[0]} · Chapter ${chap}`,emoji:t[1],colors:t[2],props:t[3]};}
 const STYLES=['Spiky','Short','Curly','Long'];const SKINS=['#f4d0b4','#d7a079','#a46c4d','#69402f'];const HAIRS=['#392339','#67402d','#e4b24c','#273866','#f5eff1'];const ROBES=['#7354d3','#259ab4','#db665e','#55a978','#dfad4e'];
-const INITIAL=()=>({walkPos:{},lastPuzzleKind:'',reasoning:{tier:1,streak:0,misses:0,solved:0},retryOpponent:null,started:false,tutorialDone:false,screen:'creator',avatar:{name:'',skin:0,hair:0,style:0,robe:0},level:1,maxHp:250,hp:250,attackBonus:0,armor:0,completed:0,bossWins:0,zone:0,pets:[],equipped:[],loot:[],battle:null,question:null,tries:0,totalAnswered:0,endlessWins:0,notice:'',lastRecruit:null,soundOn:false,realism:30,musicOn:true,musicVolume:70,musicStyle:'orchestra'});
+const INITIAL=()=>({walkPos:{},lastPuzzleKind:'',reasoning:{tier:1,streak:0,misses:0,solved:0},retryOpponent:null,started:false,tutorialDone:false,screen:'creator',avatar:{name:'',skin:0,hair:0,style:0,robe:0},level:1,maxHp:250,hp:250,attackBonus:0,armor:0,completed:0,bossWins:0,zone:0,pets:[],equipped:[],loot:[],battle:null,question:null,tries:0,totalAnswered:0,endlessWins:0,notice:'',lastRecruit:null,soundOn:false,realism:30,musicOn:true,musicVolume:70,musicStyle:'orchestra',learning:null,pendingGrade:null});
 let S=load();let previewName=S.avatar.name;let animating=false;
 function load(){try{const a=JSON.parse(localStorage.getItem(SAVE_KEY));if(a&&typeof a==='object'&&a.avatar&&Number.isFinite(a.level))return {...INITIAL(),...a,musicOn:a.musicOn!==false,musicVolume:Number.isFinite(Number(a.musicVolume))?Math.max(0,Math.min(100,Number(a.musicVolume))):65,realism:Number.isFinite(Number(a.realism))?Math.max(0,Math.min(100,Number(a.realism))):30,walkPos:a.walkPos||{},avatar:{...INITIAL().avatar,...a.avatar}}}catch(e){}return INITIAL()}
 function save(){try{localStorage.setItem(SAVE_KEY,JSON.stringify(S))}catch(e){}}
@@ -424,12 +522,12 @@ function recordPuzzle(mistakes){const a=reasoning();a.solved++;if(mistakes===0){
 const rand=(a,b)=>Math.floor(Math.random()*(b-a+1))+a;
 function toast(t){const o=document.getElementById('toast');o.textContent=t;clearTimeout(toast.t);toast.t=setTimeout(()=>o.textContent='',2600)}
 function avatarSVG({skin=0,hair=0,style=0,robe=0}={},mini=false){const face=SKINS[skin]||SKINS[0],hc=HAIRS[hair]||HAIRS[0],rc=ROBES[robe]||ROBES[0];const hairShapes=[`<path d="M71 91 Q65 52 87 52 L101 42 L107 55 L125 39 L130 56 Q160 45 159 91 Q145 73 131 76 Q104 61 78 87Z" fill="${hc}"/>`,`<path d="M71 90 Q63 44 116 47 Q165 46 160 91 L149 81 Q109 65 78 86Z" fill="${hc}"/>`,`<g fill="${hc}"><circle cx="82" cy="68" r="17"/><circle cx="100" cy="54" r="18"/><circle cx="124" cy="53" r="20"/><circle cx="143" cy="63" r="17"/><circle cx="152" cy="83" r="13"/><circle cx="74" cy="86" r="12"/></g>`,`<path d="M71 79 Q69 44 112 47 Q156 41 162 79 L164 164 L149 157 L144 85 Q102 62 78 87 L77 162 L61 167Z" fill="${hc}"/>`];return `<svg aria-label="Your wizard" role="img" class="${mini?'avatar-svg avatar-mini':'avatar-svg'}" viewBox="0 0 230 265"><ellipse cx="115" cy="246" rx="66" ry="12" fill="#12122a" opacity=".35"/><path d="M76 167 Q111 147 154 164 L178 237 Q116 254 50 235Z" fill="${rc}" stroke="#181e49" stroke-width="5"/><path d="M107 162 L116 236 L125 162" fill="#eac6ff" opacity=".8"/><path d="M78 179 L44 209 Q35 217 45 225 Q57 228 64 217 L96 195Z" fill="${rc}"/><path d="M153 180 L185 211 Q194 216 188 227 Q177 234 166 218 L136 197Z" fill="${rc}"/><circle cx="51" cy="220" r="10" fill="${face}"/><circle cx="181" cy="221" r="10" fill="${face}"/><path d="M63 237 L64 249 L88 249 L95 235 M135 237 L143 249 L165 249 L169 234" fill="#41336a" stroke="#292247" stroke-width="5"/><circle cx="115" cy="108" r="47" fill="${face}" stroke="#272044" stroke-width="4"/><path d="M84 110 Q92 102 101 111 M129 111 Q138 102 146 111" stroke="#303146" stroke-width="5" stroke-linecap="round" fill="none"/><circle cx="94" cy="111" r="3" fill="#fff"/><circle cx="138" cy="111" r="3" fill="#fff"/><path d="M108 130 Q115 137 123 130" stroke="#985a6a" stroke-width="3" fill="none" stroke-linecap="round"/>${hairShapes[style]||hairShapes[0]}<path d="M186 215 L213 101" stroke="#7f5b3b" stroke-width="7" stroke-linecap="round"/><circle cx="216" cy="93" r="13" fill="#ffe480"/><path d="M216 66 L221 80 L235 86 L222 91 L217 106 L212 92 L199 86 L210 80Z" fill="#fff7c1"/><path d="M72 182 Q110 197 155 182" fill="none" stroke="#fff" opacity=".2" stroke-width="4"/>${Number(S.realism||0)>0?`<g opacity="${(Number(S.realism||0)/100).toFixed(2)}" stroke="#e4d5fa" fill="none" stroke-width="2.2"><path d="M94 175 Q85 207 91 240 M130 180 Q136 207 135 239 M73 216 Q87 229 104 222"/><path d="M80 89 Q105 72 136 85" stroke="#fff" opacity=".55"/></g>`:''}</svg>`}
-function header(){return `<header class="top"><div class="brand"><div class="logo">✨</div><div><div class="eyebrow">Explore • Discover • Think</div><h1>The Infinite Adventures <span class="versionlabel">🎼 Fantasy Music</span></h1></div></div><div class="stats"><div class="chip">⚔️ Battles <b>${S.completed}</b></div><div class="chip">⭐ Level <b>${S.level}</b></div><div class="chip">👑 Bosses <b>${S.bossWins}</b></div></div></header>`}
-function toolbar(){if(!S.started)return '';return `<div class="sectionnav"><button class="btn ghost smallbtn" data-do="home">🏠 Adventure</button><button class="btn ghost smallbtn" data-do="map">🗺️ World Map</button><button class="btn ghost smallbtn" data-do="pets">🐾 Pet Helpers (${S.equipped.length}/2)</button><button class="btn ghost smallbtn" data-do="music">${S.musicOn?'🎶 Music On':'🔇 Music Off'}</button><button class="btn teal smallbtn" data-do="export">💾 Backup Save</button><button class="btn purple smallbtn" data-do="look">🎨 Realisticness Bar</button><button class="btn ghost smallbtn" data-do="settings">⚙️ Settings</button></div>`}
-function sidebar(){const pets=S.equipped.map(i=>S.pets.find(p=>p.id===i)).filter(Boolean);return `<aside class="rightcol"><section class="panel"><div class="eyebrow">YOUR WIZARD</div><div class="row">${avatarSVG(S.avatar,true)}<div><h3>${escapeHtml(S.avatar.name||'Adventurer')}</h3><div class="tiny">Level ${S.level} • Spellcaster</div><div class="tiny">🗡️ Power ${power()}<br>🛡️ Armor ${S.armor}<br>🧠 Puzzles: ${skillLabels[reasoning().tier]}</div></div></div><div class="healthtxt"><span>❤️ Health</span><span class="number">${S.hp.toLocaleString()}/${S.maxHp.toLocaleString()}</span></div><div class="progresswrap"><div class="progressfill" style="width:${Math.max(0,100*S.hp/S.maxHp)}%"></div></div><div style="height:17px"></div><div class="eyebrow">EQUIPPED PET HELPERS</div><div class="helperpills">${pets.length?pets.map(p=>`<span class="helperpill">${p.emoji} ${escapeHtml(p.name)}</span>`).join(''):'<span class="tiny">Defeat monsters to collect pets!</span>'}</div></section><section class="panel"><div class="eyebrow">WORLD PROGRESS</div><h3>${zoneInfo().emoji} ${zoneInfo().name}</h3><p class="small">Every 3rd battle is a boss! Every 5 boss wins unlocks another world.</p><div class="healthtxt"><span>Next new world</span><span>${Math.min(5,S.bossWins%5)}/5 bosses</span></div><div class="progresswrap"><div class="progressfill" style="width:${S.zone===ZONES.length-1?100:(S.bossWins%5)*20}%;background:linear-gradient(90deg,#77efb1,#87dffa)"></div></div>${S.zone===3?'<p class="small">♾️ Endless mode unlocked!</p>':''}</section></aside>`}
+function header(){return `<header class="top"><div class="brand"><div class="logo">✨</div><div><div class="eyebrow">Explore • Discover • Think</div><h1>The Infinite Adventures <span class="versionlabel">📚 Learning Worlds</span></h1></div></div><div class="stats"><div class="chip">⚔️ Battles <b>${S.completed}</b></div><div class="chip">⭐ Level <b>${S.level}</b></div><div class="chip">👑 Bosses <b>${S.bossWins}</b></div>${S.learning?.gradeSet?`<div class="chip learning-chip">🧠 Learning <b>${learning().rating}</b></div>`:''}</div></header>`}
+function toolbar(){if(!S.started)return '';return `<div class="sectionnav"><button class="btn ghost smallbtn" data-do="home">🏠 Adventure</button><button class="btn ghost smallbtn" data-do="map">🗺️ World Map</button><button class="btn ghost smallbtn" data-do="pets">🐾 Pet Helpers (${S.equipped.length}/2)</button><button class="btn teal smallbtn" data-do="learning">📚 Learning Journey</button><button class="btn ghost smallbtn" data-do="music">${S.musicOn?'🎶 Music On':'🔇 Music Off'}</button><button class="btn teal smallbtn" data-do="export">💾 Backup Save</button><button class="btn purple smallbtn" data-do="look">🎨 Realisticness Bar</button><button class="btn ghost smallbtn" data-do="settings">⚙️ Settings</button></div>`}
+function sidebar(){const pets=S.equipped.map(i=>S.pets.find(p=>p.id===i)).filter(Boolean);return `<aside class="rightcol"><section class="panel"><div class="eyebrow">YOUR WIZARD</div><div class="row">${avatarSVG(S.avatar,true)}<div><h3>${escapeHtml(S.avatar.name||'Adventurer')}</h3><div class="tiny">Level ${S.level} • Spellcaster</div><div class="tiny">🗡️ Power ${power()}<br>🛡️ Armor ${S.armor}<br>🧠 ${S.learning?.gradeSet?learningBadge():'Set your grade to begin'}</div></div></div><div class="healthtxt"><span>❤️ Health</span><span class="number">${S.hp.toLocaleString()}/${S.maxHp.toLocaleString()}</span></div><div class="progresswrap"><div class="progressfill" style="width:${Math.max(0,100*S.hp/S.maxHp)}%"></div></div><div style="height:17px"></div><div class="eyebrow">EQUIPPED PET HELPERS</div><div class="helperpills">${pets.length?pets.map(p=>`<span class="helperpill">${p.emoji} ${escapeHtml(p.name)}</span>`).join(''):'<span class="tiny">Defeat monsters to collect pets!</span>'}</div></section><section class="panel"><div class="eyebrow">WORLD PROGRESS</div><h3>${zoneInfo().emoji} ${zoneInfo().name}</h3><p class="small">Every 3rd battle is a boss! Every 5 boss wins unlocks another world.</p><div class="healthtxt"><span>Next new world</span><span>${Math.min(5,S.bossWins%5)}/5 bosses</span></div><div class="progresswrap"><div class="progressfill" style="width:${S.zone===ZONES.length-1?100:(S.bossWins%5)*20}%;background:linear-gradient(90deg,#77efb1,#87dffa)"></div></div>${S.zone===3?'<p class="small">♾️ Endless mode unlocked!</p>':''}</section></aside>`}
 function swatches(key,colors){return `<div class="swatches">${colors.map((c,i)=>`<button aria-label="${key} color ${i+1}" title="${key} color ${i+1}" class="swatch ${S.avatar[key]===i?'selected':''}" data-do="choose" data-key="${key}" data-value="${i}" style="background:${c}"></button>`).join('')}</div>`}
-function creator(){return `<div class="panel wide"><span class="tag">🪄 STEP 1 · DESIGN YOUR HERO</span><div class="herohead"><h2>Create your magical character!</h2><p>Pick your look, name your wizard, and begin your adventure.</p></div><div class="creatorgrid"><div><div class="avatararea"><span class="star">✦</span><span class="star">✦</span><span class="star">✦</span>${avatarSVG(S.avatar)}</div><label class="formlabel" for="hero-name">YOUR WIZARD NAME</label><input id="hero-name" class="nameinput" required maxlength="16" value="${escapeHtml(S.avatar.name)}" placeholder="Name your wizard"/></div><div><label class="formlabel">CHOOSE SKIN COLOR</label>${swatches('skin',SKINS)}<label class="formlabel">HAIR STYLE</label><div class="row">${STYLES.map((v,i)=>`<button class="stylepick ${i===S.avatar.style?'selected':''}" data-do="choose" data-key="style" data-value="${i}">${v}</button>`).join('')}</div><label class="formlabel">HAIR COLOR</label>${swatches('hair',HAIRS)}<label class="formlabel">WIZARD ROBE COLOR</label>${swatches('robe',ROBES)}<div class="buttonrow"><button class="btn" data-do="start">✨ Start Adventure!</button></div></div></div><div class="safe-box" style="margin-top:22px"><h3>💾 Already have an adventure?</h3><p>Keep your levels, pet helpers and equipment! Restore your original save instead of starting again.</p><div class="row"><label for="import-file" class="btn teal smallbtn" style="cursor:pointer;display:inline-flex;align-items:center">⬆️ Restore Save File</label><input id="import-file" class="filepick" type="file" accept=".json,application/json"/></div><details style="margin-top:12px"><summary style="cursor:pointer;font-weight:800">Or paste your old saved game text</summary><textarea class="save-paste" id="save-paste" placeholder="Paste save JSON from Dad's backup"></textarea><button class="btn teal smallbtn" data-do="paste-save">Restore My Adventure</button></details></div></div>`}
-function tutorial(){return `<section class="panel"><span class="tag">🕯️ THE BEGINNING</span><h2>Welcome to the Magic Cave!</h2><p class="story">A tiny lantern flickers. A friendly wizard appears in front of you...</p><div class="avatararea" style="background:radial-gradient(circle,#6453a880,transparent 60%),linear-gradient(150deg,#2b293d,#151a34)"><span class="star">✧</span><span class="star">✦</span><span style="font-size:100px">🧙‍♂️</span></div><div class="banner"><strong>Grandmaster Glimmer:</strong> “Hello, ${escapeHtml(S.avatar.name)}! To cast a spell, solve a math problem. You can try as many times as you want, and each mistake makes the next challenge 1% easier. Let's practice!”</div><div class="buttonrow"><button class="btn" data-do="practice">🪄 Try a practice battle</button></div></section>`}
+function creator(){return `<div class="panel wide"><span class="tag">🪄 STEP 1 · DESIGN YOUR HERO</span><div class="herohead"><h2>Create your magical character!</h2><p>Pick your look, name your wizard, and begin your adventure.</p></div><div class="creatorgrid"><div><div class="avatararea"><span class="star">✦</span><span class="star">✦</span><span class="star">✦</span>${avatarSVG(S.avatar)}</div><label class="formlabel" for="hero-name">YOUR WIZARD NAME</label><input id="hero-name" class="nameinput" required maxlength="16" value="${escapeHtml(S.avatar.name)}" placeholder="Name your wizard"/></div><div><label class="formlabel" for="creator-grade">YOUR GRADE AT SCHOOL</label><select id="creator-grade" class="nameinput grade-select" aria-label="Choose your school grade">${learningGradeOptions(S.pendingGrade,S.pendingGrade===null||S.pendingGrade===undefined)}</select><p class="small">This is just where questions begin. You can advance far beyond this grade!</p><label class="formlabel">CHOOSE SKIN COLOR</label>${swatches('skin',SKINS)}<label class="formlabel">HAIR STYLE</label><div class="row">${STYLES.map((v,i)=>`<button class="stylepick ${i===S.avatar.style?'selected':''}" data-do="choose" data-key="style" data-value="${i}">${v}</button>`).join('')}</div><label class="formlabel">HAIR COLOR</label>${swatches('hair',HAIRS)}<label class="formlabel">WIZARD ROBE COLOR</label>${swatches('robe',ROBES)}<div class="buttonrow"><button class="btn" data-do="start">✨ Start Adventure!</button></div></div></div><div class="safe-box" style="margin-top:22px"><h3>💾 Already have an adventure?</h3><p>Keep your levels, pet helpers and equipment! Restore your original save instead of starting again.</p><div class="row"><label for="import-file" class="btn teal smallbtn" style="cursor:pointer;display:inline-flex;align-items:center">⬆️ Restore Save File</label><input id="import-file" class="filepick" type="file" accept=".json,application/json"/></div><details style="margin-top:12px"><summary style="cursor:pointer;font-weight:800">Or paste your old saved game text</summary><textarea class="save-paste" id="save-paste" placeholder="Paste save JSON from Dad's backup"></textarea><button class="btn teal smallbtn" data-do="paste-save">Restore My Adventure</button></details></div></div>`}
+function tutorial(){return `<section class="panel"><span class="tag">🕯️ THE BEGINNING</span><h2>Welcome to the Magic Cave!</h2><p class="story">A tiny lantern flickers. A friendly wizard appears in front of you...</p><div class="avatararea" style="background:radial-gradient(circle,#6453a880,transparent 60%),linear-gradient(150deg,#2b293d,#151a34)"><span class="star">✧</span><span class="star">✦</span><span style="font-size:100px">🧙‍♂️</span></div><div class="banner"><strong>Grandmaster Glimmer:</strong> “Hello, ${escapeHtml(S.avatar.name)}! To cast a spell, solve a math problem. You can try as many times as you want, and mistakes help me find what to teach you next. Let's practice!”</div><div class="buttonrow"><button class="btn" data-do="practice">🪄 Try a practice battle</button></div></section>`}
 function power(){return Math.floor(125+S.level*73+S.attackBonus)}
 function unlocked(){return Math.min(ZONES.length-1,Math.floor(S.bossWins/5))}
 function tryFight(isPractice=false,pick=null){
@@ -446,6 +544,7 @@ function tryFight(isPractice=false,pick=null){
  const enemies=[{id:'enemy-0',name,emoji,hp:boss?hp:eachHp,maxHp:boss?hp:eachHp,attack:boss?attack:Math.round(attack*.55)+S.armor,isBoss:boss}];
  if(!boss)enemies.push({id:'enemy-1',name:second[0],emoji:second[1],hp:eachHp,maxHp:eachHp,attack:Math.round(attack*.55)+S.armor,isBoss:false});
  S.battle={name,emoji,isBoss:boss,isPractice,hp:enemies.reduce((sum,e)=>sum+e.hp,0),maxHp:hp,attack,enemies,petHealth:Object.fromEntries(team.map(p=>[p.id,capturedHealth(p)])),phase:'heroes',currentEnemy:null,turn:0,nextIndex:0,hits:[],activePet:null,fallenPets:[],petHp:0,petMaxHp:0,feed:`${boss?'The boss':'Two monsters'} ${boss?'challenges':'challenge'} your team! Your hero goes first, then each pet. Every enemy casts its OWN magic after your team.`};
+ const l=learning();l.battleSolved=0;l.battleMisses=0;
  S.tries=0;S.question=makeQuestion();S.screen='battle';save();render();
 }
 
@@ -453,7 +552,203 @@ function tryFight(isPractice=false,pick=null){
 // These are original practice problems, NOT copied NGAT test questions or a score prediction.
 function pic(shape,color){return {shape,color};}
 function options(values,correct){const x=values.map((v,i)=>({v,correct:i===correct}));for(let i=x.length-1;i>0;i--){const j=rand(0,i);[x[i],x[j]]=[x[j],x[i]]}return {choices:x.map(a=>a.v),answer:x.findIndex(a=>a.correct)}}
+// ORIGINAL EDUCATIONAL ENGINE • Questions are independently generated, not copies of licensed assessments.
+// Gameplay level, pet strength and inventory do not control academic difficulty.
+const GRADE_NAMES=['Kindergarten','Grade 1','Grade 2','Grade 3','Grade 4','Grade 5','Grade 6'];
+const DOMAINS={number:'Numbers & Math',visual:'Patterns & Shapes',verbal:'Words & Logic'};
+// Stable, versioned, 1–1000 academic level. Combat level is always independent.
+// Old difficulty 'challenge' (0.5 to 40) migrates without losing placement.
+const SCORE_MIN=1,SCORE_MAX=1000;
+const ratingFromChallenge=n=>Math.round(clamp(1+(Number(n)-.5)*999/39.5,SCORE_MIN,SCORE_MAX));
+const challengeFromRating=n=>.5+(clamp(Number(n)||1,SCORE_MIN,SCORE_MAX)-1)*39.5/999;
+function setLearningRating(l,r){l.rating=Math.round(clamp(Number(r)||SCORE_MIN,SCORE_MIN,SCORE_MAX));l.challenge=challengeFromRating(l.rating);return l.rating;}
+function domainLearningLevel(domain){return Math.round(learning().domainRatings?.[domain]||learning().rating);}
+
+function freshLearning(grade=1){grade=Math.max(0,Math.min(6,Number(grade)||0));
+ const rating=ratingFromChallenge(grade*4+2);
+ return {version:3,grade,gradeSet:true,rating,challenge:challengeFromRating(rating),domainRatings:{number:rating,visual:rating,verbal:rating},solved:0,firstTry:0,battles:0,battleSolved:0,battleMisses:0,skills:{},review:[],lastSkills:[],domainCounts:{number:0,visual:0,verbal:0},history:[],ratingHistory:[]};}
+
+function learning(){
+ if(!S.learning||typeof S.learning!=='object'){S.learning=freshLearning(1);S.learning.gradeSet=false;}
+ let l=S.learning;
+ l.skills=l.skills&&typeof l.skills==='object'&&!Array.isArray(l.skills)?l.skills:{};
+ l.review=Array.isArray(l.review)?l.review.slice(-90):[];
+ l.history=Array.isArray(l.history)?l.history.slice(-36):[];
+ l.lastSkills=Array.isArray(l.lastSkills)?l.lastSkills.slice(-6):[];
+ l.domainCounts=l.domainCounts||{number:0,visual:0,verbal:0};
+ l.grade=Math.max(0,Math.min(6,Number(l.grade)||0));
+ // IMPORTANT: When restoring pre-v3 saves, preserve previous academic placement.
+ const prior=Number(l.challenge);
+ if(!Number.isFinite(Number(l.rating))||Number(l.rating)<1||Number(l.rating)>1000){
+  l.rating=ratingFromChallenge(Number.isFinite(prior)?prior:l.grade*4+2);
+ }
+ setLearningRating(l,l.rating);
+ l.version=Math.max(3,Number(l.version)||0);
+ if(!l.domainRatings||typeof l.domainRatings!=='object')l.domainRatings={};
+ for(const d of Object.keys(DOMAINS)){
+  const v=Number(l.domainRatings[d]);l.domainRatings[d]=Math.round(Number.isFinite(v)&&v>=1&&v<=1000?v:l.rating);
+ }
+ l.ratingHistory=Array.isArray(l.ratingHistory)?l.ratingHistory.slice(-150):[];
+ l.solved=Number(l.solved)||0;l.firstTry=Number(l.firstTry)||0;l.battles=Number(l.battles)||0;
+ return l;
+}
+function learnedGrade(){const l=learning(),v=Math.max(0,Math.floor((l.challenge-1)/4));return v===0?'Early foundations':v<=6?'Exploring Grade '+v:'Beyond Grade 6';}
+function learningBadge(){const l=learning();return `🧠 Learning ${l.rating}/1000`;}
+
+const choose=(a)=>a[rand(0,a.length-1)];
+const clamp=(n,a,b)=>Math.min(b,Math.max(a,n));
+function noptions(answer,step=1){let vals=[answer],offsets=[-1,1,-2,2,-3,3,-4,4,-5,5,-10,10,-step,step,-2*step,2*step];for(let n of offsets){const v=answer+n;if(v>=0&&!vals.includes(v))vals.push(v);if(vals.length===4)break;}while(vals.length<4)vals.push(answer+vals.length+3);return options(vals,0);}
+function four(correct,wrongs){const out=[String(correct)];for(const v of wrongs.map(String))if(v!==out[0]&&!out.includes(v))out.push(v);for(let k=0;out.length<4&&k<10;k++)out.push('Other '+(k+1));return options(out.slice(0,4),0);}
+function item(id,domain,stage,generate){return {id,domain,stage,generate};}
+function numeric(id,stage,build){return item(id,'number',stage,(s)=>{const v=build(s),o=Number.isInteger(v.answer)&&v.answer>=0?noptions(v.answer,v.step||1):four(v.answer,v.distractors||[]);return {...v,...o};});}
+function textItem(id,domain,stage,build){return item(id,domain,stage,(s)=>{const v=build(s);return {...v,...four(v.answer,v.distractors)};});}
+function pictureItem(id,stage,build){return item(id,'visual',stage,build);}
+const BANK=[
+ numeric('counting',0,s=>{const n=rand(2,Math.min(18,5+s*2));return {prompt:'How many stars are there?',media:`<div class="learning-visual">${'⭐'.repeat(n)}</div>`,answer:n,hint1:'Point at each star as you count.',hint2:`Count one at a time to ${n}.`}}),
+ numeric('more-less',0,s=>{const a=rand(2,9+s),b=a+rand(1,Math.min(8,s+2));return {prompt:`How many MORE is ${b} than ${a}?`,answer:b-a,hint1:'Count up from the smaller number.',hint2:`${b} minus ${a} is ${b-a}.`}}),
+ numeric('add-pictures',0,s=>{const a=rand(1,4+s),b=rand(1,4+s),e=choose(['🍎','⭐','🪄','🐚']);return {prompt:'Count both groups. How many altogether?',media:`<div class="learning-visual">${e.repeat(a)} <span>+</span> ${e.repeat(b)}</div>`,answer:a+b,hint1:'Count every picture once.',hint2:`${a}+${b}=${a+b}.`}}),
+ numeric('basic-add',1,s=>{const a=rand(1,5+s*2),b=rand(1,Math.min(20,5+s*2));return {prompt:`${a} + ${b} = ?`,answer:a+b,hint1:'Start with the bigger number and count on.',hint2:`${a}+${b}=${a+b}.`}}),
+ numeric('basic-subtract',1,s=>{const a=rand(3,Math.min(65,8+s*3)),b=rand(1,a-1);return {prompt:`${a} − ${b} = ?`,answer:a-b,hint1:'Count back from the first number.',hint2:`${a} minus ${b} is ${a-b}.`}}),
+ numeric('number-neighbors',0,s=>{const a=rand(2,15+s*3);return {prompt:`What number comes right BEFORE ${a}?`,answer:a-1,hint1:'Count backward once.',hint2:`${a-1} is right before ${a}.`}}),
+ numeric('skip-counting',2,s=>{const step=choose(s>=12?[2,3,4,5,6,10]:[2,5,10]),start=step*rand(1,5),answer=start+step*4;return {prompt:'What number comes next?',media:`<div class="learning-visual">${[0,1,2,3].map(i=>start+step*i).join('  →  ')}  →  ?</div>`,answer,step,hint1:'Check how much is added each time.',hint2:`This counts by ${step}s.`}}),
+ numeric('missing-addend',3,s=>{const a=rand(2,8+s),b=rand(2,7+s),sum=a+b;return {prompt:`Find the missing number: ${a} + ? = ${sum}`,answer:b,hint1:'Subtract the known part from the total.',hint2:`${sum} − ${a} = ${b}.`}}),
+ numeric('two-step-story',6,s=>{const a=rand(4,9+s),b=rand(2,7+s),c=rand(1,Math.min(9,a+b-1));return {prompt:`A wizard has ${a} gems, finds ${b} more, then spends ${c}. How many gems remain?`,answer:a+b-c,hint1:'Add the gems found. Then subtract the ones spent.',hint2:`${a}+${b}−${c}=${a+b-c}.`}}),
+ numeric('story-add',1,s=>{const a=rand(2,9+s),b=rand(2,9+s),who=choose(['Ava','Mina','Leo','Jack']),thing=choose(['shells','marbles','stickers','crystals']);return {prompt:`${who} collected ${a} ${thing} and then found ${b} more. How many altogether?`,answer:a+b,hint1:'Found more means add.',hint2:`${a}+${b}=${a+b}.`}}),
+ numeric('story-subtract',1,s=>{const a=rand(6,17+s*2),b=rand(1,a-2),thing=choose(['cookies','tickets','apples','magic stones']);return {prompt:`There were ${a} ${thing}. ${b} were used. How many remain?`,answer:a-b,hint1:'Used means take away.',hint2:`${a}−${b}=${a-b}.`}}),
+ numeric('equal-groups',5,s=>{const groups=rand(2,Math.min(8,3+Math.floor(s/3))),each=rand(2,Math.min(9,4+Math.floor(s/3)));return {prompt:`There are ${groups} baskets with ${each} apples in each basket. How many apples?`,answer:groups*each,hint1:'Add the same group repeatedly.',hint2:`${groups} groups of ${each} = ${groups*each}.`}}),
+ numeric('multiplication',7,s=>{const a=rand(2,Math.min(12,3+Math.floor(s/2))),b=rand(2,Math.min(12,3+Math.floor(s/2)));return {prompt:`${a} × ${b} = ?`,answer:a*b,hint1:'Think of equal groups.',hint2:`${a} groups of ${b} make ${a*b}.`}}),
+ numeric('division-sharing',9,s=>{const count=rand(2,Math.min(11,4+Math.floor(s/2))),each=rand(2,9);return {prompt:`Share ${count*each} stars equally between ${count} friends. How many does each get?`,answer:each,hint1:'Think: groups × each = total.',hint2:`${count*each} ÷ ${count} = ${each}.`}}),
+ numeric('place-value',4,s=>{const h=s>=12?rand(1,7):0,t=rand(1,9),ones=rand(0,9),n=h*100+t*10+ones;return {prompt:`In ${n}, how many TENS are there?`,answer:t,hint1:'Tens are the middle digit in a three-digit number.',hint2:`${n} has ${t} tens.`}}),
+ numeric('rounding',13,s=>{const n=rand(11,Math.min(980,90+s*15));return {prompt:`Round ${n} to the nearest ten.`,answer:Math.round(n/10)*10,step:10,hint1:'Look at the ones digit: 5 or more rounds up.',hint2:`${n} rounds to ${Math.round(n/10)*10}.`}}),
+ numeric('patterns-differences',8,s=>{const step=rand(2,Math.min(18,s+1)),start=rand(1,30),next=start+4*step;return {prompt:'Find the missing number in this sequence.',media:`<div class="learning-visual">${[0,1,2,3].map(i=>start+i*step).join(' · ')} · ?</div>`,answer:next,step,hint1:'Subtract neighboring numbers to find the jump.',hint2:`Increase by ${step} each time.`}}),
+ numeric('odd-even',2,s=>{const a=rand(2,40+s*3);return {prompt:`What is the smallest EVEN number greater than ${a}?`,answer:a%2===0?a+2:a+1,hint1:'Even numbers can be split into two equal groups.',hint2:`The next even number is ${a%2===0?a+2:a+1}.`}}),
+ numeric('number-compare',1,s=>{const a=rand(1,20+s*3),b=a+rand(1,15);return {prompt:`What is ${b} − ${a}?`,answer:b-a,hint1:'Find the difference.',hint2:`${b}−${a}=${b-a}.`}}),
+ numeric('time-minutes',10,s=>{const h=rand(1,9),m=choose([0,15,30,45]),add=choose([15,30,45,60]),total=h*60+m+add,end=Math.floor(total/60),endm=total%60;return {prompt:`A clock shows ${h}:${String(m).padStart(2,'0')}. After ${add} minutes, what HOUR will the clock show?`,answer:end,hint1:'Every 60 minutes makes a new hour.',hint2:`The clock will show ${end}:${String(endm).padStart(2,'0')}.`}}),
+ numeric('money-total',6,s=>{const nick=rand(1,4),dimes=rand(1,5);return {prompt:`You have ${nick} nickels (5¢ each) and ${dimes} dimes (10¢ each). How many cents?`,answer:nick*5+dimes*10,step:5,hint1:'A nickel is 5 cents; a dime is 10.',hint2:`${nick*5}+${dimes*10}=${nick*5+dimes*10} cents.`}}),
+ textItem('fractions-shares','number',10,s=>{const denom=choose([2,3,4,5,6,8]),num=rand(1,denom-1);return {prompt:`${num} of ${denom} equal pieces are shaded. What fraction is shaded?`,media:`<div class="fraction-tiles">${Array.from({length:denom},(_,i)=>`<span class="fraction-tile ${i<num?'filled':''}"></span>`).join('')}</div>`,answer:`${num}/${denom}`,distractors:[`${denom}/${num}`,`${denom-num}/${denom}`,`${num}/${denom+1}`,`${num+1}/${denom}`],hint1:'Numerator = shaded pieces. Denominator = total equal pieces.',hint2:`${num} shaded out of ${denom} total pieces is ${num}/${denom}.`}}),
+ numeric('fraction-of',16,s=>{const denom=choose([2,3,4,5]),k=rand(2,10),whole=denom*k;return {prompt:`What is 1/${denom} of ${whole}?`,answer:k,hint1:'Divide the whole into equal parts.',hint2:`${whole} ÷ ${denom} = ${k}.`}}),
+ numeric('perimeter',12,s=>{const w=rand(2,Math.min(20,s+3)),h=rand(2,Math.min(20,s+4));return {prompt:`A rectangle is ${w} units wide and ${h} units tall. What is its perimeter?`,media:`<div class="learning-visual">▭ <small>${w} × ${h}</small></div>`,answer:2*(w+h),hint1:'Add all four sides.',hint2:`2 × (${w}+${h}) = ${2*(w+h)}.`}}),
+ numeric('area',16,s=>{const a=rand(2,Math.min(12,4+Math.floor(s/2))),b=rand(2,9);return {prompt:`A rectangle has ${a} rows of ${b} square tiles. How many tiles fill it?`,answer:a*b,hint1:'Multiply rows by columns.',hint2:`${a} × ${b} = ${a*b}.`}}),
+ numeric('operations-mix',20,s=>{const a=rand(2,12),b=rand(2,8),c=rand(2,8);return {prompt:`${a} + ${b} × ${c} = ?`,answer:a+b*c,hint1:'Multiply before adding.',hint2:`${b}×${c}=${b*c}, then add ${a}.`}}),
+ numeric('sequence-square',22,s=>{const n=rand(2,7);return {prompt:'Which number comes next?',media:`<div class="learning-visual">${[n,n+1,n+2].map(x=>x*x).join('  →  ')}  →  ?</div>`,answer:(n+3)**2,hint1:'The numbers are square numbers.',hint2:`Next is ${n+3} × ${n+3}.`}}),
+ numeric('ratio-intro',24,s=>{const a=rand(2,6),b=rand(2,6),mult=rand(2,5);return {prompt:`For every ${a} blue gems there are ${b} red gems. With ${a*mult} blue gems, how many red gems?`,answer:b*mult,hint1:'Use the same multiplier for both colors.',hint2:`Multiply ${a} by ${mult}, so ${b} × ${mult} = ${b*mult}.`}}),
+ // Nonverbal: matrices, rotations, sequences, transformations and spatial thinking.
+ pictureItem('shape-alternation',0,s=>{const a=pic('circle','#dd7775'),b=pic('triangle','#78a5eb');return {prompt:'What comes next?',pattern:[a,b,a,b,null],...options([a,b,pic('square','#dd7775'),pic('circle','#78a5eb')],0),hint1:'Find the repeating pair.',hint2:'Circle, triangle, circle, triangle, circle.'}}),
+ pictureItem('shape-abb',1,s=>{const shapes=['circle','square','triangle','diamond','star'],x=choose(shapes),y=choose(shapes.filter(v=>v!==x)),a=pic(x,'#8aa3ed'),b=pic(y,'#efb16e');return {prompt:'What shape completes the pattern?',pattern:[a,b,b,a,b,null],...options([b,a,pic(x,'#efb16e'),pic(y,'#8aa3ed')],0),hint1:'Look for a group of THREE.',hint2:'The pattern is first, second, second.'}}),
+ pictureItem('shape-aab',2,s=>{const a=pic('diamond','#72b59f'),b=pic('star','#f0ac69');return {prompt:'What picture finishes the group?',pattern:[a,a,b,a,a,null],...options([b,a,pic('square','#72b59f'),pic('star','#72b59f')],0),hint1:'Two diamonds, one star.',hint2:'The third one in each group is a star.'}}),
+ pictureItem('color-shift',2,s=>{const a=pic('circle','#ef7777'),b=pic('circle','#85a9ee'),c=pic('square','#ef7777'),d=pic('square','#85a9ee');return {prompt:'Make the same change to the third picture.',pattern:[a,b,c,null],...options([d,c,a,pic('triangle','#85a9ee')],0),hint1:'The shape stays the same.',hint2:'Change red to blue, but keep the square.'}}),
+ pictureItem('matrix-2x2',3,s=>{const shape=choose(['circle','triangle','diamond','square']),other=choose(['circle','triangle','diamond','square'].filter(x=>x!==shape)),a=pic(shape,'#ec9b74'),b=pic(shape,'#759bd1'),c=pic(other,'#ec9b74'),d=pic(other,'#759bd1');return {prompt:'Which picture belongs in the empty box?',cells:[a,b,c,null],...options([d,a,b,c],0),hint1:'Look across: the color changes.',hint2:'Keep the bottom shape; use the right-hand color.'}}),
+ pictureItem('matrix-row-shapes',4,s=>{const a=pic('triangle','#84b1cd'),b=pic('square','#84b1cd'),c=pic('triangle','#e7af65'),d=pic('square','#e7af65');return {prompt:'Fill the missing square.',cells:[a,b,c,null],...options([d,c,a,b],0),hint1:'What changes in each column?',hint2:'Bottom row is orange and right column is squares.'}}),
+ pictureItem('shape-count',1,s=>{const a=rand(2,7+s),b=a+rand(1,5);return {prompt:'Which row has more shapes?',media:`<div class="two-count"><span>A: ${'◆'.repeat(a)}</span><span>B: ${'◆'.repeat(b)}</span></div>`,...four('B',['A','Same','Cannot tell']),hint1:'Count each row.',hint2:`Row B has ${b} compared with ${a}.`}}),
+ pictureItem('arrow-turn',5,s=>{const arrows=['↑','→','↓','←'],i=rand(0,3);return {prompt:'This arrow turns one quarter-turn CLOCKWISE. Where does it point?',media:`<div class="learning-visual direction">${arrows[i]} <span>⟳ 90°</span> ?</div>`,...four(arrows[(i+1)%4],arrows.filter(x=>x!==arrows[(i+1)%4])),hint1:'Imagine turning the arrow to the right.',hint2:`${arrows[i]} turns into ${arrows[(i+1)%4]}.`}}),
+ pictureItem('arrow-counter',8,s=>{const arrows=['↑','→','↓','←'],i=rand(0,3);return {prompt:'Turn the arrow one quarter-turn COUNTERCLOCKWISE.',media:`<div class="learning-visual direction">${arrows[i]} <span>⟲ 90°</span> ?</div>`,...four(arrows[(i+3)%4],arrows.filter(x=>x!==arrows[(i+3)%4])),hint1:'Counterclockwise turns to the left.',hint2:`${arrows[i]} becomes ${arrows[(i+3)%4]}.`}}),
+ pictureItem('arrow-halfturn',11,s=>{const arrows=['↑','→','↓','←'],i=rand(0,3);return {prompt:'Which way does the arrow point after a HALF-TURN?',media:`<div class="learning-visual direction">${arrows[i]} <span>↻ 180°</span> ?</div>`,...four(arrows[(i+2)%4],arrows.filter(x=>x!==arrows[(i+2)%4])),hint1:'A half-turn points in the opposite direction.',hint2:`The opposite of ${arrows[i]} is ${arrows[(i+2)%4]}.`}}),
+ pictureItem('path-tracking',2,s=>{const path=choose([['up','right','↗'],['up','left','↖'],['down','right','↘'],['down','left','↙']]);return {prompt:`Move one step ${path[0]} and one step ${path[1]}. Where are you from where you started?`,...four(path[2],['↗','↖','↘','↙'].filter(x=>x!==path[2])),hint1:'Imagine a tiny square grid.',hint2:`You end up ${path[2]} of your start.`}}),
+ pictureItem('path-return',7,s=>{const path=choose([['↑','↓'],['→','←'],['←','→'],['↓','↑']]);return {prompt:`Which arrow UNDOES the move ${path[0]}?`,...four(path[1],['↑','↓','→','←'].filter(x=>x!==path[1])),hint1:'Think of the opposite direction.',hint2:`${path[1]} takes you back.`}}),
+ pictureItem('symmetry',7,s=>{const rows=[['● ◇ ●','♢ ● ♢','● △ ●'],['◆ ○ ◆','○ ◆ ○','◆ □ ◆']];const set=choose(rows),correct=set[0].split(' ')[0];return {prompt:'Complete the mirror pattern.',media:`<div class="learning-visual">${correct} ◇ ?</div>`,...four(correct,['◇','△','□','●','○','◆'].filter(v=>v!==correct)),hint1:'Both ends must match.',hint2:`The left shape ${correct} reflects onto the right.`}}),
+ pictureItem('count-sides',6,s=>{const shapes=[['triangle',3],['square',4],['pentagon',5],['hexagon',6]],p=choose(shapes);return {prompt:`How many straight sides does a ${p[0]} have?`,...noptions(p[1]),hint1:'Count each edge once.',hint2:`A ${p[0]} has ${p[1]} sides.`}}),
+ pictureItem('grid-rule',10,s=>{const r=rand(2,5),c=rand(2,5);return {prompt:`Imagine a grid with ${r} rows and ${c} columns. How many squares altogether?`,media:`<div class="mini-grid" style="grid-template-columns:repeat(${c},19px)">${Array.from({length:r*c},()=>'<span></span>').join('')}</div>`,...noptions(r*c),hint1:'Each row has the same number.',hint2:`${r} × ${c} = ${r*c} squares.`}}),
+ pictureItem('visual-odd-one',0,s=>{const e=choose(['🐱','🐻','🐶','🐹']);return {prompt:'Which picture is different from the others?',...four('🚲',[e,'🐰','🐼']),hint1:'Find the three animals.',hint2:'A bicycle is not an animal.'}}),
+ pictureItem('rotating-pattern',11,s=>{const arr=['↑','→','↓','←'];const start=rand(0,3);return {prompt:'Which arrow comes next in the turning pattern?',media:`<div class="learning-visual direction">${[0,1,2,3].map(i=>arr[(start+i)%4]).join('   ')}   ?</div>`,...four(arr[start],arr.filter(x=>x!==arr[start])),hint1:'Each arrow turns right once.',hint2:'Four turns make a full circle.'}}),
+ pictureItem('color-and-shape',8,s=>{const a=pic('square','#e6786f'),b=pic('triangle','#e6786f'),c=pic('square','#6d9fd8'),d=pic('triangle','#6d9fd8');return {prompt:'Find the missing tile by combining both rules.',cells:[a,b,c,null],...options([d,a,c,b],0),hint1:'Change shape across and color down.',hint2:'Blue triangle is missing.'}}),
+ pictureItem('visual-series-add',10,s=>{const a=rand(1,3),b=rand(1,3),c=a+b;return {prompt:'Join the two groups. Which number of dots results?',media:`<div class="learning-visual">${'●'.repeat(a)} + ${'●'.repeat(b)} = ?</div>`,...noptions(c),hint1:'Put both groups together.',hint2:`${a}+${b}=${c}.`}}),
+ // Verbal: general reasoning, picture/category concepts and progressively richer reading reasoning.
+ textItem('category-picture','verbal',0,s=>{const groups=[['🐶','🐱','🦊','🚕'],['🍌','🍓','🍐','👟'],['⚽','🏈','🎾','🍞'],['🚗','🚲','🚂','🍎']];const a=choose(groups);return {prompt:'Which picture does NOT belong?',answer:a[3],distractors:a.slice(0,3),hint1:'Three belong to the same group.',hint2:'Three are alike; one is a different kind of thing.'}}),
+ textItem('word-odd-one','verbal',2,s=>{const g=choose([['rose','tulip','daisy','hammer'],['apple','pear','plum','pencil'],['train','bus','car','carrot'],['table','chair','desk','tiger'],['shirt','jacket','sock','river'],['violin','drum','flute','cloud']]);return {prompt:'Which word does NOT belong?',answer:g[3],distractors:g.slice(0,3),hint1:'Which three names belong to one group?',hint2:`${g[3]} is different from the other three.`}}),
+ textItem('pair-association','verbal',1,s=>{const p=choose([['bird','nest','bee','hive','cave','shoe','tree'],['fish','water','bird','sky','grass','desk','snow'],['cow','calf','dog','puppy','kitten','foal','duckling'],['hand','glove','foot','sock','hat','shirt','cup'],['day','sun','night','moon','cloud','leaf','shoe']]);return {prompt:`${p[0]} goes with ${p[1]}. ${p[2]} goes with ...?`,answer:p[3],distractors:p.slice(4),hint1:'What relationship connects the first two?',hint2:`${p[2]} goes with ${p[3]}.`}}),
+ textItem('opposite','verbal',0,s=>{const a=choose([['hot','cold','warm','tall','loud'],['up','down','high','side','small'],['fast','slow','quick','bright','green'],['inside','outside','under','beside','over'],['happy','sad','joyful','kind','early']]);return {prompt:`What is the OPPOSITE of “${a[0]}”?`,answer:a[1],distractors:a.slice(2),hint1:'Opposite means the reverse meaning.',hint2:`The opposite of ${a[0]} is ${a[1]}.`}}),
+ textItem('similar-meaning','verbal',3,s=>{const a=choose([['tiny','small','huge','wide','late'],['enormous','huge','tiny','quiet','square'],['quick','fast','slow','cold','tall'],['joyful','happy','tired','angry','early'],['silent','quiet','loud','busy','bright']]);return {prompt:`Which word means almost the same as “${a[0]}”?`,answer:a[1],distractors:a.slice(2),hint1:'Think of a word with a similar meaning.',hint2:`${a[0]} means ${a[1]}.`}}),
+ textItem('whole-part','verbal',2,s=>{const a=choose([['tree','branch','wheel','spoon','cloud'],['book','page','wheel','rock','leaf'],['bicycle','wheel','leaf','pencil','flower'],['house','roof','shoe','fork','moon']]);return {prompt:`Which item is PART of a ${a[0]}?`,answer:a[1],distractors:a.slice(2),hint1:'Think of what the object is made of.',hint2:`A ${a[0]} includes a ${a[1]}.`}}),
+ textItem('analogy-tool','verbal',4,s=>{const a=choose([['painter','brush','chef','spoon','sled','sock','ladder'],['writer','pencil','farmer','shovel','hat','boat','bell'],['musician','instrument','carpenter','hammer','peach','river','book'],['bird','wing','fish','fin','bowl','leaf','shoe']]);return {prompt:`${a[0]} : ${a[1]} :: ${a[2]} : ?`,answer:a[3],distractors:a.slice(4),hint1:'Ask what role the second word plays for the first.',hint2:`${a[2]} uses or has a ${a[3]}.`}}),
+ textItem('analogy-function','verbal',7,s=>{const a=choose([['key','unlock','scissors','cut','float','taste','jump'],['umbrella','rain','sunglasses','sun','snow','books','food'],['compass','direction','clock','time','weight','taste','sound']]);return {prompt:`${a[0]} is for ${a[1]}. ${a[2]} is for ...?`,answer:a[3],distractors:a.slice(4),hint1:'Think about what the second tool does.',hint2:`${a[2]} goes with ${a[3]}.`}}),
+ textItem('word-classification','verbal',4,s=>{const a=choose([['sparrow','bird','reptile','fish','flower'],['salmon','fish','mammal','insect','plant'],['oak','tree','flower','fruit','bird'],['tiger','mammal','flower','reptile','insect']]);return {prompt:`A ${a[0]} is a kind of ...?`,answer:a[1],distractors:a.slice(2),hint1:'Think of the larger group.',hint2:`${a[0]} belongs to the ${a[1]} group.`}}),
+ textItem('ordering','verbal',2,s=>{const a=choose([['seed','sprout','flower','tree'],['baby','child','adult','egg'],['morning','afternoon','evening','midnight']]);return {prompt:`Which belongs LAST in the normal order: ${a.slice(0,3).join(', ')}?`,answer:a[2],distractors:[a[0],a[1],a[3]],hint1:'Put the first three in order.',hint2:`The last one is ${a[2]}.`}}),
+ textItem('logic-if-then','verbal',6,s=>{const a=choose([['All hummingbirds are birds. A hummingbird is a ...','bird','rock','fish','plant'],['Every square has four equal sides. A square has ...','four equal sides','five sides','three corners','no sides'],['All oak trees are plants. An oak tree is a ...','plant','vehicle','animal','mineral']]);return {prompt:a[0],answer:a[1],distractors:a.slice(2),hint1:'Use the rule given in the first sentence.',hint2:`The rule tells us: ${a[1]}.`}}),
+ textItem('conditional-elimination','verbal',11,s=>{const colors=['red','blue','yellow','green'],chosen=choose(colors);return {prompt:`Four flags are red, blue, yellow and green. The chosen flag is NOT red, NOT blue, and NOT ${chosen==='yellow'?'green':'yellow'}. Which color remains?`,answer:chosen==='yellow'?'yellow':'green',distractors:['red','blue',chosen==='yellow'?'green':'yellow'],hint1:'Cross out every excluded color.',hint2:'Only one of the four is left.'}}),
+ textItem('reading-inference','verbal',6,s=>{const a=choose([['Milo grabbed his raincoat. Dark clouds filled the sky.','It may rain.','It is snowing.','Milo is swimming.','It is a sunny day.'],['Leah turned off the lamp and crawled under her blanket.','She is getting ready to sleep.','She is planting a tree.','She is painting.','She is eating breakfast.'],['The ice cream began dripping down the cone.','It is melting.','It is freezing harder.','It is growing.','It is turning to stone.']]);return {prompt:`${a[0]} What is MOST likely happening?`,answer:a[1],distractors:a.slice(2),hint1:'Look for clues from the story.',hint2:a[1]}}),
+ textItem('cause-effect','verbal',8,s=>{const a=choose([['The wind blows the leaves.','The leaves move.','The leaves turn to metal.','Night starts.','Fish swim away.'],['The sun warms a puddle.','Some water evaporates.','The water becomes stone.','The puddle sings.','The sun disappears.'],['A child waters a drooping plant.','The plant may perk up.','The plant becomes a car.','The pot gets smaller instantly.','It begins to snow.']]);return {prompt:`${a[0]} Which result makes the MOST sense?`,answer:a[1],distractors:a.slice(2),hint1:'Think about what normally happens next.',hint2:a[1]}}),
+ textItem('complex-analogy','verbal',12,s=>{const a=choose([['author','novel','composer','song','bridge','window','cup'],['caterpillar','butterfly','tadpole','frog','lizard','fish','bird'],['thermometer','temperature','ruler','length','color','time','taste']]);return {prompt:`${a[0]} is to ${a[1]} as ${a[2]} is to ...?`,answer:a[3],distractors:a.slice(4),hint1:'Name the exact relationship.',hint2:`${a[2]} corresponds to ${a[3]}.`}})
+];
+function skillStats(id){const l=learning();return l.skills[id]||(l.skills[id]={seen:0,first:0,mistakes:0,streak:0,reviewed:0,mastery:0});}
 function makeQuestion(){
+ const l=learning();const due=l.review.filter(r=>r&&r.due<=l.solved && BANK.some(b=>b.id===r.id));
+ // Roughly 1 in 3 puzzles is deliberate spaced retrieval when reviews are due.
+ let itemDef=null,review=false,reviewPass=0;
+ if(due.length&&(l.solved%3===0||due.some(x=>x.priority>=2))){const entry=due.sort((a,b)=>(b.priority||0)-(a.priority||0)||a.due-b.due)[0];itemDef=BANK.find(x=>x.id===entry.id);review=!!itemDef;reviewPass=Number(entry.pass)||0;l.review=l.review.filter(x=>x!==entry);}
+ if(!itemDef){
+  const possible=BANK.filter(b=>b.stage<=challengeFromRating(domainLearningLevel(b.domain))+1.3);
+  // Revisit weak concepts and underserved domains, but never show the same template twice in a row.
+  const pool=possible.filter(b=>b.id!==l.lastSkills[l.lastSkills.length-1]);const list=pool.length?pool:possible;
+  let weighted=[];
+  for(const b of list){const st=skillStats(b.id),recent=l.lastSkills.includes(b.id),near=b.stage>=l.challenge-3;
+   let weight=(st.seen===0?5:2)+Math.max(0,Math.min(3,3-st.mastery))+(near?2:0)+(recent?-4:0);
+   if(domainLearningLevel(b.domain)<l.rating-30)weight+=3;
+   weight+=Math.max(0,3-Math.floor((l.domainCounts[b.domain]||0)/Math.max(1,l.solved/3)));
+   for(let i=0;i<Math.max(1,Math.floor(weight));i++)weighted.push(b);
+  }
+  itemDef=choose(weighted.length?weighted:list);
+ }
+ // Fresh random parameters on each review: a skill is tested, not a memorized answer.
+ const q=itemDef.generate(Math.floor(challengeFromRating(domainLearningLevel(itemDef.domain))));
+ q.skillId=itemDef.id;q.domain=itemDef.domain;q.review=review;q.reviewPass=review?reviewPass:0;q.stage=itemDef.stage;
+ q.kind=q.kind||'learning';
+ const answers=new Set(q.choices.map(c=>typeof c==='object'?JSON.stringify(c):String(c)));
+ if(q.choices.length!==4||answers.size!==4||!(q.answer>=0&&q.answer<4))throw Error('Question choices invalid: '+itemDef.id);
+ l.lastSkills.push(itemDef.id);l.lastSkills=l.lastSkills.slice(-6);
+ l.domainCounts[itemDef.domain]=(l.domainCounts[itemDef.domain]||0)+1;
+ return q;
+}
+function recordLearning(question,mistakes){
+ if(!question?.skillId)return;
+ const l=learning(),s=skillStats(question.skillId),correctFirst=mistakes===0;
+ l.solved++;l.firstTry+=correctFirst?1:0;l.battleSolved=(l.battleSolved||0)+1;l.battleMisses=(l.battleMisses||0)+(correctFirst?0:1);
+ s.seen++;s.first+=correctFirst?1:0;s.mistakes+=mistakes;
+ if(correctFirst){s.streak++;s.mastery=clamp(s.mastery+1,0,5);if(question.review)s.reviewed++;}
+ else{s.streak=0;s.mastery=Math.max(0,s.mastery-2);}
+ // Domain levels react to demonstrated first-try success, not a memorized retry.
+ const local=domainLearningLevel(question.domain);
+ const stretch=Math.max(-4,Math.min(4,Number(question.stage||0)-challengeFromRating(local)));
+ const change=correctFirst?(3+Math.max(0,Math.round(stretch))):(mistakes>=2?-9:-6);
+ l.domainRatings[question.domain]=Math.round(clamp(local+change,SCORE_MIN,SCORE_MAX));
+ // Two spaced fresh successes are needed to count an earlier miss as learned.
+ if(!correctFirst){l.review=l.review.filter(r=>r.id!==question.skillId);l.review.push({id:question.skillId,due:l.solved+2,priority:2,pass:0});}
+ else if(question.review){
+  const nextPass=(Number(question.reviewPass)||0)+1;
+  if(nextPass<2)l.review.push({id:question.skillId,due:l.solved+7,priority:1,pass:1});
+  else l.review.push({id:question.skillId,due:l.solved+24,priority:0,pass:2});
+ }
+ // Re-evaluate actual needs after a run of difficult questions. No permanent penalty.
+ const recent=l.history;l.history=[...recent,{id:question.skillId,domain:question.domain,first:correctFirst?1:0}].slice(-36);
+ if(l.history.length>=6){const last=l.history.slice(-8),bad=last.filter(x=>!x.first).length;
+  if(bad>=5){setLearningRating(l,l.rating-12);}
+ }
+}
+function finishLearningBattle(isPractice){if(isPractice)return;const l=learning();l.battles++;
+ const seen=l.battleSolved||0,misses=l.battleMisses||0,ratio=seen?misses/seen:0;
+ if(ratio>=.48){setLearningRating(l,l.rating-21);toast('🧠 Let’s practice those tricky skills again!');}
+ else if(ratio>=.26)setLearningRating(l,l.rating-3);
+ else {const needsRelearning=l.review.filter(r=>(r.priority||0)>=1).length;
+  setLearningRating(l,l.rating+(needsRelearning>=2?2:needsRelearning===1?4:8));
+ } // Strong wins add gradually; unresolved foundational concepts slow new introductions.
+ l.ratingHistory.push({battle:l.battles,rating:l.rating,solved:seen,firstTry:seen-misses});
+ l.ratingHistory=l.ratingHistory.slice(-150);
+ l.battleSolved=0;l.battleMisses=0;
+}
+function learningGradeOptions(current,placeholder=false){return `${placeholder?'<option value="" disabled selected>Choose a grade…</option>':''}${GRADE_NAMES.map((g,i)=>`<option value="${i}" ${!placeholder&&current===i?'selected':''}>${g}</option>`).join('')}`;}
+function gradeSetup(){return `<section class="panel wide learning-setup"><div class="levelburst">📚✨</div><span class="tag">YOUR LEARNING ADVENTURE</span><h2>What grade are you in?</h2><p>This sets your starting Learning Level (1–1000). As you learn, your level can rise far beyond your grade. Your adventure level, pets and items stay exactly as they are.</p><label class="formlabel" for="learning-grade-setup">CHOOSE YOUR GRADE</label><select id="learning-grade-setup" class="nameinput grade-select" aria-label="Choose school grade">${learningGradeOptions(null,true)}</select><p class="small">Questions explore pictures, word relationships, number puzzles, math and stories. Missed ideas return later for extra practice.</p><div class="buttonrow"><button class="btn" data-do="grade-confirm">✨ Start Learning!</button></div></section>`;}
+function learningDashboard(){const l=learning(),entries=Object.entries(l.skills),done=entries.filter(([_,s])=>s.mastery>=4).length;
+ const grouped=Object.keys(DOMAINS).map(d=>{const ids=BANK.filter(b=>b.domain===d),observed=entries.filter(([id])=>ids.some(t=>t.id===id)),first=observed.reduce((n,[_,s])=>n+s.first,0),seen=observed.reduce((n,[_,s])=>n+s.seen,0);return {d,seen,first,skills:observed.length};});
+ const weak=entries.filter(([id,s])=>s.seen>=2&&s.mastery<3).sort((a,b)=>(b[1].mistakes/(b[1].seen||1))-(a[1].mistakes/(a[1].seen||1))).slice(0,5);
+ return `<section class="panel wide"><span class="tag">🧠 YOUR LEARNING JOURNEY</span><h2>Look how your thinking grows!</h2><p>The game mixes skills, starts from your selected grade, and adjusts up or down after each battle based on how the questions went. It schedules fresh examples of missed concepts for review.</p>
+ <div class="learning-rating-feature" role="status"><div><small>YOUR LEARNING LEVEL</small><strong>${l.rating}<em> / 1000</em></strong><span>Saved with your adventure • Separate from combat level ${S.level}</span></div><div class="rating-track"><div style="width:${l.rating/10}%"></div></div></div>
+ <div class="learning-metrics"><div><b>${GRADE_NAMES[l.grade]}</b><span>Starting grade</span></div><div><b>${l.solved}</b><span>Questions solved</span></div><div><b>${l.solved?Math.round(100*l.firstTry/l.solved):0}%</b><span>First-try correct</span></div><div><b>${done}</b><span>Strong skills</span></div></div>
+ <p class="banner">🌟 <b>${learningBadge()}</b> · ${learnedGrade()} · ${l.review.length} scheduled reviews. These are internal learning indicators, <b>not standardized scores, IQ, or a grade placement test.</b></p>
+ <div class="learning-domains">${grouped.map(g=>`<div class="learning-domain"><b>${DOMAINS[g.d]}</b><div class="domain-rating">Level ${domainLearningLevel(g.d)} / 1000</div><div class="learning-bar"><span style="width:${g.seen?Math.round(100*g.first/g.seen):0}%"></span></div><small>${g.seen} answered · ${g.seen?Math.round(100*g.first/g.seen):0}% first try</small></div>`).join('')}</div>
+ <h3>We'll practice these again</h3><p>${weak.length?weak.map(([id])=>escapeHtml(id.replace(/-/g,' '))).join(' · '):'Keep solving! New skills will show up here after enough questions.'}</p>
+ <p class="tiny">Concepts reviewed until two clean spaced attempts; then periodically revisited. Incorrect guesses count as learning signals even if the child eventually chooses the right answer.</p>
+ <div class="buttonrow"><button class="btn" data-do="home">🏠 Keep Exploring</button><button class="btn ghost" data-do="settings">⚙️ Learning Settings</button></div></section>`;}
+
+function makeLegacyQuestion(){
  const types=['picture','sequence','grid','numbers','count','analogy','addition','subtraction','word','difference','missing','numberbond','compare','verbal','logic','spatial','skip','picturemath','patterns','oddword'];
  let kind=types[rand(0,types.length-1)];if(kind===S.lastPuzzleKind)kind=types[(types.indexOf(kind)+1+rand(0,3))%types.length];S.lastPuzzleKind=kind;
  // Original practice puzzles: more variety, still kept near first-grade expectations.
@@ -558,12 +853,13 @@ function dotSvg(n){let dots='';for(let i=0;i<n;i++){const cols=Math.min(3,n);con
 function pictured(v,kind){if(v===null||v===undefined)return '?';if(typeof v==='object'&&v.shape)return shapeSvg(v);if(kind==='count')return dotSvg(Number(v));return escapeHtml(v);}
 function puzzleCard(){const q=S.question;if(!q||!q.choices)return `<div class="feedback">Loading puzzle…</div>`;
  let top='';const tile=(v,kind)=>`<div class="puzzle-tile ${v===null?'questionmark':''}">${pictured(v,kind)}</div>`;
- if(q.kind==='sequence'||q.kind==='analogy')top=`<div class="puzzle-pattern">${q.pattern.map(x=>tile(x,q.kind)).join('')}</div>`;
- else if(q.kind==='grid')top=`<div class="puzzle-grid">${q.cells.map(x=>tile(x,q.kind)).join('')}</div>`;
- else if(q.kind==='numbers')top=`<div class="puzzle-pattern">${q.numbers.map(x=>tile(x,q.kind)).join('')}${tile(null)}</div>`;
- else if(q.kind==='count')top=`<div class="puzzle-pattern">${q.groups.map(x=>tile(x,'count')).join('')}${tile(null)}</div>`;
+ if(Array.isArray(q.pattern))top=`<div class="puzzle-pattern">${q.pattern.map(x=>tile(x,q.kind)).join('')}</div>`;
+ else if(Array.isArray(q.cells))top=`<div class="puzzle-grid">${q.cells.map(x=>tile(x,q.kind)).join('')}</div>`;
+ else if(Array.isArray(q.numbers))top=`<div class="puzzle-pattern">${q.numbers.map(x=>tile(x,q.kind)).join('')}${tile(null)}</div>`;
+ else if(Array.isArray(q.groups))top=`<div class="puzzle-pattern">${q.groups.map(x=>tile(x,'count')).join('')}${tile(null)}</div>`;
+ else if(q.media)top=q.media;
  const hint=S.tries>0?`<div class="puzzle-hint">💡 ${escapeHtml(S.tries>=3?q.hint2:q.hint1)} · Each mistake earns you another hint.</div>`:'';
- return `<div class="puzzle-card"><div class="puzzle-kicker">✨ Choose the answer</div><div class="puzzle-heading">${escapeHtml(q.prompt)}</div>${top}<div class="puzzle-choices">${q.choices.map((v,i)=>`<button type="button" class="puzzle-choice ${S.tries>=4&&i!==q.answer?'weakened':''}" data-do="puzzle" data-value="${i}" aria-label="Choice ${i+1}"><span class="letter">${String.fromCharCode(65+i)}</span>${pictured(v,q.kind)}</button>`).join('')}</div>${hint}<div class="puzzle-note">Take your time. You can try again! 🌟</div></div>`;
+ return `<div class="puzzle-card"><div class="puzzle-kicker">${q.review?'🌱 Remember this idea?':'✨ Think it through'}</div><div class="puzzle-heading">${escapeHtml(q.prompt)}</div>${top}<div class="puzzle-choices">${q.choices.map((v,i)=>`<button type="button" class="puzzle-choice ${S.tries>=4&&i!==q.answer?'weakened':''}" data-do="puzzle" data-value="${i}" aria-label="Choice ${i+1}"><span class="letter">${String.fromCharCode(65+i)}</span>${pictured(v,q.kind)}</button>`).join('')}</div>${hint}<div class="puzzle-note">${q.review?'A fresh example. You can do it! 🌟':'Every correct answer powers up your team! ✨'}</div></div>`;
 }
 function miniAvatar(p,idx){
  const turn=S.screen==='battle'&&!currentActor()?.main&&currentActor()?.id===p.id;
@@ -710,7 +1006,7 @@ async function answerPuzzle(i){
  S.totalAnswered++;
  const b=S.battle,actor=currentActor();if(!b||!actor)return;
  if(i!==q.answer){S.tries++;b.feed=`💡 ${actor.name}'s turn! Try another answer; you won't lose your turn.`;save();render();return;}
- animating=true;recordPuzzle(S.tries);S.tries=0;ensureEnemies();
+ animating=true;recordLearning(q,S.tries);S.tries=0;ensureEnemies();
  const dmg=actor.main?power():Math.max(1,Math.floor(actor.pet.strength+S.level*14));
  const targetIndex=b.enemies.findIndex(e=>e.hp>0);
  if(targetIndex<0){animating=false;return;}
@@ -731,12 +1027,12 @@ async function answerPuzzle(i){
 function animateSidekick(idx,dmg,done,targetIndex=0){
  const pet=document.getElementById('sidekick-'+idx),pop=document.getElementById('battle-damage'),enemy=document.getElementById('enemy-actor-'+targetIndex);
  if(pet)pet.classList.add('attacking');if(enemy)enemy.classList.add('struck');
- if(pop){pop.textContent='−'+dmg.toLocaleString()+' 🐾';pop.className='arena-damage show';}
+ if(pop){pop.textContent='✨ NICE! −'+dmg.toLocaleString();pop.className='arena-damage show';}
  playTone('cast');setTimeout(()=>{if(pet)pet.classList.remove('attacking');if(enemy)enemy.classList.remove('struck');if(pop)pop.className='arena-damage';done();},630);
 }
 
 function recruit(b){const pet={capturedHp:b.maxHp,id:Date.now().toString(36)+Math.random().toString(36).slice(2,6),name:b.name,emoji:b.emoji,level:S.level,strength:Math.round(power()*(b.isBoss?.95:.45)),special:b.isBoss?'Meteor Burst':(S.zone===0?'Leaf Beam':S.zone===1?'Flame Wave':S.zone===2?'Thunder Flash':'Star Storm')};S.pets.push(pet);if(S.equipped.length<2)S.equipped.push(pet.id);S.lastRecruit=pet;}
-function wonBattle(assists,hit,deferRender=false){const b=S.battle;S.completed+=b.isPractice?0:1;S.level+=b.isPractice?0:1;S.maxHp+=b.isPractice?0:100;S.hp=S.maxHp;S.notice=b.isPractice?`You passed training! Grandmaster Glimmer opens the forest gate.`:`Your attack hit for ${hit}! ${assists.join(' ')} Victory! +1 level and +100 maximum health!`;if(!b.isPractice){recruit(b);if(b.isBoss)S.bossWins++}else S.tutorialDone=true;S.battle=null;S.question=null;S.screen=b.isBoss?'reward':'victory';save();if(!deferRender)render();}
+function wonBattle(assists,hit,deferRender=false){const b=S.battle;finishLearningBattle(b.isPractice);S.completed+=b.isPractice?0:1;S.level+=b.isPractice?0:1;S.maxHp+=b.isPractice?0:100;S.hp=S.maxHp;S.notice=b.isPractice?`You passed training! Grandmaster Glimmer opens the forest gate.`:`Your attack hit for ${hit}! ${assists.join(' ')} Victory! +1 level and +100 maximum health!`;if(!b.isPractice){recruit(b);if(b.isBoss)S.bossWins++}else S.tutorialDone=true;S.battle=null;S.question=null;S.screen=b.isBoss?'reward':'victory';save();if(!deferRender)render();}
 function defeat(){return `<section class="panel"><span class="tag">💔 TEAM DEFEATED</span><div class="levelburst">🩹</div><h2>Time to regroup!</h2><p class="story">${escapeHtml(S.notice)}</p><div class="banner">⭐ Your Level ${S.level} is safe! All ${S.pets.length} pets and ${S.bossWins} boss victories are saved.</div><p>Your whole team can heal, then you can challenge the same monster again.</p><div class="buttonrow"><button class="btn" data-do="retry">❤️ Heal & Try Again</button><button class="btn ghost" data-do="recover">🏕️ Return to Camp</button></div></section>`}
 function turnRibbon(){
  const b=S.battle,actors=currentActors(),idx=b?.nextIndex||0,enemies=b?.enemies||[];
@@ -757,7 +1053,7 @@ function battle(){
  const friendCards=hpBar(S.avatar.name||'Hero',S.hp,S.maxHp,'friendly','🧙')+team.map(p=>hpBar(p.name,b.petHealth[p.id]??capturedHealth(p),capturedHealth(p),'friendly',p.emoji)).join('');
  const enemyCards=b.enemies.map(e=>hpBar(e.name,e.hp,e.maxHp,'villain',e.emoji)).join('');
  const enemyArt=b.enemies.map((e,i)=>`<div class="enemy-unit ${e.hp===0?'down':''} ${b.phase==='enemies'&&b.currentEnemy===i?'acting':''}" id="enemy-actor-${i}" aria-label="${escapeHtml(e.name)} with ${e.hp} HP"><span class="enemy-wand" aria-hidden="true">🪄</span>${monsterSVG(e)}<span class="unit-name">${e.emoji} ${escapeHtml(e.name)}</span></div>`).join('');
- return `<section class="panel wide battle-panel"><div class="battle-header"><div><span class="tag">${b.isPractice?'🕯️ PRACTICE':b.isBoss?'👑 BOSS BATTLE':'⚔️ TWO-MONSTER ENCOUNTER '+(S.completed+1)}</span><h2>${b.isBoss?'Boss: '+escapeHtml(b.name):'Your team vs. '+enemies.length+' monster'+(enemies.length===1?'':'s')}</h2></div><div class="tiny">⭐ Level ${S.level} · 🛡️ Your progress is safe if you lose</div></div>
+ return `<section class="panel wide battle-panel"><div class="battle-header"><div><span class="tag">${b.isPractice?'🕯️ PRACTICE':b.isBoss?'👑 BOSS BATTLE':'⚔️ TWO-MONSTER ENCOUNTER '+(S.completed+1)}</span><h2>${b.isBoss?'Boss: '+escapeHtml(b.name):'Your team vs. '+enemies.length+' monster'+(enemies.length===1?'':'s')}</h2></div><div class="tiny battle-microstats">⭐ Hero ${S.level} · ${learningBadge()}</div></div>
  <div class="battle-split"><div class="battle-stage">
  <div id="battle-arena" class="arena-scene ${zoneClass}" aria-label="Your hero and two pet creatures facing ${b.isBoss?'one boss':'two different monsters'}">
  <div class="arena-team-label ally-label">✨ YOUR TEAM</div><div class="arena-team-label foe-label">⚔️ MONSTERS</div><div class="arena-divider" aria-hidden="true"></div><div class="arena-scenery" aria-hidden="true"><span class="object">${props[0]}</span><span class="object">${props[1]}</span><span class="object">${props[2]}</span></div><div class="arena-vs">⚔️</div>
@@ -777,7 +1073,7 @@ function playSpellAnimation(damage,withPets,done,targetIndex=0){
  const enemy=document.getElementById('enemy-actor-'+targetIndex),orb=document.getElementById('spell-projectile'),pop=document.getElementById('battle-damage');
  hero.classList.add('casting');orb?.classList.add('flying');arena.classList.add('spell-flash');
  if(withPets)document.getElementById('battle-pets')?.classList.add('helping');
- setTimeout(()=>{enemy?.classList.add('struck');if(pop){pop.textContent='−'+damage.toLocaleString()+' ✨';pop.classList.add('show');}playTone('cast');},230);
+ setTimeout(()=>{enemy?.classList.add('struck');if(pop){pop.textContent='✨ GREAT! −'+damage.toLocaleString();pop.classList.add('show');}playTone('cast');},230);
  setTimeout(done,920);
 }
 function playEnemyAnimation(index=0){
@@ -1047,6 +1343,7 @@ function realismPreviews(){const demo=[{name:'Twig Dragon',emoji:'🐲'},{name:'
 function settings(){return `<section class="panel"><span class="tag">⚙️ PREFERENCES</span><h2>Game Settings & Save Safety</h2><p>Your adventure automatically saves on this website in this browser. Download a backup before changing files, browsers, or computers.</p>
  <div class="banner">⭐ Level ${S.level} • ⚔️ ${S.completed} battles • 🐾 ${S.pets.length} pets • 👑 ${S.bossWins} bosses</div>
  <section id="look-lab" class="look-lab" aria-label="Realisticness Bar"><h3>🎨 Realisticness Bar <span id="realism-number">${Math.round(S.realism??30)}%</span></h3><p class="small" style="margin:6px 0;color:#d7eef1">Slide it to change how the monsters look. From simple cartoons to shaded fantasy creatures — never too scary!</p><input id="realisticness-bar" class="real-range" aria-label="Realisticness" type="range" min="0" max="100" step="5" value="${Math.round(S.realism??30)}"><div class="look-labels"><span>0% 🎨 Cartoon</span><span>50% 📖 Storybook</span><span>100% 🪄 Detailed fantasy</span></div><div class="look-state" id="look-state">${realismLabel()}</div><div class="look-previews" id="look-previews">${realismPreviews()}</div><p class="look-note">Try the bar as much as you want. It only changes artwork. Levels, HP, puzzles, pets and equipment stay exactly the same.</p></section>
+ <section class="learning-settings"><h3>📚 Learning Level: ${learning().rating} / 1000</h3><p class="small">Starting grade: <b>${S.learning?.gradeSet?GRADE_NAMES[learning().grade]:'Not yet selected'}</b>. This does not limit how far questions can advance. Your permanent Learning Level (1–1000) is separate from your wizard's combat level, and stays in your save file.</p><button class="btn teal smallbtn" data-do="learning">📈 View Learning Journey</button><details style="margin-top:12px"><summary style="cursor:pointer">Parent: change initial grade or restart learning placement</summary><p class="small">This resets only learning-skill history and challenge placement, not character levels, pets, gear, or boss wins.</p><select id="grade-change" class="nameinput grade-select" aria-label="New learning starting grade">${learningGradeOptions(learning().grade)}</select><button class="btn ghost smallbtn" data-do="grade-reset">Reset Learning Placement</button></details></section>
  <section class="music-controls"><h3>🎵 Adventure Soundtrack</h3><p class="small" style="margin-top:6px">🌿 Peaceful flute-and-harp melodies while exploring • ⚔️ energetic battle music • 👑 epic boss music. Smooth transitions, no short synthetic loop. Music streams from the internet and starts after you tap or press a key.</p><details style="margin:9px 0 13px"><summary style="cursor:pointer;font-size:12px;color:#d7e6ee">Music credits and licenses (CC0)</summary><p class="tiny">Exploring: <a style="color:#b5fae1" href="https://opengameart.org/content/town-theme-rpg" target="_blank" rel="noopener">Town Theme RPG</a> by cynicmusic; <a style="color:#b5fae1" href="https://opengameart.org/content/magic-town" target="_blank" rel="noopener">Magic Town</a> by controllerhead.<br>Battles: <a style="color:#b5fae1" href="https://opengameart.org/content/jrpg-epic-rock-battle-theme-1" target="_blank" rel="noopener">JRPG Epic Rock Battle Theme</a> by HydroGene.<br>Bosses: <a style="color:#b5fae1" href="https://opengameart.org/content/boss-battle-theme" target="_blank" rel="noopener">Battle RPG Theme</a> by Cleyton Kauffman. All listed under CC0 on OpenGameArt.</p></details><button class="btn teal smallbtn" data-do="music">${S.musicOn?'🎶 Turn Music Off':'▶ Play Music'}</button><label class="formlabel" for="music-volume">Music volume: <span id="music-volume-number">${S.musicVolume??70}%</span></label><input type="range" id="music-volume" min="0" max="100" step="5" value="${S.musicVolume??70}" aria-label="Music volume" /></section>
  <section class="safe-box"><h3>💾 Back Up Your Adventure</h3><p>This downloads a small save file containing your level, pets, equipment, and character. Keep it safe with your dad.</p><div class="row"><button class="btn teal" data-do="export">⬇️ Download My Save</button><label for="import-file" class="btn purple" style="cursor:pointer;display:inline-flex;align-items:center">⬆️ Restore a Save</label><input id="import-file" class="filepick" type="file" accept=".json,application/json"/></div>
  <p class="backup-status">✅ Works with your original Magic Battles save. Importing never deletes the backup file.</p>
@@ -1054,8 +1351,8 @@ function settings(){return `<section class="panel"><span class="tag">⚙️ PREF
  </section><div class="row"><button class="btn ghost smallbtn" data-do="sound">${S.soundOn?'🔊 Sound: On':'🔇 Sound: Off'}</button></div>
  <div class="buttonrow"><button class="btn purple" data-do="home">← Keep Playing</button><button class="btn ghost" data-do="reset">🗑️ Reset My Adventure</button></div><p class="tiny danger">Reset erases this browser's progress. Download a backup before using it.</p></section>`}
 function downloadSave(){
- try{save();const text=JSON.stringify({game:'jacks-magic-battles',format:1,exportedAt:new Date().toISOString(),save:S},null,2);
- const blob=new Blob([text],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=`infinite-adventures-save-level-${S.level}.json`;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),15000);toast('Your adventure backup is downloading! 💾');}
+ try{save();const text=JSON.stringify({game:'jacks-magic-battles',format:2,learningVersion:3,learningRating:S.learning?.rating??null,exportedAt:new Date().toISOString(),save:S},null,2);
+ const blob=new Blob([text],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=`infinite-adventures-hero-${S.level}-learning-${S.learning?.rating||'new'}.json`;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),15000);toast('Your adventure backup is downloading! 💾');}
  catch(e){toast('Could not download. Try Chrome on your computer.')}
 }
 function validateSave(obj){
@@ -1064,8 +1361,18 @@ function validateSave(obj){
  const clean={...INITIAL(),...value,walkPos:value.walkPos||{},reasoning:{...INITIAL().reasoning,...value.reasoning},avatar:{...INITIAL().avatar,...value.avatar}};
  clean.avatar.name=String(clean.avatar.name).slice(0,16);
  clean.zone=Number.isInteger(clean.zone)?Math.max(0,Math.min(ZONES.length-1,clean.zone)):0;clean.realism=Number.isFinite(Number(clean.realism))?Math.max(0,Math.min(100,Number(clean.realism))):30;
- clean.screen=['creator','tutorial','battle','victory','reward','map','pets','settings','adventure','defeat'].includes(clean.screen)?clean.screen:'adventure';
+ clean.screen=['creator','tutorial','battle','victory','reward','map','pets','settings','adventure','defeat','learning'].includes(clean.screen)?clean.screen:'adventure';
  if(clean.screen==='battle'&&(!clean.battle||!clean.question))clean.screen='adventure';if(clean.battle){clean.battle.fallenPets=clean.battle.fallenPets||[];clean.battle.activePet=clean.battle.activePet||null;}
+ clean.learning=(value.learning&&typeof value.learning==='object')?value.learning:null;
+ if(clean.learning){
+  const l=clean.learning, old=Number(l.challenge);
+  if(!Number.isInteger(Number(l.rating))||Number(l.rating)<1||Number(l.rating)>1000)l.rating=ratingFromChallenge(Number.isFinite(old)?old:(Number(l.grade)||0)*4+2);
+  l.rating=clamp(Math.round(Number(l.rating)),1,1000);
+  l.challenge=challengeFromRating(l.rating);
+  if(!l.domainRatings||typeof l.domainRatings!=='object')l.domainRatings={number:l.rating,visual:l.rating,verbal:l.rating};
+  for(const d of Object.keys(DOMAINS)){const v=Number(l.domainRatings[d]);l.domainRatings[d]=Number.isFinite(v)&&v>=1&&v<=1000?Math.round(v):l.rating;}
+  l.version=3;
+ }
  clean.equipped=clean.equipped.filter(x=>clean.pets.some(p=>p.id===x)).slice(0,2);
  return clean;
 }
@@ -1075,7 +1382,7 @@ function importSave(text){
  S=candidate;save();render();beginMusicFromGesture();toast(`Save restored! Welcome back, ${S.avatar.name}! ⭐`);
  }catch(e){toast('Could not restore: '+e.message);}
 }
-function renderUnsafe(){stopExplore();syncMusic();let main;if(!S.started)main=creator();else if(S.screen==='tutorial')main=tutorial();else if(S.screen==='battle')main=battle();else if(S.screen==='victory')main=victory();else if(S.screen==='reward')main=reward();else if(S.screen==='defeat')main=defeat();else if(S.screen==='map')main=worldmap();else if(S.screen==='pets')main=pets();else if(S.screen==='settings')main=settings();else main=adventure();el().innerHTML=header()+(S.started?`<div style="margin-bottom:16px">${toolbar()}</div>`:'')+`<main class="layout ${S.screen==='battle'?'layout-battle':''}">${main}${S.started&&S.screen!=='battle'?sidebar():''}</main><div class="footnote">The Infinite Adventures • Original cartoon world • Your adventure saves automatically • Backup in Settings</div>`;if(S.started&&S.screen==='adventure')requestAnimationFrame(startExplore);}
+function renderUnsafe(){stopExplore();syncMusic();document.body.classList.toggle('battle-mode',S.started&&S.screen==='battle');let main;if(!S.started)main=creator();else if(!learning().gradeSet)main=gradeSetup();else if(S.screen==='tutorial')main=tutorial();else if(S.screen==='battle')main=battle();else if(S.screen==='victory')main=victory();else if(S.screen==='reward')main=reward();else if(S.screen==='defeat')main=defeat();else if(S.screen==='map')main=worldmap();else if(S.screen==='pets')main=pets();else if(S.screen==='learning')main=learningDashboard();else if(S.screen==='settings')main=settings();else main=adventure();el().innerHTML=header()+(S.started?`<div class="toolbar-wrap" style="margin-bottom:16px">${toolbar()}</div>`:'')+`<main class="layout ${S.screen==='battle'?'layout-battle':''}">${main}${S.started&&S.screen!=='battle'?sidebar():''}</main><div class="footnote">The Infinite Adventures • Original cartoon world • Your adventure saves automatically • Backup in Settings</div>`;if(S.started&&S.screen==='adventure')requestAnimationFrame(startExplore);}
 function render(){
  try{return renderUnsafe()}
  catch(problem){
@@ -1091,11 +1398,24 @@ function render(){
  }
 }
 function goHome(){if(S.battle){S.screen='battle'}else if(!S.tutorialDone){S.screen='tutorial'}else if(S.screen==='reward'){return}else if(S.screen==='defeat'){S.hp=S.maxHp;S.screen='adventure'}else S.screen='adventure';save();render()}
-document.addEventListener('click',e=>{const b=e.target.closest('button[data-do]');if(!b)return;const a=b.dataset.do,v=b.dataset.value;switch(a){case'choose':{const key=b.dataset.key;if(!['skin','hair','style','robe'].includes(key))return;S.avatar[key]=Number(v);const i=document.getElementById('hero-name');if(i)S.avatar.name=i.value.slice(0,16);save();render();break}case'start':{const i=document.getElementById('hero-name');if(!i?.value.trim()){toast('Choose a name for your hero first! ✨');i?.focus();return;}S.avatar.name=i.value.trim().slice(0,16);S.started=true;S.screen='tutorial';save();render();beginMusicFromGesture();break}case'retry':{const opponent=S.retryOpponent;S.hp=S.maxHp;tryFight(Boolean(opponent?.isPractice),opponent);break}case'recover':S.hp=S.maxHp;S.screen=S.tutorialDone?'adventure':'tutorial';save();render();break;case'practice':tryFight(true);break;case'fight':tryFight(false);break;case'puzzle':answerPuzzle(Number(v));break;case'home':goHome();break;case'map':S.screen='map';save();render();break;case'pets':S.screen='pets';save();render();break;case'settings':S.screen='settings';save();render();break;case'look':S.screen='settings';save();render();document.getElementById('look-lab')?.scrollIntoView({behavior:'smooth',block:'center'});break;case'continue':S.screen=unlocked()>S.zone?'map':'adventure';save();render();break;case'travel':{const i=Number(v);if(i>unlocked()){toast('Beat more bosses to unlock that place!');break}if(S.battle){toast('Finish your current battle first!');S.screen='battle';render();break}S.zone=i;S.screen='adventure';save();render();break}case'equip':{const id=v;if(!S.pets.some(p=>p.id===id))return;const at=S.equipped.indexOf(id);if(at>=0)S.equipped.splice(at,1);else if(S.equipped.length<2)S.equipped.push(id);else {toast('You can equip only 2 pets! Unequip one first.');return}save();render();break}case'reward':{if(S.screen!=='reward')return;const r=getRewards().find(x=>x.id===v);if(!r)return;if(r.id==='blade')S.attackBonus+=r.value;else if(r.id==='armor')S.armor+=r.value;else if(r.id==='heart'){S.maxHp+=r.value;S.hp=S.maxHp}S.loot.push({name:r.name,id:r.id,value:r.value});S.notice=`You earned ${r.name}! Your next magical adventure awaits.`;S.screen='victory';save();render();break}case'export':downloadSave();break;case'paste-save':{importSave(document.getElementById('save-paste')?.value.trim()||'');break}case'sound':S.soundOn=!S.soundOn;save();render();break;case'music':S.musicOn=!S.musicOn;save();syncMusic();if(S.musicOn)beginMusicFromGesture();render();break;case'reset':{if(window.confirm('DANGER: Reset ALL levels, pets, and gear? Download a backup first.')){S=INITIAL();save();render()};break}}});
+document.addEventListener('click',e=>{const b=e.target.closest('button[data-do]');if(!b)return;const a=b.dataset.do,v=b.dataset.value;switch(a){case'learning':S.screen='learning';save();render();break;case'grade-confirm':{
+  const v=document.getElementById('learning-grade-setup')?.value;
+  if(v===undefined||v===''){toast('Please choose your school grade first! 📚');return;}
+  S.learning=freshLearning(v);
+  if(S.screen==='battle'&&S.battle){S.question=makeQuestion();S.tries=0;}
+  save();render();toast('Your learning adventure begins! ✨');break;
+ }case'grade-reset':{
+  const v=document.getElementById('grade-change')?.value;
+  if(!window.confirm('Restart ONLY academic skill progress at '+GRADE_NAMES[Number(v)]+'? Wizard levels, pets and boss wins remain saved.'))return;
+  S.learning=freshLearning(v);
+  if(S.screen==='battle'){S.question=makeQuestion();S.tries=0;}
+  save();render();toast('Your new learning starting point is ready!');break;
+ }case'choose':{const key=b.dataset.key;if(!['skin','hair','style','robe'].includes(key))return;S.avatar[key]=Number(v);const i=document.getElementById('hero-name');if(i)S.avatar.name=i.value.slice(0,16);save();render();break}case'start':{const i=document.getElementById('hero-name');if(!i?.value.trim()){toast('Choose a name for your hero first! ✨');i?.focus();return;}const grade=document.getElementById('creator-grade')?.value;if(grade===undefined||grade===''){toast('Choose your grade so your thinking journey starts at the right place! 📚');return;}S.learning=freshLearning(grade);S.pendingGrade=null;S.avatar.name=i.value.trim().slice(0,16);S.started=true;S.screen='tutorial';save();render();beginMusicFromGesture();break}case'retry':{const opponent=S.retryOpponent;S.hp=S.maxHp;tryFight(Boolean(opponent?.isPractice),opponent);break}case'recover':S.hp=S.maxHp;S.screen=S.tutorialDone?'adventure':'tutorial';save();render();break;case'practice':tryFight(true);break;case'fight':tryFight(false);break;case'puzzle':answerPuzzle(Number(v));break;case'home':goHome();break;case'map':S.screen='map';save();render();break;case'pets':S.screen='pets';save();render();break;case'settings':S.screen='settings';save();render();break;case'look':S.screen='settings';save();render();document.getElementById('look-lab')?.scrollIntoView({behavior:'smooth',block:'center'});break;case'continue':S.screen=unlocked()>S.zone?'map':'adventure';save();render();break;case'travel':{const i=Number(v);if(i>unlocked()){toast('Beat more bosses to unlock that place!');break}if(S.battle){toast('Finish your current battle first!');S.screen='battle';render();break}S.zone=i;S.screen='adventure';save();render();break}case'equip':{const id=v;if(!S.pets.some(p=>p.id===id))return;const at=S.equipped.indexOf(id);if(at>=0)S.equipped.splice(at,1);else if(S.equipped.length<2)S.equipped.push(id);else {toast('You can equip only 2 pets! Unequip one first.');return}save();render();break}case'reward':{if(S.screen!=='reward')return;const r=getRewards().find(x=>x.id===v);if(!r)return;if(r.id==='blade')S.attackBonus+=r.value;else if(r.id==='armor')S.armor+=r.value;else if(r.id==='heart'){S.maxHp+=r.value;S.hp=S.maxHp}S.loot.push({name:r.name,id:r.id,value:r.value});S.notice=`You earned ${r.name}! Your next magical adventure awaits.`;S.screen='victory';save();render();break}case'export':downloadSave();break;case'paste-save':{importSave(document.getElementById('save-paste')?.value.trim()||'');break}case'sound':S.soundOn=!S.soundOn;save();render();break;case'music':S.musicOn=!S.musicOn;save();syncMusic();if(S.musicOn)beginMusicFromGesture();render();break;case'reset':{if(window.confirm('DANGER: Reset ALL levels, pets, and gear? Download a backup first.')){S=INITIAL();save();render()};break}}});
 document.addEventListener('change',async e=>{if(e.target.id==='import-file'){const file=e.target.files?.[0];if(!file)return;try{if(file.size>5000000)throw Error('File is too large.');importSave(await file.text())}catch(err){toast('Could not read save file: '+err.message)}e.target.value=''}});
 document.addEventListener('submit',e=>{if(e.target.id==='math-form'){e.preventDefault();mathSubmit()}});
 document.addEventListener('input',e=>{
  if(e.target.id==='hero-name'){S.avatar.name=e.target.value.slice(0,16);save();}
+ if(e.target.id==='creator-grade'){S.pendingGrade=Number(e.target.value);save();}
  if(e.target.id==='music-volume'){S.musicVolume=Math.max(0,Math.min(100,Number(e.target.value)||0));document.getElementById('music-volume-number').textContent=S.musicVolume+'%';save();syncMusic();}
  if(e.target.id==='realisticness-bar'){
   S.realism=Math.max(0,Math.min(100,Number(e.target.value)||0));save();
