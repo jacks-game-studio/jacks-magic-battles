@@ -130,6 +130,37 @@ body{background:radial-gradient(ellipse at 15% 0%,#546388 0%,transparent 52%),li
 .look-note{font-size:12px!important;color:#bbdce0!important;margin:10px 0 0!important}
 @media(max-width:540px){.look-previews{grid-template-columns:repeat(2,minmax(0,1fr))}.look-card svg{height:125px}}
 
+
+/* Turn-based battle: keep artwork and puzzles in the same viewport on a laptop. */
+.layout-battle{display:block!important;max-width:1200px}
+.battle-panel{width:100%;padding:18px 22px}
+.battle-header{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:8px}
+.battle-header .tag{margin-bottom:3px}.battle-header h2{font-size:clamp(20px,2.7vw,27px);margin:0}
+.battle-split{display:grid;grid-template-columns:minmax(0,1.08fr) minmax(0,1fr);align-items:start;gap:18px}
+.battle-stage,.battle-questions{min-width:0}
+.battle-stage .arena-scene{margin:0 0 8px;height:clamp(220px,27vw,292px)}
+.battle-stage .battle-hp{margin:8px 0;gap:8px}
+.battle-feedback{font-size:12px!important;margin:8px 0}
+.battle-questions .puzzle-card{margin:7px 0;padding:13px}
+.battle-questions .puzzle-heading{font-size:17px;line-height:1.3;margin-bottom:8px}
+.battle-questions .puzzle-pattern{margin:7px auto 8px;min-height:40px}
+.battle-questions .puzzle-grid{margin:4px auto 12px}
+.battle-questions .puzzle-tile{width:50px;height:52px}
+.battle-questions .puzzle-choices{gap:7px}
+.battle-questions .puzzle-choice{min-height:65px;padding:5px 3px;font-size:18px}
+.battle-questions .symbol-pic{width:37px;height:37px}
+.battle-questions .puzzle-note{margin-top:8px}
+.turn-strip{display:flex;align-items:center;gap:4px;flex-wrap:wrap;background:#111d35;padding:9px;border:1px solid #a1d3e867;border-radius:15px;margin-bottom:8px}
+.turn-pill{background:#ffffff13;color:#d9e8e8;border:1px solid #ffffff20;padding:7px 8px;border-radius:10px;font-size:11px;font-weight:800;white-space:nowrap}
+.turn-pill.active{color:#243b43;background:#ffe3a3;border-color:#ffcc6d;box-shadow:0 2px 0 #cc905f}
+.turn-pill.enemy-turn{color:#ffb5b8}.turn-arrow{font-size:11px;color:#acccca}
+.turn-heading{font-size:15px;font-weight:850;color:#ffe2ab}
+.sidekick.is-turn{transform:scale(1.1);filter:drop-shadow(0 0 10px #fff9a3)!important}
+.player-actor.is-turn{filter:drop-shadow(0 0 12px #e6ffb3)}
+.music-controls{background:#8fe7d519;border:1px solid #9bd9cd85;padding:15px;border-radius:15px;margin:12px 0}
+.music-controls input[type=range]{width:100%;accent-color:#9deaca;height:30px}
+@media(max-width:850px){.battle-split{grid-template-columns:1fr}.battle-stage .arena-scene{height:220px}.battle-stage .actor{height:148px;bottom:26px}.battle-stage .actor .avatar-svg{height:144px;width:130px}.battle-stage .arena-pets{bottom:30px}.battle-stage .enemy-actor .beast-svg{height:145px}.battle-stage .arena-name{font-size:10px}.battle-questions .puzzle-choices{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media(max-width:480px){.battle-panel{padding:13px}.battle-stage .arena-scene{height:185px}.battle-stage .actor{height:132px;bottom:23px}.battle-stage .arena-name{bottom:4px}.battle-questions .puzzle-choices{grid-template-columns:repeat(2,minmax(0,1fr))}.battle-questions .puzzle-choice{min-height:57px}.turn-pill{font-size:10px}}
 </style>
 </head>
 <body><div id="app" class="shell"></div><div id="toast" role="status" aria-live="polite"></div>
@@ -153,9 +184,9 @@ function zoneInfo(index=S.zone){const z=ZONES[index]||ZONES[0];if(index!==ZONES.
 const themes=[['Verdant Basin','🌿',['#b3ddb8','#6fab91','#4a796b'],['🌳','🍃','🌻']],['Sunset Outpost','🏕️',['#efccaa','#c88e79','#97646d'],['🌵','⛺','🪨']],['Rainy Port','🌧️',['#b3d6e3','#81acbc','#5a779c'],['🌧️','⛵','⚓']],['Silver Valley','🗻',['#d8e3eb','#9eaec3','#5d819b'],['🌲','🏔️','❄️']]];
 const chap=Math.max(1,1+Math.floor(Math.max(0,S.bossWins-50)/5)),t=themes[(chap-1)%themes.length];return {...z,name:`${t[0]} · Chapter ${chap}`,emoji:t[1],colors:t[2],props:t[3]};}
 const STYLES=['Spiky','Short','Curly','Long'];const SKINS=['#f4d0b4','#d7a079','#a46c4d','#69402f'];const HAIRS=['#392339','#67402d','#e4b24c','#273866','#f5eff1'];const ROBES=['#7354d3','#259ab4','#db665e','#55a978','#dfad4e'];
-const INITIAL=()=>({walkPos:{},lastPuzzleKind:'',reasoning:{tier:1,streak:0,misses:0,solved:0},retryOpponent:null,started:false,tutorialDone:false,screen:'creator',avatar:{name:'',skin:0,hair:0,style:0,robe:0},level:1,maxHp:250,hp:250,attackBonus:0,armor:0,completed:0,bossWins:0,zone:0,pets:[],equipped:[],loot:[],battle:null,question:null,tries:0,totalAnswered:0,endlessWins:0,notice:'',lastRecruit:null,soundOn:false,realism:30});
+const INITIAL=()=>({walkPos:{},lastPuzzleKind:'',reasoning:{tier:1,streak:0,misses:0,solved:0},retryOpponent:null,started:false,tutorialDone:false,screen:'creator',avatar:{name:'',skin:0,hair:0,style:0,robe:0},level:1,maxHp:250,hp:250,attackBonus:0,armor:0,completed:0,bossWins:0,zone:0,pets:[],equipped:[],loot:[],battle:null,question:null,tries:0,totalAnswered:0,endlessWins:0,notice:'',lastRecruit:null,soundOn:false,realism:30,musicOn:true,musicVolume:45});
 let S=load();let previewName=S.avatar.name;let animating=false;
-function load(){try{const a=JSON.parse(localStorage.getItem(SAVE_KEY));if(a&&typeof a==='object'&&a.avatar&&Number.isFinite(a.level))return {...INITIAL(),...a,realism:Number.isFinite(Number(a.realism))?Math.max(0,Math.min(100,Number(a.realism))):30,walkPos:a.walkPos||{},avatar:{...INITIAL().avatar,...a.avatar}}}catch(e){}return INITIAL()}
+function load(){try{const a=JSON.parse(localStorage.getItem(SAVE_KEY));if(a&&typeof a==='object'&&a.avatar&&Number.isFinite(a.level))return {...INITIAL(),...a,musicOn:a.musicOn!==false,musicVolume:Number.isFinite(Number(a.musicVolume))?Math.max(0,Math.min(100,Number(a.musicVolume))):45,realism:Number.isFinite(Number(a.realism))?Math.max(0,Math.min(100,Number(a.realism))):30,walkPos:a.walkPos||{},avatar:{...INITIAL().avatar,...a.avatar}}}catch(e){}return INITIAL()}
 function save(){try{localStorage.setItem(SAVE_KEY,JSON.stringify(S))}catch(e){}}
 const el=()=>document.getElementById('app');const escapeHtml=(t)=>String(t??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const reasoning=()=>S.reasoning||(S.reasoning={tier:1,streak:0,misses:0,solved:0});
@@ -165,7 +196,7 @@ const rand=(a,b)=>Math.floor(Math.random()*(b-a+1))+a;
 function toast(t){const o=document.getElementById('toast');o.textContent=t;clearTimeout(toast.t);toast.t=setTimeout(()=>o.textContent='',2600)}
 function avatarSVG({skin=0,hair=0,style=0,robe=0}={},mini=false){const face=SKINS[skin]||SKINS[0],hc=HAIRS[hair]||HAIRS[0],rc=ROBES[robe]||ROBES[0];const hairShapes=[`<path d="M71 91 Q65 52 87 52 L101 42 L107 55 L125 39 L130 56 Q160 45 159 91 Q145 73 131 76 Q104 61 78 87Z" fill="${hc}"/>`,`<path d="M71 90 Q63 44 116 47 Q165 46 160 91 L149 81 Q109 65 78 86Z" fill="${hc}"/>`,`<g fill="${hc}"><circle cx="82" cy="68" r="17"/><circle cx="100" cy="54" r="18"/><circle cx="124" cy="53" r="20"/><circle cx="143" cy="63" r="17"/><circle cx="152" cy="83" r="13"/><circle cx="74" cy="86" r="12"/></g>`,`<path d="M71 79 Q69 44 112 47 Q156 41 162 79 L164 164 L149 157 L144 85 Q102 62 78 87 L77 162 L61 167Z" fill="${hc}"/>`];return `<svg aria-label="Your wizard" role="img" class="${mini?'avatar-svg avatar-mini':'avatar-svg'}" viewBox="0 0 230 265"><ellipse cx="115" cy="246" rx="66" ry="12" fill="#12122a" opacity=".35"/><path d="M76 167 Q111 147 154 164 L178 237 Q116 254 50 235Z" fill="${rc}" stroke="#181e49" stroke-width="5"/><path d="M107 162 L116 236 L125 162" fill="#eac6ff" opacity=".8"/><path d="M78 179 L44 209 Q35 217 45 225 Q57 228 64 217 L96 195Z" fill="${rc}"/><path d="M153 180 L185 211 Q194 216 188 227 Q177 234 166 218 L136 197Z" fill="${rc}"/><circle cx="51" cy="220" r="10" fill="${face}"/><circle cx="181" cy="221" r="10" fill="${face}"/><path d="M63 237 L64 249 L88 249 L95 235 M135 237 L143 249 L165 249 L169 234" fill="#41336a" stroke="#292247" stroke-width="5"/><circle cx="115" cy="108" r="47" fill="${face}" stroke="#272044" stroke-width="4"/><path d="M84 110 Q92 102 101 111 M129 111 Q138 102 146 111" stroke="#303146" stroke-width="5" stroke-linecap="round" fill="none"/><circle cx="94" cy="111" r="3" fill="#fff"/><circle cx="138" cy="111" r="3" fill="#fff"/><path d="M108 130 Q115 137 123 130" stroke="#985a6a" stroke-width="3" fill="none" stroke-linecap="round"/>${hairShapes[style]||hairShapes[0]}<path d="M186 215 L213 101" stroke="#7f5b3b" stroke-width="7" stroke-linecap="round"/><circle cx="216" cy="93" r="13" fill="#ffe480"/><path d="M216 66 L221 80 L235 86 L222 91 L217 106 L212 92 L199 86 L210 80Z" fill="#fff7c1"/><path d="M72 182 Q110 197 155 182" fill="none" stroke="#fff" opacity=".2" stroke-width="4"/>${Number(S.realism||0)>0?`<g opacity="${(Number(S.realism||0)/100).toFixed(2)}" stroke="#e4d5fa" fill="none" stroke-width="2.2"><path d="M94 175 Q85 207 91 240 M130 180 Q136 207 135 239 M73 216 Q87 229 104 222"/><path d="M80 89 Q105 72 136 85" stroke="#fff" opacity=".55"/></g>`:''}</svg>`}
 function header(){return `<header class="top"><div class="brand"><div class="logo">✨</div><div><div class="eyebrow">Explore • Discover • Think</div><h1>The Infinite Adventures <span class="versionlabel">🎨 Look Lab</span></h1></div></div><div class="stats"><div class="chip">⚔️ Battles <b>${S.completed}</b></div><div class="chip">⭐ Level <b>${S.level}</b></div><div class="chip">👑 Bosses <b>${S.bossWins}</b></div></div></header>`}
-function toolbar(){if(!S.started)return '';return `<div class="sectionnav"><button class="btn ghost smallbtn" data-do="home">🏠 Adventure</button><button class="btn ghost smallbtn" data-do="map">🗺️ World Map</button><button class="btn ghost smallbtn" data-do="pets">🐾 Pet Helpers (${S.equipped.length}/2)</button><button class="btn teal smallbtn" data-do="export">💾 Backup Save</button><button class="btn purple smallbtn" data-do="look">🎨 Realisticness Bar</button><button class="btn ghost smallbtn" data-do="settings">⚙️ Settings</button></div>`}
+function toolbar(){if(!S.started)return '';return `<div class="sectionnav"><button class="btn ghost smallbtn" data-do="home">🏠 Adventure</button><button class="btn ghost smallbtn" data-do="map">🗺️ World Map</button><button class="btn ghost smallbtn" data-do="pets">🐾 Pet Helpers (${S.equipped.length}/2)</button><button class="btn ghost smallbtn" data-do="music">${S.musicOn?'🎶 Music On':'🔇 Music Off'}</button><button class="btn teal smallbtn" data-do="export">💾 Backup Save</button><button class="btn purple smallbtn" data-do="look">🎨 Realisticness Bar</button><button class="btn ghost smallbtn" data-do="settings">⚙️ Settings</button></div>`}
 function sidebar(){const pets=S.equipped.map(i=>S.pets.find(p=>p.id===i)).filter(Boolean);return `<aside class="rightcol"><section class="panel"><div class="eyebrow">YOUR WIZARD</div><div class="row">${avatarSVG(S.avatar,true)}<div><h3>${escapeHtml(S.avatar.name||'Adventurer')}</h3><div class="tiny">Level ${S.level} • Spellcaster</div><div class="tiny">🗡️ Power ${power()}<br>🛡️ Armor ${S.armor}<br>🧠 Puzzles: ${skillLabels[reasoning().tier]}</div></div></div><div class="healthtxt"><span>❤️ Health</span><span class="number">${S.hp.toLocaleString()}/${S.maxHp.toLocaleString()}</span></div><div class="progresswrap"><div class="progressfill" style="width:${Math.max(0,100*S.hp/S.maxHp)}%"></div></div><div style="height:17px"></div><div class="eyebrow">EQUIPPED PET HELPERS</div><div class="helperpills">${pets.length?pets.map(p=>`<span class="helperpill">${p.emoji} ${escapeHtml(p.name)}</span>`).join(''):'<span class="tiny">Defeat monsters to collect pets!</span>'}</div></section><section class="panel"><div class="eyebrow">WORLD PROGRESS</div><h3>${zoneInfo().emoji} ${zoneInfo().name}</h3><p class="small">Every 3rd battle is a boss! Every 5 boss wins unlocks another world.</p><div class="healthtxt"><span>Next new world</span><span>${Math.min(5,S.bossWins%5)}/5 bosses</span></div><div class="progresswrap"><div class="progressfill" style="width:${S.zone===ZONES.length-1?100:(S.bossWins%5)*20}%;background:linear-gradient(90deg,#77efb1,#87dffa)"></div></div>${S.zone===3?'<p class="small">♾️ Endless mode unlocked!</p>':''}</section></aside>`}
 function swatches(key,colors){return `<div class="swatches">${colors.map((c,i)=>`<button aria-label="${key} color ${i+1}" title="${key} color ${i+1}" class="swatch ${S.avatar[key]===i?'selected':''}" data-do="choose" data-key="${key}" data-value="${i}" style="background:${c}"></button>`).join('')}</div>`}
 function creator(){return `<div class="panel wide"><span class="tag">🪄 STEP 1 · DESIGN YOUR HERO</span><div class="herohead"><h2>Create your magical character!</h2><p>Pick your look, name your wizard, and begin your adventure.</p></div><div class="creatorgrid"><div><div class="avatararea"><span class="star">✦</span><span class="star">✦</span><span class="star">✦</span>${avatarSVG(S.avatar)}</div><label class="formlabel" for="hero-name">YOUR WIZARD NAME</label><input id="hero-name" class="nameinput" required maxlength="16" value="${escapeHtml(S.avatar.name)}" placeholder="Name your wizard"/></div><div><label class="formlabel">CHOOSE SKIN COLOR</label>${swatches('skin',SKINS)}<label class="formlabel">HAIR STYLE</label><div class="row">${STYLES.map((v,i)=>`<button class="stylepick ${i===S.avatar.style?'selected':''}" data-do="choose" data-key="style" data-value="${i}">${v}</button>`).join('')}</div><label class="formlabel">HAIR COLOR</label>${swatches('hair',HAIRS)}<label class="formlabel">WIZARD ROBE COLOR</label>${swatches('robe',ROBES)}<div class="buttonrow"><button class="btn" data-do="start">✨ Start Adventure!</button></div></div></div><div class="safe-box" style="margin-top:22px"><h3>💾 Already have an adventure?</h3><p>Keep your levels, pet helpers and equipment! Restore your original save instead of starting again.</p><div class="row"><label for="import-file" class="btn teal smallbtn" style="cursor:pointer;display:inline-flex;align-items:center">⬆️ Restore Save File</label><input id="import-file" class="filepick" type="file" accept=".json,application/json"/></div><details style="margin-top:12px"><summary style="cursor:pointer;font-weight:800">Or paste your old saved game text</summary><textarea class="save-paste" id="save-paste" placeholder="Paste save JSON from Dad's backup"></textarea><button class="btn teal smallbtn" data-do="paste-save">Restore My Adventure</button></details></div></div>`}
@@ -179,7 +210,7 @@ function tryFight(isPractice=false,pick=null){
  const team=S.equipped.map(id=>S.pets.find(p=>p.id===id)).filter(Boolean),total=power()+team.reduce((n,p)=>n+Math.round(p.strength+S.level*14),0);
  const hp=isPractice?250:Math.min(4000000,Math.max(boss?1000:350,Math.round(total*(boss?6.9+S.zone*.24:3.0+S.zone*.13))));
  const attack=isPractice?14:Math.max(Math.ceil(S.maxHp*(boss?.28:.22))+S.armor,Math.floor(20+S.level*29+S.zone*30+(boss?S.level*6:0))); // percent of health means even strong heroes can lose
- S.battle={name,emoji,isBoss:boss,isPractice,hp,maxHp:hp,attack,turn:0,activePet:null,fallenPets:[],petHp:0,petMaxHp:0,feed:`${emoji} ${name} makes the first move. Think through the puzzle and lead your team!`};
+ S.battle={name,emoji,isBoss:boss,isPractice,hp,maxHp:hp,attack,turn:0,nextIndex:0,hits:[],activePet:null,fallenPets:[],petHp:0,petMaxHp:0,feed:`${emoji} ${name} makes the first move. Think through the puzzle and lead your team!`};
  S.tries=0;S.question=makeQuestion();S.screen='battle';opponentAttack(true);save();render();setTimeout(playEnemyAnimation,160);
 }
 // NGAT-inspired original reasoning puzzles: adaptive steps within child-friendly elementary logic; no official test questions.
@@ -187,13 +218,72 @@ function tryFight(isPractice=false,pick=null){
 function pic(shape,color){return {shape,color};}
 function options(values,correct){const x=values.map((v,i)=>({v,correct:i===correct}));for(let i=x.length-1;i>0;i--){const j=rand(0,i);[x[i],x[j]]=[x[j],x[i]]}return {choices:x.map(a=>a.v),answer:x.findIndex(a=>a.correct)}}
 function makeQuestion(){
- const types=['picture','sequence','grid','numbers','count','analogy'];
+ const types=['picture','sequence','grid','numbers','count','analogy','addition','subtraction','word','difference','missing','numberbond','compare','verbal','logic','spatial','skip','picturemath','patterns','oddword'];
  let kind=types[rand(0,types.length-1)];if(kind===S.lastPuzzleKind)kind=types[(types.indexOf(kind)+1+rand(0,3))%types.length];S.lastPuzzleKind=kind;
+ // Original practice puzzles: more variety, still kept near first-grade expectations.
+ const lvl=Math.max(1,Math.min(4,reasoning().tier));
+ const maxAdd=[0,10,18,24,35][lvl];
+ function numericChoices(correct){const pool=[correct-2,correct-1,correct+1,correct+2,correct+3,correct-3,correct+4,correct-4,correct+5,correct+6].filter((n,i,a)=>n>=0&&n!==correct&&a.indexOf(n)===i);for(let i=pool.length-1;i>0;i--){let j=rand(0,i);[pool[i],pool[j]]=[pool[j],pool[i]];}return options([correct,...pool.slice(0,3)],0);}
+ if(kind==='addition'){
+  const a=rand(1,maxAdd-2),b=rand(1,Math.max(2,maxAdd-a));const sum=a+b;
+  return {kind,domain:'Adding numbers',prompt:`What is ${a} + ${b}?`,...numericChoices(sum),hint1:'Start with the larger number and count on.',hint2:`${a} plus ${b} makes ${sum}.`};
+ }
+ if(kind==='subtraction'){
+  const n=rand(5,maxAdd+3),take=rand(1,Math.min(n-1,7+lvl*2));return {kind,domain:'Subtracting numbers',prompt:`What is ${n} − ${take}?`,...numericChoices(n-take),hint1:'Try counting backwards or drawing dots.',hint2:`Start with ${n} and take away ${take}. The answer is ${n-take}.`};
+ }
+ if(kind==='word'){
+  const stories=[['Mina has {a} marbles. She finds {b} more. How many marbles now?',1],['A dragon collected {a} crystals, then collected {b} more. How many altogether?',1],['There are {a} birds on a branch. {b} fly away. How many are left?',-1],['A shop had {a} apples. It sold {b}. How many remain?',-1],['{a} pets are playing and {b} more join. How many pets are there?',1],['A wizard has {a} gems and gives away {b}. How many gems remain?',-1]];
+  const [story,sign]=stories[rand(0,stories.length-1)],a=sign===1?rand(3,maxAdd-3):rand(5,maxAdd+2),b=sign===1?rand(1,Math.min(9,maxAdd-a)):rand(1,Math.min(a-1,9+lvl*2)),answer=a+sign*b;
+  return {kind,domain:'Story problems',prompt:story.replaceAll('{a}',String(a)).replaceAll('{b}',String(b)),...numericChoices(answer),hint1:sign===1?'Someone gets more. Add the numbers.':'Some things go away. Subtract.',hint2:`${a} ${sign===1?'+':'−'} ${b} = ${answer}.`};
+ }
+ if(kind==='difference'){
+  const a=rand(2,8+lvl*3),b=a+rand(1,Math.min(8,1+lvl*2));return {kind,domain:'Compare quantities',prompt:`A fox has ${a} acorns and an owl has ${b}. How many MORE does the owl have?`,...numericChoices(b-a),hint1:'Count up from the smaller amount to the larger.',hint2:`${b} minus ${a} is ${b-a}.`};
+ }
+ if(kind==='missing'){
+  const a=rand(1,5+lvl*2),answer=rand(1,5+lvl*2),sum=a+answer;return {kind,domain:'Missing numbers',prompt:`Find the missing number: ${a} + ? = ${sum}`,...numericChoices(answer),hint1:'What do you add to the first number to get the total?',hint2:`${sum} minus ${a} is ${answer}.`};
+ }
+ if(kind==='numberbond'){
+  const total=rand(4,10+lvl*4),part=rand(1,total-1),answer=total-part;return {kind,domain:'Parts and wholes',prompt:`A box holds ${total} stars. ${part} are yellow and the rest are blue. How many are blue?`,...numericChoices(answer),hint1:'The two colors together make the total.',hint2:`${part} + ${answer} = ${total}.`};
+ }
+ if(kind==='compare'){
+  const a=rand(1,maxAdd),b=rand(1,maxAdd);const x=a===b?b+1:b;
+  const answer=a>x?'Left':a<x?'Right':'Same';return {kind,domain:'Number comparisons',prompt:`Which side has the greater number? LEFT: ${a}  ·  RIGHT: ${x}`,...options(['Left','Right','Same','Not enough information'],['Left','Right','Same','Not enough information'].indexOf(answer)),hint1:'Which number is bigger?',hint2:`${Math.max(a,x)} is greater than ${Math.min(a,x)}.`};
+ }
+ if(kind==='verbal'){
+  const pair=[['Bird','nest','Bee','hive','pond','desk','car'],['Fish','water','Bird','sky','shoe','book','hat'],['Puppy','dog','Kitten','cat','fish','rock','tree'],['Day','sun','Night','moon','apple','kite','shoe'],['Hand','glove','Foot','sock','cup','plate','hat'],['Chef','kitchen','Teacher','classroom','river','cave','forest'],['Rain','umbrella','Sun','sunglasses','mittens','sled','towel']][rand(0,6)];
+  return {kind,domain:'Word relationships',prompt:`${pair[0]} goes with ${pair[1]}. ${pair[2]} goes with ...?`,...options([pair[3],pair[4],pair[5],pair[6]],0),hint1:'Think how the first two words go together.',hint2:`${pair[2]} goes with ${pair[3]}.`};
+ }
+ if(kind==='logic'){
+  const things=[['owl','fox','deer'],['red','blue','green'],['small','medium','large']][rand(0,2)];
+  const [small,medium,large]=things;
+  const prompt=things[0]==='small'?`${small} is shorter than ${medium}. ${medium} is shorter than ${large}. Which is tallest?`:`The ${small} goes before the ${medium}. The ${medium} goes before the ${large}. Which comes LAST?`;
+  return {kind,domain:'Logical reasoning',prompt,...options([small,large,medium,'All equal'],1),hint1:'Follow the order one step at a time.',hint2:`${large} comes last.`};
+ }
+ if(kind==='spatial'){
+  const ways=[['up','right','↗ North-east'],['down','right','↘ South-east'],['up','left','↖ North-west'],['down','left','↙ South-west']];const pair=ways[rand(0,3)],choices=ways.map(x=>x[2]);
+  return {kind,domain:'Directions and position',prompt:`A rabbit hops one square ${pair[0]}, then one square ${pair[1]}. Where is it from the start?`,...options(choices,ways.indexOf(pair)),hint1:'Picture where the rabbit ends up on a grid.',hint2:`It is ${pair[2]} of the starting square.`};
+ }
+ if(kind==='skip'){
+  const step=[2,5,10][rand(0,lvl<3?1:2)],start=step*rand(0,3);const numbers=[start,start+step,start+2*step,start+3*step],answer=start+4*step;
+  return {kind,domain:'Skip-counting',prompt:'Continue the counting pattern.',numbers,...numericChoices(answer),hint1:'Count the difference between the numbers.',hint2:`Count by ${step}s. The next number is ${answer}.`};
+ }
+ if(kind==='picturemath'){
+  const symbol=['🍓','⭐','🐚','🍋','💎'][rand(0,4)],a=rand(2,4+lvl),b=rand(1,3+lvl),answer=a+b;
+  return {kind,domain:'Picture arithmetic',prompt:`Count the pictures: ${symbol.repeat(a)} and ${symbol.repeat(b)}. How many in all?`,...numericChoices(answer),hint1:'Count each group, then add the groups.',hint2:`${a} plus ${b} is ${answer}.`};
+ }
+ if(kind==='patterns'){
+  const symbols=['🐱','🐶','🐸','🦉','🦊','🐼'],a=symbols[rand(0,2)],b=symbols[rand(3,5)];
+  const arr=lvl>=3?[a,a,b,a,a]:[a,b,b,a,b];const answer=lvl>=3?b:b;
+  return {kind,domain:'Picture sequences',prompt:`What animal comes next? ${arr.join('  ')}  ?`,...options([answer,a,'🦋','🐢'],0),hint1:'Find a repeating group of animals.',hint2:lvl>=3?'The pattern is two of the first, then one of the second.':'The pattern is one of the first, then two of the second.'};
+ }
+ if(kind==='oddword'){
+  const sets=[['carrot','pepper','broccoli','bicycle'],['circle','square','triangle','pillow'],['hammer','saw','drill','banana'],['violin','drum','piano','mountain'],['oak','maple','pine','scooter'],['morning','afternoon','evening','elephant']];const arr=sets[rand(0,5)];return {kind,domain:'Sorting ideas',prompt:'Which word does NOT belong with the other three?',...options(arr,3),hint1:'Find three words in the same category.',hint2:`${arr[3]} belongs to a different category.`};
+ }
  const shapes=['circle','square','triangle','diamond','star'];
  const colors=['#e46c63','#5d9acf','#65a77a','#e4a957'];
  const tier=reasoning().tier;
  if(kind==='picture'){
-  const sets=[{same:['🐶','🐱','🐰','🐻'],other:'🚗',why:'Four pictures are animals, and one is a vehicle.'},{same:['🍎','🍌','🍇','🍐'],other:'🧦',why:'Four pictures are fruit, and one is clothing.'},{same:['🚲','🚗','🚌','🚕'],other:'🍪',why:'Four pictures are ways to travel, and one is food.'},{same:['👕','🧥','🧦','👟'],other:'🐟',why:'Four pictures are things you wear, and one is an animal.'},{same:['⚽','🏀','🏈','🎾'],other:'🥕',why:'Four pictures are sports balls, and one is food.'}];
+  const sets=[{same:['🐶','🐱','🐰','🐻'],other:'🚗',why:'Three pictures are animals, and one is a vehicle.'},{same:['🍎','🍌','🍇','🍐'],other:'🧦',why:'Three pictures are fruit, and one is clothing.'},{same:['🚲','🚗','🚌','🚕'],other:'🍪',why:'Three pictures are ways to travel, and one is food.'},{same:['👕','🧥','🧦','👟'],other:'🐟',why:'Three pictures are things you wear, and one is an animal.'},{same:['⚽','🏀','🏈','🎾'],other:'🥕',why:'Three pictures are sports balls, and one is food.'}];
   const set=sets[rand(0,sets.length-1)],o=options([...set.same.slice(0,3),set.other],3);
   return {kind,domain:'Picture thinking',prompt:'Which picture does NOT belong with the others?',...o,hint1:'Find four pictures that have something in common.',hint2:set.why};
  }
@@ -237,9 +327,9 @@ function puzzleCard(){const q=S.question;if(!q||!q.choices)return `<div class="f
  else if(q.kind==='numbers')top=`<div class="puzzle-pattern">${q.numbers.map(x=>tile(x,q.kind)).join('')}${tile(null)}</div>`;
  else if(q.kind==='count')top=`<div class="puzzle-pattern">${q.groups.map(x=>tile(x,'count')).join('')}${tile(null)}</div>`;
  const hint=S.tries>0?`<div class="puzzle-hint">💡 ${escapeHtml(S.tries>=3?q.hint2:q.hint1)} · Each mistake earns you another hint.</div>`:'';
- return `<div class="puzzle-card"><div class="puzzle-type">🧠 NGAT-inspired • ${escapeHtml(q.domain)} • ${skillLabels[reasoning().tier]}</div><div class="puzzle-heading">${escapeHtml(q.prompt)}</div>${top}<div class="puzzle-choices">${q.choices.map((v,i)=>`<button type="button" class="puzzle-choice ${S.tries>=4&&i!==q.answer?'weakened':''}" data-do="puzzle" data-value="${i}" aria-label="Choice ${i+1}"><span class="letter">${String.fromCharCode(65+i)}</span>${pictured(v,q.kind)}</button>`).join('')}</div>${hint}<div class="puzzle-note">Pick an answer to power your next attack. Puzzles adapt slowly to your answers. Wrong guesses give hints, not damage.</div></div>`;
+ return `<div class="puzzle-card"><div class="puzzle-type">🧠 ${['addition','subtraction','word','difference','missing','numberbond','picturemath'].includes(q.kind)?'Math practice':'NGAT-inspired reasoning'} • ${escapeHtml(q.domain)} • ${skillLabels[reasoning().tier]}</div><div class="puzzle-heading">${escapeHtml(q.prompt)}</div>${top}<div class="puzzle-choices">${q.choices.map((v,i)=>`<button type="button" class="puzzle-choice ${S.tries>=4&&i!==q.answer?'weakened':''}" data-do="puzzle" data-value="${i}" aria-label="Choice ${i+1}"><span class="letter">${String.fromCharCode(65+i)}</span>${pictured(v,q.kind)}</button>`).join('')}</div>${hint}<div class="puzzle-note">Solve one puzzle for EACH fighter’s turn. Questions adapt gently; wrong guesses give hints without losing your turn.</div></div>`;
 }
-function miniAvatar(p,idx){const avatar={skin:idx%4,hair:(idx+2)%5,style:(idx+1)%4,robe:(idx+1)%5};return `<span class="sidekick" id="sidekick-${idx}" title="${escapeHtml(p.name)} — ${escapeHtml(p.special)}">${avatarSVG(avatar,true)}<span class="sigil">${p.emoji}</span></span>`}
+function miniAvatar(p,idx){const avatar={skin:idx%4,hair:(idx+2)%5,style:(idx+1)%4,robe:(idx+1)%5};return `<span class="sidekick ${S.screen==='battle'&&!currentActor()?.main&&currentActor()?.id===p.id?'is-turn':''}" id="sidekick-${idx}" title="${escapeHtml(p.name)} — ${escapeHtml(p.special)}">${avatarSVG(avatar,true)}<span class="sigil">${p.emoji}</span></span>`}
 function creatureFamily(b){
  const n=String(b?.name||'').toLowerCase(),e=b?.emoji||'';
  if(/dragon|lizard|serpent|runner|armadillo/.test(n)||['🐲','🦎','🐍'].includes(e))return 'dragon';
@@ -282,7 +372,7 @@ function activateNextPet(){
  const b=S.battle;if(!b)return false;
  const next=S.equipped.map(id=>S.pets.find(p=>p.id===id)).find(p=>p&&!b.fallenPets.includes(p.id));
  if(!next){lostBattle();return false;}
- b.activePet=next.id;b.petMaxHp=capturedHealth(next);b.petHp=b.petMaxHp;
+ b.activePet=next.id;b.nextIndex=0;b.petMaxHp=capturedHealth(next);b.petHp=b.petMaxHp;
  b.feed=`💫 ${S.avatar.name||'Your hero'} fell! ${next.emoji} ${next.name} takes over with ${b.petMaxHp.toLocaleString()} HP and your hero's attack power. Keep fighting!`;
  return true;
 }
@@ -306,25 +396,34 @@ function opponentAttack(first=false){
  if(b.isBoss&&b.turn>0&&b.turn%4===3&&S.screen==='battle')b.feed+=' ⚠️ WARNING: A 100,000-power mega strike is charging for the next turn!';
  save();
 }
+function currentActors(){
+ const b=S.battle;if(!b)return [];
+ const equipped=S.equipped.map(id=>S.pets.find(p=>p.id===id)).filter(Boolean);
+ const leader=b.activePet?equipped.find(p=>p.id===b.activePet):null;
+ return [{id:leader?.id||'hero',name:leader?.name||S.avatar.name||'Hero',emoji:leader?.emoji||'🧙',pet:leader,main:true},...equipped.filter(p=>p.id!==b.activePet&&!b.fallenPets.includes(p.id)).map(p=>({id:p.id,name:p.name,emoji:p.emoji,pet:p,main:false}))];
+}
+function currentActor(){const b=S.battle;if(!b)return null;const actors=currentActors();b.nextIndex=Math.max(0,Math.min(Number(b.nextIndex)||0,actors.length-1));return actors[b.nextIndex]||actors[0]||null;}
 async function answerPuzzle(i){
  if(animating||S.screen!=='battle'||!S.question?.choices)return;
  const q=S.question;if(!Number.isInteger(i)||i<0||i>=q.choices.length)return;
  S.totalAnswered++;
- if(i!==q.answer){S.tries++;S.battle.feed=`Try again, ${S.avatar.name}! Look for the pattern. No damage or lost turn. Your next try gets easier.`;save();render();return;}
- animating=true;recordPuzzle(S.tries);S.tries=0;const b=S.battle;
- const heroDamage=power();b.hp=Math.max(0,b.hp-heroDamage);
- await new Promise(resolve=>playSpellAnimation(heroDamage,0,resolve));
- const actions=[`${escapeHtml(S.avatar.name)} dealt ${heroDamage.toLocaleString()}`];
- const pets=S.equipped.map(id=>S.pets.find(p=>p.id===id)).filter(Boolean);
- for(let idx=0;idx<pets.length;idx++){
-  if(b.hp<=0)break;const p=pets[idx];if(b.activePet===p.id||b.fallenPets?.includes(p.id))continue;const dmg=Math.floor(p.strength+S.level*14);
-  await new Promise(resolve=>animateSidekick(idx,dmg,resolve));b.hp=Math.max(0,b.hp-dmg);
-  actions.push(`${p.emoji} ${p.name} used ${p.special} for ${dmg.toLocaleString()}`);
- }
- b.turn++;
- if(b.hp<=0){wonBattle(actions.slice(1),heroDamage,true);animating=false;render();return;}
- S.question=makeQuestion();opponentAttack();if(S.screen==='battle'){b.feed=`✅ Great thinking! ${actions.join(' • ')}. ${b.feed}`;}
- save();animating=false;render();if(S.screen==='battle')setTimeout(playEnemyAnimation,90);
+ const b=S.battle,actor=currentActor();if(!b||!actor)return;
+ if(i!==q.answer){S.tries++;b.feed=`💡 ${actor.name}'s turn! Try another answer; you won't lose your turn.`;save();render();return;}
+ animating=true;recordPuzzle(S.tries);S.tries=0;
+ const dmg=actor.main?power():Math.max(1,Math.floor(actor.pet.strength+S.level*14));
+ b.hp=Math.max(0,b.hp-dmg);
+ if(actor.main)await new Promise(resolve=>playSpellAnimation(dmg,0,resolve));
+ else await new Promise(resolve=>animateSidekick(S.equipped.indexOf(actor.id),dmg,resolve));
+ b.hits=Array.isArray(b.hits)?b.hits:[];b.hits.push(`${actor.emoji} ${actor.name}: ${dmg.toLocaleString()} damage`);
+ if(b.hp===0){const assists=b.hits.slice(1);wonBattle(assists,dmg,true);animating=false;render();return;}
+ b.nextIndex=(Number(b.nextIndex)||0)+1;
+ if(b.nextIndex>=currentActors().length){
+   b.turn++;b.nextIndex=0;opponentAttack();
+   if(S.screen==='battle')b.feed=`🛡️ Enemy counterattack! ${b.feed} Now ${currentActor()?.name||'your team'} attacks.`;
+ } else b.feed=`✨ ${actor.name} hit for ${dmg.toLocaleString()}! Next: ${currentActor().emoji} ${currentActor().name}'s OWN turn. Solve a new puzzle to attack!`;
+ if(S.screen==='battle')S.question=makeQuestion();
+ save();animating=false;render();
+ if(S.screen==='battle'&&b.nextIndex===0)setTimeout(playEnemyAnimation,90);
 }
 function animateSidekick(idx,dmg,done){
  const pet=document.getElementById('sidekick-'+idx),pop=document.getElementById('battle-damage'),enemy=document.getElementById('enemy-actor');
@@ -335,26 +434,31 @@ function animateSidekick(idx,dmg,done){
 function recruit(b){const pet={capturedHp:b.maxHp,id:Date.now().toString(36)+Math.random().toString(36).slice(2,6),name:b.name,emoji:b.emoji,level:S.level,strength:Math.round(power()*(b.isBoss?.95:.45)),special:b.isBoss?'Meteor Burst':(S.zone===0?'Leaf Beam':S.zone===1?'Flame Wave':S.zone===2?'Thunder Flash':'Star Storm')};S.pets.push(pet);if(S.equipped.length<2)S.equipped.push(pet.id);S.lastRecruit=pet;}
 function wonBattle(assists,hit,deferRender=false){const b=S.battle;S.completed+=b.isPractice?0:1;S.level+=b.isPractice?0:1;S.maxHp+=b.isPractice?0:100;S.hp=S.maxHp;S.notice=b.isPractice?`You passed training! Grandmaster Glimmer opens the forest gate.`:`Your attack hit for ${hit}! ${assists.join(' ')} Victory! +1 level and +100 maximum health!`;if(!b.isPractice){recruit(b);if(b.isBoss)S.bossWins++}else S.tutorialDone=true;S.battle=null;S.question=null;S.screen=b.isBoss?'reward':'victory';save();if(!deferRender)render();}
 function defeat(){return `<section class="panel"><span class="tag">💔 TEAM DEFEATED</span><div class="levelburst">🩹</div><h2>Time to regroup!</h2><p class="story">${escapeHtml(S.notice)}</p><div class="banner">⭐ Your Level ${S.level} is safe! All ${S.pets.length} pets and ${S.bossWins} boss victories are saved.</div><p>Your whole team can heal, then you can challenge the same monster again.</p><div class="buttonrow"><button class="btn" data-do="retry">❤️ Heal & Try Again</button><button class="btn ghost" data-do="recover">🏕️ Return to Camp</button></div></section>`}
+function turnRibbon(){
+ const actors=currentActors(),idx=S.battle?.nextIndex||0;
+ return `<div class="turn-strip" role="status" aria-label="Separate attack turns">${actors.map((a,i)=>`<span class="turn-pill ${i===idx?'active':''}">${i===idx?'▶ ':''}${a.emoji} ${escapeHtml(a.name)}${i===idx?' · YOUR TURN':''}</span>`).join('<span class="turn-arrow">→</span>')}<span class="turn-arrow">→</span><span class="turn-pill enemy-turn">😠 Enemy</span></div>`;
+}
 function battle(){
  const b=S.battle;if(!b){S.screen='adventure';save();return adventure();}
  if(!S.question?.choices){S.question=makeQuestion();save();}
  const zoneClass=['forest','volcano','sky','forest','endless','volcano','forest','sky','forest','endless','forest'][S.zone]||'forest';
  const z=zoneInfo(),props=z.props||['🌿','🪨','🌲'];
- const team=S.equipped.map(id=>S.pets.find(p=>p.id===id)).filter(Boolean);const lead=team.find(p=>p.id===b.activePet),leadHP=lead?b.petHp:S.hp,leadMax=lead?b.petMaxHp:S.maxHp;
- return `<section class="panel"><span class="tag">${b.isPractice?'🕯️ PRACTICE':b.isBoss?'👑 BOSS BATTLE':'⚔️ ENCOUNTER '+(S.completed+1)}</span><h2>${b.isBoss?'Boss: ':''}${escapeHtml(b.name)}</h2><p>${lead?'💪 Your hero fell, but your pet is taking over!':'Solve reasoning puzzles to lead your team. Watch your HP—your hero can fall!'}</p>
- <div id="battle-arena" class="arena-scene ${zoneClass}" aria-label="Animated battle between your team and ${escapeHtml(b.name)}">
- <div class="arena-scenery" aria-hidden="true"><span class="object">${props[0]}</span><span class="object">${props[1]}</span><span class="object">${props[2]}</span></div>
- <div class="arena-vs">⚔️</div>
- <div id="player-actor" class="actor player-actor">${lead?monsterSVG({...lead,friend:true}):avatarSVG(S.avatar,true)}</div>
- <div id="battle-pets" class="arena-pets" aria-label="Your helpers">${team.filter(p=>p.id!==b.activePet&&!b.fallenPets?.includes(p.id)).map(p=>miniAvatar(p,S.equipped.indexOf(p.id))).join('')}</div>
+ const team=S.equipped.map(id=>S.pets.find(p=>p.id===id)).filter(Boolean),lead=team.find(p=>p.id===b.activePet);
+ const leadHP=lead?b.petHp:S.hp,leadMax=lead?b.petMaxHp:S.maxHp,actor=currentActor();
+ return `<section class="panel wide battle-panel"><div class="battle-header"><div><span class="tag">${b.isPractice?'🕯️ PRACTICE':b.isBoss?'👑 BOSS BATTLE':'⚔️ ENCOUNTER '+(S.completed+1)}</span><h2>${b.isBoss?'Boss: ':''}${escapeHtml(b.name)}</h2></div><div class="tiny">⭐ Level ${S.level} · 🛡️ You keep your level if you lose</div></div>
+ <div class="battle-split"><div class="battle-stage">
+ <div id="battle-arena" class="arena-scene ${zoneClass}" aria-label="Your hero and both pets facing ${escapeHtml(b.name)}">
+ <div class="arena-scenery" aria-hidden="true"><span class="object">${props[0]}</span><span class="object">${props[1]}</span><span class="object">${props[2]}</span></div><div class="arena-vs">⚔️</div>
+ <div id="player-actor" class="actor player-actor ${actor?.main?'is-turn':''}">${lead?monsterSVG({...lead,friend:true}):avatarSVG(S.avatar,true)}</div>
+ <div id="battle-pets" class="arena-pets" aria-label="Your companions">${team.filter(p=>p.id!==b.activePet&&!b.fallenPets?.includes(p.id)).map(p=>miniAvatar(p,S.equipped.indexOf(p.id))).join('')}</div>
  <div id="enemy-actor" class="actor enemy-actor ${b.isBoss?'boss-actor':''}">${monsterSVG(b)}</div>
- <span class="arena-name left">🛡️ ${lead?lead.emoji+" "+escapeHtml(lead.name):escapeHtml(S.avatar.name)} & team</span><span class="arena-name right">${b.emoji} ${escapeHtml(b.name)}</span>
- <div id="spell-projectile" class="arena-projectile" aria-hidden="true"></div>
- <div id="battle-damage" class="arena-damage" aria-live="polite"></div></div>
- <div class="battle-hp"><div class="hp-card"><div class="healthtxt"><span>❤️ ${lead?"RESCUE PET":"YOUR HEALTH"}</span><span>${leadHP.toLocaleString()}/${leadMax.toLocaleString()}</span></div><div class="progresswrap"><div class="progressfill" style="width:${Math.max(0,100*leadHP/leadMax)}%;background:linear-gradient(90deg,#7ee8ad,#a2f0ca)"></div></div></div>
+ <span class="arena-name left">${lead?lead.emoji+' '+escapeHtml(lead.name):'🧙 '+escapeHtml(S.avatar.name)}</span><span class="arena-name right">${b.emoji} ${escapeHtml(b.name)}</span>
+ <div id="spell-projectile" class="arena-projectile" aria-hidden="true"></div><div id="battle-damage" class="arena-damage" aria-live="polite"></div></div>
+ <div class="battle-hp"><div class="hp-card"><div class="healthtxt"><span>❤️ ${lead?'RESCUE PET':'YOUR HEALTH'}</span><span>${leadHP.toLocaleString()}/${leadMax.toLocaleString()}</span></div><div class="progresswrap"><div class="progressfill" style="width:${Math.max(0,100*leadHP/leadMax)}%;background:linear-gradient(90deg,#7ee8ad,#a2f0ca)"></div></div></div>
  <div class="hp-card"><div class="healthtxt"><span>❤️ MONSTER HP</span><span>${b.hp.toLocaleString()}/${b.maxHp.toLocaleString()}</span></div><div class="progresswrap"><div class="progressfill" style="width:${100*b.hp/b.maxHp}%"></div></div></div></div>
- <div class="feedback" aria-live="polite">${escapeHtml(b.feed)}</div>${puzzleCard()}
- <p class="tiny">Each correct answer powers your active fighter, followed by remaining companions. Bosses unleash dramatic 100,000-power attacks, but your magic shield reduces the real damage. The monster can defeat your team. Puzzles adapt gently according to your answers (currently ${skillLabels[reasoning().tier]}).</p></section>`;
+ <div class="feedback battle-feedback" aria-live="polite">${escapeHtml(b.feed)}</div>
+ </div><div class="battle-questions">${turnRibbon()}<div class="turn-heading">${actor?.emoji||'🧙'} ${escapeHtml(actor?.name||'Hero')}'s turn — solve to attack!</div>${puzzleCard()}
+ <p class="tiny">Separate turns: hero → first pet → second pet → enemy. After each answer, a different fighter moves. Bosses can use a shielded 100,000-power strike. NGAT-inspired puzzles and math adapt to your thinking.</p></div></div></section>`;
 }
 function playSpellAnimation(damage,withPets,done){
  const arena=document.getElementById('battle-arena'),hero=document.getElementById('player-actor');
@@ -374,6 +478,46 @@ function playEnemyAnimation(){
  setTimeout(()=>{p?.classList.add('hurt');if(pop){pop.textContent='⚡';pop.classList.add('incoming','show')}},260);
  setTimeout(()=>{e?.classList.remove('lunging');p?.classList.remove('hurt');orb?.classList.remove('enemybolt');pop?.classList.remove('incoming','show')},820)
 }
+// Original procedural soundtrack: entirely offline and starts only after user interaction.
+let scoreCtx=null,scoreMaster=null,scoreTimer=null,scoreStep=0,scoreScene='',scoreActive=false;
+const MUSIC_MODES={travel:{root:57,pace:270,notes:[0,4,7,12,7,4,2,4,5,9,12,16,12,9,7,5,0,7,9,12,14,12,9,7,5,4,2,0,2,4,7,9],bass:[0,5,9,7]},battle:{root:52,pace:210,notes:[0,7,3,7,10,7,3,7,2,9,5,9,12,9,5,9,3,10,7,10,12,10,7,10,2,9,5,9,7,5,3,2],bass:[0,3,5,2]},boss:{root:48,pace:185,notes:[0,0,12,7,3,7,10,7,2,2,14,9,5,9,12,9,0,7,0,10,12,10,7,3,5,12,5,14,12,7,3,0],bass:[0,2,3,5]}};
+function getScoreScene(){return S.screen==='battle'?(S.battle?.isBoss?'boss':'battle'):(S.screen==='defeat'?'travel':'travel');}
+function synthNote(midi,seconds=.2,voice='lead',when){
+ if(!scoreCtx||!scoreMaster)return;
+ const now=when??scoreCtx.currentTime;const freq=440*Math.pow(2,(midi-69)/12);
+ const o=scoreCtx.createOscillator(),g=scoreCtx.createGain();o.type=voice==='bass'?'sine':'triangle';o.frequency.setValueAtTime(freq,now);
+ g.gain.setValueAtTime(.0001,now);g.gain.exponentialRampToValueAtTime(voice==='bass'?.12:.075,now+.019);g.gain.exponentialRampToValueAtTime(.0001,now+seconds);
+ o.connect(g).connect(scoreMaster);o.start(now);o.stop(now+seconds+.02);
+}
+function musicTick(){
+ if(!S.musicOn||!S.started||document.hidden)return;
+ if(!scoreCtx||scoreCtx.state!=='running')return;
+ const scene=getScoreScene();if(scene!==scoreScene){scoreScene=scene;scoreStep=0;}
+ const cfg=MUSIC_MODES[scene],step=scoreStep++;
+ const note=cfg.notes[step%cfg.notes.length],chord=Math.floor(step/8)%4;
+ if(step%2===0)synthNote(cfg.root+note+(scene==='boss'?-2:0),cfg.pace/1000*.83,'lead');
+ if(step%4===0)synthNote(cfg.root-12+cfg.bass[chord],cfg.pace/1000*3.4,'bass');
+ if(step%16===12&&scene==='travel')synthNote(cfg.root+12+cfg.bass[chord],cfg.pace/1000*1.8,'lead');
+}
+function musicVolume(){return Math.min(100,Math.max(0,Number(S.musicVolume??45))) /100;}
+function syncMusic(){
+ if(scoreMaster&&scoreCtx){scoreMaster.gain.setTargetAtTime(S.musicOn?musicVolume()*.43:0,scoreCtx.currentTime,.055);}
+ if(!S.musicOn||!S.started){if(scoreTimer){clearInterval(scoreTimer);scoreTimer=null;}return;}
+ if(scoreCtx?.state==='running'&&!scoreTimer){scoreScene='';scoreStep=0;musicTick();scoreTimer=setInterval(musicTick,210);}
+}
+function beginMusicFromGesture(){
+ if(!S.started||!S.musicOn||document.hidden)return;
+ try{
+  if(!scoreCtx){const C=window.AudioContext||window.webkitAudioContext;if(!C)return;scoreCtx=new C();scoreMaster=scoreCtx.createGain();scoreMaster.gain.value=musicVolume()*.43;scoreMaster.connect(scoreCtx.destination);}
+  if(scoreCtx.state==='suspended')scoreCtx.resume().then(syncMusic).catch(()=>{});
+  else syncMusic();
+ }catch(e){}
+}
+function shutMusicOff(){syncMusic();}
+window.addEventListener('pagehide',()=>{if(scoreTimer)clearInterval(scoreTimer);scoreTimer=null;scoreCtx?.close?.().catch(()=>{});scoreCtx=null;scoreMaster=null});
+document.addEventListener('visibilitychange',()=>{if(document.hidden){if(scoreTimer)clearInterval(scoreTimer);scoreTimer=null;}else syncMusic();});
+document.addEventListener('pointerdown',beginMusicFromGesture);
+document.addEventListener('keydown',beginMusicFromGesture);
 function playTone(type){
  if(!S.soundOn)return;
  try{const Audio=window.AudioContext||window.webkitAudioContext;if(!Audio)return;const ctx=new Audio(),o=ctx.createOscillator(),gain=ctx.createGain();
@@ -511,6 +655,7 @@ function realismPreviews(){const demo=[{name:'Twig Dragon',emoji:'🐲'},{name:'
 function settings(){return `<section class="panel"><span class="tag">⚙️ PREFERENCES</span><h2>Game Settings & Save Safety</h2><p>Your adventure automatically saves on this website in this browser. Download a backup before changing files, browsers, or computers.</p>
  <div class="banner">⭐ Level ${S.level} • ⚔️ ${S.completed} battles • 🐾 ${S.pets.length} pets • 👑 ${S.bossWins} bosses</div>
  <section id="look-lab" class="look-lab" aria-label="Realisticness Bar"><h3>🎨 Realisticness Bar <span id="realism-number">${Math.round(S.realism??30)}%</span></h3><p class="small" style="margin:6px 0;color:#d7eef1">Slide it to change how the monsters look. From simple cartoons to shaded fantasy creatures — never too scary!</p><input id="realisticness-bar" class="real-range" aria-label="Realisticness" type="range" min="0" max="100" step="5" value="${Math.round(S.realism??30)}"><div class="look-labels"><span>0% 🎨 Cartoon</span><span>50% 📖 Storybook</span><span>100% 🪄 Detailed fantasy</span></div><div class="look-state" id="look-state">${realismLabel()}</div><div class="look-previews" id="look-previews">${realismPreviews()}</div><p class="look-note">Try the bar as much as you want. It only changes artwork. Levels, HP, puzzles, pets and equipment stay exactly the same.</p></section>
+ <section class="music-controls"><h3>🎵 Adventure Soundtrack</h3><p class="small">Original music changes while exploring, battling, and fighting bosses. Starts after you click or press a key.</p><button class="btn teal smallbtn" data-do="music">${S.musicOn?'🎶 Turn Music Off':'▶ Play Music'}</button><label class="formlabel" for="music-volume">Music volume: <span id="music-volume-number">${S.musicVolume??45}%</span></label><input type="range" id="music-volume" min="0" max="100" step="5" value="${S.musicVolume??45}" aria-label="Music volume" /></section>
  <section class="safe-box"><h3>💾 Back Up Your Adventure</h3><p>This downloads a small save file containing your level, pets, equipment, and character. Keep it safe with your dad.</p><div class="row"><button class="btn teal" data-do="export">⬇️ Download My Save</button><label for="import-file" class="btn purple" style="cursor:pointer;display:inline-flex;align-items:center">⬆️ Restore a Save</label><input id="import-file" class="filepick" type="file" accept=".json,application/json"/></div>
  <p class="backup-status">✅ Works with your original Magic Battles save. Importing never deletes the backup file.</p>
  <details><summary style="cursor:pointer;font-weight:850;padding:8px 0">Have save text from the original Chrome tab?</summary><p>Paste the saved JSON below. Ask Dad for help if needed.</p><textarea class="save-paste" id="save-paste" placeholder="Paste the original save JSON here"></textarea><button class="btn teal smallbtn" data-do="paste-save">✨ Restore Pasted Save</button></details>
@@ -535,16 +680,17 @@ function validateSave(obj){
 function importSave(text){
  try{if(text.length>5_000_000)throw Error('Save too large.');const candidate=validateSave(JSON.parse(text));
  if(S.started&&!window.confirm(`Restore ${candidate.avatar.name}'s Level ${candidate.level} adventure? This will replace this browser's current Level ${S.level} save. Download a backup first if you want to keep both.`))return;
- S=candidate;save();render();toast(`Save restored! Welcome back, ${S.avatar.name}! ⭐`);
+ S=candidate;save();render();beginMusicFromGesture();toast(`Save restored! Welcome back, ${S.avatar.name}! ⭐`);
  }catch(e){toast('Could not restore: '+e.message);}
 }
-function render(){stopExplore();let main;if(!S.started)main=creator();else if(S.screen==='tutorial')main=tutorial();else if(S.screen==='battle')main=battle();else if(S.screen==='victory')main=victory();else if(S.screen==='reward')main=reward();else if(S.screen==='defeat')main=defeat();else if(S.screen==='map')main=worldmap();else if(S.screen==='pets')main=pets();else if(S.screen==='settings')main=settings();else main=adventure();el().innerHTML=header()+(S.started?`<div style="margin-bottom:16px">${toolbar()}</div>`:'')+`<main class="layout">${main}${S.started?sidebar():''}</main><div class="footnote">The Infinite Adventures • Original cartoon world • Your adventure saves automatically • Backup in Settings</div>`;if(S.started&&S.screen==='adventure')requestAnimationFrame(startExplore);}
+function render(){stopExplore();syncMusic();let main;if(!S.started)main=creator();else if(S.screen==='tutorial')main=tutorial();else if(S.screen==='battle')main=battle();else if(S.screen==='victory')main=victory();else if(S.screen==='reward')main=reward();else if(S.screen==='defeat')main=defeat();else if(S.screen==='map')main=worldmap();else if(S.screen==='pets')main=pets();else if(S.screen==='settings')main=settings();else main=adventure();el().innerHTML=header()+(S.started?`<div style="margin-bottom:16px">${toolbar()}</div>`:'')+`<main class="layout ${S.screen==='battle'?'layout-battle':''}">${main}${S.started&&S.screen!=='battle'?sidebar():''}</main><div class="footnote">The Infinite Adventures • Original cartoon world • Your adventure saves automatically • Backup in Settings</div>`;if(S.started&&S.screen==='adventure')requestAnimationFrame(startExplore);}
 function goHome(){if(S.battle){S.screen='battle'}else if(!S.tutorialDone){S.screen='tutorial'}else if(S.screen==='reward'){return}else if(S.screen==='defeat'){S.hp=S.maxHp;S.screen='adventure'}else S.screen='adventure';save();render()}
-document.addEventListener('click',e=>{const b=e.target.closest('button[data-do]');if(!b)return;const a=b.dataset.do,v=b.dataset.value;switch(a){case'choose':{const key=b.dataset.key;if(!['skin','hair','style','robe'].includes(key))return;S.avatar[key]=Number(v);const i=document.getElementById('hero-name');if(i)S.avatar.name=i.value.slice(0,16);save();render();break}case'start':{const i=document.getElementById('hero-name');if(!i?.value.trim()){toast('Choose a name for your hero first! ✨');i?.focus();return;}S.avatar.name=i.value.trim().slice(0,16);S.started=true;S.screen='tutorial';save();render();break}case'retry':{const opponent=S.retryOpponent;S.hp=S.maxHp;tryFight(Boolean(opponent?.isPractice),opponent);break}case'recover':S.hp=S.maxHp;S.screen=S.tutorialDone?'adventure':'tutorial';save();render();break;case'practice':tryFight(true);break;case'fight':tryFight(false);break;case'puzzle':answerPuzzle(Number(v));break;case'home':goHome();break;case'map':S.screen='map';save();render();break;case'pets':S.screen='pets';save();render();break;case'settings':S.screen='settings';save();render();break;case'look':S.screen='settings';save();render();document.getElementById('look-lab')?.scrollIntoView({behavior:'smooth',block:'center'});break;case'continue':S.screen=unlocked()>S.zone?'map':'adventure';save();render();break;case'travel':{const i=Number(v);if(i>unlocked()){toast('Beat more bosses to unlock that place!');break}if(S.battle){toast('Finish your current battle first!');S.screen='battle';render();break}S.zone=i;S.screen='adventure';save();render();break}case'equip':{const id=v;if(!S.pets.some(p=>p.id===id))return;const at=S.equipped.indexOf(id);if(at>=0)S.equipped.splice(at,1);else if(S.equipped.length<2)S.equipped.push(id);else {toast('You can equip only 2 pets! Unequip one first.');return}save();render();break}case'reward':{if(S.screen!=='reward')return;const r=getRewards().find(x=>x.id===v);if(!r)return;if(r.id==='blade')S.attackBonus+=r.value;else if(r.id==='armor')S.armor+=r.value;else if(r.id==='heart'){S.maxHp+=r.value;S.hp=S.maxHp}S.loot.push({name:r.name,id:r.id,value:r.value});S.notice=`You earned ${r.name}! Your next magical adventure awaits.`;S.screen='victory';save();render();break}case'export':downloadSave();break;case'paste-save':{importSave(document.getElementById('save-paste')?.value.trim()||'');break}case'sound':S.soundOn=!S.soundOn;save();render();break;case'reset':{if(window.confirm('DANGER: Reset ALL levels, pets, and gear? Download a backup first.')){S=INITIAL();save();render()};break}}});
+document.addEventListener('click',e=>{const b=e.target.closest('button[data-do]');if(!b)return;const a=b.dataset.do,v=b.dataset.value;switch(a){case'choose':{const key=b.dataset.key;if(!['skin','hair','style','robe'].includes(key))return;S.avatar[key]=Number(v);const i=document.getElementById('hero-name');if(i)S.avatar.name=i.value.slice(0,16);save();render();break}case'start':{const i=document.getElementById('hero-name');if(!i?.value.trim()){toast('Choose a name for your hero first! ✨');i?.focus();return;}S.avatar.name=i.value.trim().slice(0,16);S.started=true;S.screen='tutorial';save();render();beginMusicFromGesture();break}case'retry':{const opponent=S.retryOpponent;S.hp=S.maxHp;tryFight(Boolean(opponent?.isPractice),opponent);break}case'recover':S.hp=S.maxHp;S.screen=S.tutorialDone?'adventure':'tutorial';save();render();break;case'practice':tryFight(true);break;case'fight':tryFight(false);break;case'puzzle':answerPuzzle(Number(v));break;case'home':goHome();break;case'map':S.screen='map';save();render();break;case'pets':S.screen='pets';save();render();break;case'settings':S.screen='settings';save();render();break;case'look':S.screen='settings';save();render();document.getElementById('look-lab')?.scrollIntoView({behavior:'smooth',block:'center'});break;case'continue':S.screen=unlocked()>S.zone?'map':'adventure';save();render();break;case'travel':{const i=Number(v);if(i>unlocked()){toast('Beat more bosses to unlock that place!');break}if(S.battle){toast('Finish your current battle first!');S.screen='battle';render();break}S.zone=i;S.screen='adventure';save();render();break}case'equip':{const id=v;if(!S.pets.some(p=>p.id===id))return;const at=S.equipped.indexOf(id);if(at>=0)S.equipped.splice(at,1);else if(S.equipped.length<2)S.equipped.push(id);else {toast('You can equip only 2 pets! Unequip one first.');return}save();render();break}case'reward':{if(S.screen!=='reward')return;const r=getRewards().find(x=>x.id===v);if(!r)return;if(r.id==='blade')S.attackBonus+=r.value;else if(r.id==='armor')S.armor+=r.value;else if(r.id==='heart'){S.maxHp+=r.value;S.hp=S.maxHp}S.loot.push({name:r.name,id:r.id,value:r.value});S.notice=`You earned ${r.name}! Your next magical adventure awaits.`;S.screen='victory';save();render();break}case'export':downloadSave();break;case'paste-save':{importSave(document.getElementById('save-paste')?.value.trim()||'');break}case'sound':S.soundOn=!S.soundOn;save();render();break;case'music':S.musicOn=!S.musicOn;save();syncMusic();if(S.musicOn)beginMusicFromGesture();render();break;case'reset':{if(window.confirm('DANGER: Reset ALL levels, pets, and gear? Download a backup first.')){S=INITIAL();save();render()};break}}});
 document.addEventListener('change',async e=>{if(e.target.id==='import-file'){const file=e.target.files?.[0];if(!file)return;try{if(file.size>5000000)throw Error('File is too large.');importSave(await file.text())}catch(err){toast('Could not read save file: '+err.message)}e.target.value=''}});
 document.addEventListener('submit',e=>{if(e.target.id==='math-form'){e.preventDefault();mathSubmit()}});
 document.addEventListener('input',e=>{
  if(e.target.id==='hero-name'){S.avatar.name=e.target.value.slice(0,16);save();}
+ if(e.target.id==='music-volume'){S.musicVolume=Math.max(0,Math.min(100,Number(e.target.value)||0));document.getElementById('music-volume-number').textContent=S.musicVolume+'%';save();syncMusic();}
  if(e.target.id==='realisticness-bar'){
   S.realism=Math.max(0,Math.min(100,Number(e.target.value)||0));save();
   document.getElementById('realism-number').textContent=Math.round(S.realism)+'%';
