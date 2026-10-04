@@ -161,6 +161,124 @@ body{background:radial-gradient(ellipse at 15% 0%,#546388 0%,transparent 52%),li
 .music-controls input[type=range]{width:100%;accent-color:#9deaca;height:30px}
 @media(max-width:850px){.battle-split{grid-template-columns:1fr}.battle-stage .arena-scene{height:220px}.battle-stage .actor{height:148px;bottom:26px}.battle-stage .actor .avatar-svg{height:144px;width:130px}.battle-stage .arena-pets{bottom:30px}.battle-stage .enemy-actor .beast-svg{height:145px}.battle-stage .arena-name{font-size:10px}.battle-questions .puzzle-choices{grid-template-columns:repeat(4,minmax(0,1fr))}}
 @media(max-width:480px){.battle-panel{padding:13px}.battle-stage .arena-scene{height:185px}.battle-stage .actor{height:132px;bottom:23px}.battle-stage .arena-name{bottom:4px}.battle-questions .puzzle-choices{grid-template-columns:repeat(2,minmax(0,1fr))}.battle-questions .puzzle-choice{min-height:57px}.turn-pill{font-size:10px}}
+
+/* Responsive editions: roomy two-column desktop / stacked touch-first phone. */
+html{width:100%;overflow-x:hidden;-webkit-text-size-adjust:100%}
+body{width:100%;overflow-x:hidden;min-width:0}
+.shell{width:100%;min-width:0;padding-left:max(12px,env(safe-area-inset-left));padding-right:max(12px,env(safe-area-inset-right));padding-bottom:calc(36px + env(safe-area-inset-bottom))}
+.layout,.panel,.rightcol,.explore-scene,.battle-questions,.battle-stage{min-width:0}
+.sectionnav{gap:7px}.sectionnav .btn{white-space:nowrap}
+.explore-scene canvas{max-width:100%;user-select:none;-webkit-user-select:none;-webkit-tap-highlight-color:transparent}
+.move-pad button{touch-action:none;-webkit-tap-highlight-color:transparent;min-height:44px}
+.battle-questions,.puzzle-card,.puzzle-choice{overflow-wrap:anywhere}
+.puzzle-choices{min-width:0}.puzzle-choice{min-width:0}
+@media (min-width:1100px){
+ .shell{max-width:1250px}.layout{grid-template-columns:minmax(0,1.72fr) minmax(280px,.72fr)}
+ .layout-battle{display:block}.battle-split{grid-template-columns:minmax(0,1.12fr) minmax(0,1fr)}
+ .battle-stage .arena-scene{height:315px}.battle-questions .puzzle-choice{min-height:88px}
+ .battle-questions .puzzle-heading{font-size:18px}
+}
+@media (max-width:899px){
+ .shell{max-width:750px;padding-top:14px}
+ .top{align-items:flex-start;gap:10px;margin-bottom:13px}
+ .brand h1{font-size:clamp(23px,5vw,30px)}
+ .stats{gap:6px}.chip{padding:7px 10px;font-size:12px}
+ .sectionnav{display:flex;flex-wrap:nowrap;overflow-x:auto;padding:2px 3px 12px;scrollbar-width:thin;-webkit-overflow-scrolling:touch}
+ .sectionnav .btn{flex:0 0 auto;min-height:44px;padding:9px 12px;font-size:12px}
+ .layout{display:flex!important;flex-direction:column;gap:12px}
+ .layout>.panel,.layout>.rightcol{width:100%;max-width:100%}
+ .rightcol{grid-row:auto!important;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}
+ .rightcol .panel{margin:0!important;padding:14px}
+ .rightcol .avatar-svg{width:65px;height:85px}
+ .battle-split{grid-template-columns:1fr;gap:12px}
+ .battle-questions{order:2}.battle-stage{order:1}
+ .battle-panel{padding:15px}.battle-stage .arena-scene{height:242px}
+ .battle-questions .puzzle-choices{grid-template-columns:repeat(4,minmax(0,1fr))}
+ .battle-questions .puzzle-choice{min-height:74px}
+ .explore-scene{margin:12px 0 9px}
+}
+@media(max-width:540px){
+ .shell{padding-top:10px;padding-left:max(9px,env(safe-area-inset-left));padding-right:max(9px,env(safe-area-inset-right))}
+ .logo{width:43px;height:43px;border-radius:14px;font-size:24px}
+ .brand{gap:9px}.brand h1{font-size:23px}
+ .stats{width:100%;justify-content:space-between}.chip{flex:1;text-align:center;padding:7px 5px;font-size:11px}
+ .panel{padding:13px!important;border-radius:18px}
+ .rightcol{grid-template-columns:1fr;gap:8px}
+ .rightcol .panel{padding:12px!important}
+ .rightcol .panel .row{gap:6px}
+ .explore-hud{font-size:10px;max-width:90%;padding:6px 8px;left:6px;top:6px}
+ .explore-scene{border-width:2px;border-radius:15px}
+ .explore-ui{flex-direction:column;align-items:stretch;gap:8px}
+ .move-pad{grid-template-columns:repeat(3,60px);grid-template-rows:repeat(2,52px);align-self:center}
+ .miniquest{min-width:0;font-size:12px}.explore-help{font-size:12px}
+ .battle-panel .battle-header h2{font-size:20px}.battle-stage .arena-scene{height:220px;margin:4px 0 8px}
+ .battle-stage .arena-vs{font-size:16px;top:29%}
+ .battle-stage .battle-hp{gap:5px;grid-template-columns:repeat(2,minmax(0,1fr))}
+ .battle-stage .hp-card{padding:7px!important}.battle-stage .healthtxt{font-size:10px!important;gap:3px;flex-wrap:wrap}
+ .battle-stage .healthtxt span{font-size:10px;line-height:1.25}
+ .turn-strip{padding:7px;gap:4px}.turn-pill{padding:6px;font-size:10px;white-space:normal}
+ .battle-questions .puzzle-card{padding:11px}
+ .battle-questions .puzzle-heading{font-size:17px}
+ .battle-questions .puzzle-choices{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+ .battle-questions .puzzle-choice{min-height:73px;font-size:21px}
+ .puzzle-type,.puzzle-note{font-size:11px}
+ .battle-questions .puzzle-tile{width:45px;height:49px}
+ .battle-questions .puzzle-grid{grid-template-columns:repeat(2,50px)}
+ .battle-questions .puzzle-choice .symbol-pic{width:43px;height:43px}
+ .battle-questions .puzzle-pattern{gap:5px}
+ .rewardgrid{grid-template-columns:1fr}
+ .look-lab,.music-controls{padding:12px}
+ .music-controls input[type=range],.real-range{touch-action:pan-y}
+}
+@media(max-width:360px){
+ .brand h1{font-size:20px}.battle-stage .arena-scene{height:182px}
+ .battle-questions .puzzle-heading{font-size:15px}
+ .battle-questions .puzzle-choice{min-height:67px}
+ .battle-stage .arena-name{font-size:9px}
+}
+
+
+/* Two enemy monsters and two individual pet creatures: fluid on laptop and phone. */
+.battle-stage .player-actor{left:0%;width:27%;height:166px;bottom:35px;z-index:3}
+.battle-stage .player-actor .avatar-svg,.battle-stage .player-actor .beast-svg{width:100%;height:156px}
+.battle-stage .arena-vs{left:52%;top:39%}
+.battle-stage .arena-pets{left:21%;width:30%;bottom:28px;z-index:4;display:flex;justify-content:space-evenly;align-items:end;gap:3px;pointer-events:none}
+.battle-stage .arena-pets .sidekick{width:50%;min-width:0;max-width:105px;height:108px;display:flex;flex-direction:column;justify-content:end;align-items:center;animation:none;filter:none}
+.battle-stage .sidekick .pet-art{display:block;width:100%;height:92px;animation:petFloat 1.6s infinite alternate;filter:drop-shadow(0 5px 3px #0c1437a5)}
+.battle-stage .sidekick .pet-art .creature-svg{width:100%;height:88px;display:block;transform:scaleX(-1)}
+.battle-stage .sidekick .pet-name{display:block;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:10px;font-weight:900;background:#182944de;border-radius:6px;padding:2px 3px}
+.battle-stage .sidekick.attacking{animation:sidekickStrike .6s ease-in-out both}
+.enemy-lineup{position:absolute;right:1%;bottom:25px;height:205px;width:47%;display:flex;align-items:flex-end;justify-content:space-evenly;gap:0;z-index:2}
+.enemy-lineup .enemy-unit{position:relative;flex:1 1 0;min-width:0;max-width:160px;height:190px;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;transform-origin:50% 85%;filter:drop-shadow(0 7px 4px #06162990)}
+.enemy-lineup .enemy-unit .creature-svg{width:100%;height:160px;max-width:146px;animation:petFloat 2s infinite alternate;display:block}
+.enemy-lineup .enemy-unit.down{opacity:.22;filter:grayscale(1);transform:scale(.78)}
+.enemy-lineup .enemy-unit .unit-name{font-size:10px;font-weight:900;color:#fff6e1;background:#202143cf;padding:3px;border-radius:8px;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.enemy-lineup.solo{width:39%;right:2%}.enemy-lineup.solo .enemy-unit{max-width:235px;height:205px}.enemy-lineup.solo .enemy-unit .creature-svg{max-width:185px;height:180px}
+.enemy-wand{position:absolute;z-index:4;right:4%;top:25%;font-size:24px;filter:drop-shadow(0 0 7px #f7d98a);transform:rotate(-25deg);opacity:.85}
+.enemy-unit.waving .enemy-wand{animation:wandCast .65s ease-in-out both}
+@keyframes wandCast{0%,100%{transform:rotate(-30deg)}32%{transform:translate(-14px,-25px) rotate(28deg) scale(1.4)}60%{transform:translate(-7px,-11px) rotate(-16deg)}}
+.enemy-unit.lunging{animation:monsterLunge .75s ease-in-out both}
+.enemy-unit.struck{animation:monsterStruck .65s ease-in-out both}
+.battle-stage .battle-hp{grid-template-columns:repeat(auto-fit,minmax(110px,1fr))}
+.battle-stage .battle-hp .hp-card{min-width:0;padding:8px}
+.battle-stage .healthtxt{gap:5px}.battle-stage .healthtxt span{font-size:11px;overflow:hidden;text-overflow:ellipsis}
+.turn-pill.finished{opacity:.45}
+.enemy-wait{padding:19px 10px;text-align:center;border:2px dashed #ffcba6;border-radius:14px;margin:14px 0;background:#f0ba5b19;color:#ffe6b3;font-weight:800;min-height:100px;display:grid;place-items:center}
+@media(max-width:850px){
+ .battle-stage .player-actor{height:145px;bottom:26px}.battle-stage .player-actor .avatar-svg,.battle-stage .player-actor .beast-svg{height:140px}
+ .battle-stage .arena-pets{bottom:23px}.battle-stage .sidekick .pet-art,.battle-stage .sidekick .pet-art .creature-svg{height:80px}
+ .enemy-lineup{height:163px;bottom:24px}.enemy-lineup .enemy-unit{height:160px}.enemy-lineup .enemy-unit .creature-svg{height:130px}
+}
+@media(max-width:540px){
+ .battle-stage .player-actor{height:125px;bottom:24px}.battle-stage .player-actor .avatar-svg,.battle-stage .player-actor .beast-svg{height:120px}
+ .battle-stage .arena-pets{left:19%;width:34%;bottom:22px}.battle-stage .arena-pets .sidekick{height:88px}
+ .battle-stage .sidekick .pet-art,.battle-stage .sidekick .pet-art .creature-svg{height:72px}.battle-stage .sidekick .pet-name{font-size:8px}
+ .enemy-lineup{height:141px;bottom:20px;width:47%}.enemy-lineup .enemy-unit{height:138px}.enemy-lineup .enemy-unit .creature-svg{height:108px}
+ .enemy-lineup .enemy-unit .unit-name{font-size:8px}.enemy-lineup.solo .enemy-unit .creature-svg{height:125px}.enemy-wand{font-size:17px}
+ .battle-stage .battle-hp{grid-template-columns:repeat(3,minmax(0,1fr));gap:4px}
+ .battle-stage .battle-hp .hp-card{padding:5px!important}.battle-stage .battle-hp .hp-card .healthtxt{display:flex;flex-direction:column;line-height:1.15;font-size:9px!important}
+ .battle-stage .battle-hp .hp-card .healthtxt span{font-size:9px!important}
+}
 </style>
 </head>
 <body><div id="app" class="shell"></div><div id="toast" role="status" aria-live="polite"></div>
@@ -184,9 +302,9 @@ function zoneInfo(index=S.zone){const z=ZONES[index]||ZONES[0];if(index!==ZONES.
 const themes=[['Verdant Basin','🌿',['#b3ddb8','#6fab91','#4a796b'],['🌳','🍃','🌻']],['Sunset Outpost','🏕️',['#efccaa','#c88e79','#97646d'],['🌵','⛺','🪨']],['Rainy Port','🌧️',['#b3d6e3','#81acbc','#5a779c'],['🌧️','⛵','⚓']],['Silver Valley','🗻',['#d8e3eb','#9eaec3','#5d819b'],['🌲','🏔️','❄️']]];
 const chap=Math.max(1,1+Math.floor(Math.max(0,S.bossWins-50)/5)),t=themes[(chap-1)%themes.length];return {...z,name:`${t[0]} · Chapter ${chap}`,emoji:t[1],colors:t[2],props:t[3]};}
 const STYLES=['Spiky','Short','Curly','Long'];const SKINS=['#f4d0b4','#d7a079','#a46c4d','#69402f'];const HAIRS=['#392339','#67402d','#e4b24c','#273866','#f5eff1'];const ROBES=['#7354d3','#259ab4','#db665e','#55a978','#dfad4e'];
-const INITIAL=()=>({walkPos:{},lastPuzzleKind:'',reasoning:{tier:1,streak:0,misses:0,solved:0},retryOpponent:null,started:false,tutorialDone:false,screen:'creator',avatar:{name:'',skin:0,hair:0,style:0,robe:0},level:1,maxHp:250,hp:250,attackBonus:0,armor:0,completed:0,bossWins:0,zone:0,pets:[],equipped:[],loot:[],battle:null,question:null,tries:0,totalAnswered:0,endlessWins:0,notice:'',lastRecruit:null,soundOn:false,realism:30,musicOn:true,musicVolume:45});
+const INITIAL=()=>({walkPos:{},lastPuzzleKind:'',reasoning:{tier:1,streak:0,misses:0,solved:0},retryOpponent:null,started:false,tutorialDone:false,screen:'creator',avatar:{name:'',skin:0,hair:0,style:0,robe:0},level:1,maxHp:250,hp:250,attackBonus:0,armor:0,completed:0,bossWins:0,zone:0,pets:[],equipped:[],loot:[],battle:null,question:null,tries:0,totalAnswered:0,endlessWins:0,notice:'',lastRecruit:null,soundOn:false,realism:30,musicOn:true,musicVolume:65});
 let S=load();let previewName=S.avatar.name;let animating=false;
-function load(){try{const a=JSON.parse(localStorage.getItem(SAVE_KEY));if(a&&typeof a==='object'&&a.avatar&&Number.isFinite(a.level))return {...INITIAL(),...a,musicOn:a.musicOn!==false,musicVolume:Number.isFinite(Number(a.musicVolume))?Math.max(0,Math.min(100,Number(a.musicVolume))):45,realism:Number.isFinite(Number(a.realism))?Math.max(0,Math.min(100,Number(a.realism))):30,walkPos:a.walkPos||{},avatar:{...INITIAL().avatar,...a.avatar}}}catch(e){}return INITIAL()}
+function load(){try{const a=JSON.parse(localStorage.getItem(SAVE_KEY));if(a&&typeof a==='object'&&a.avatar&&Number.isFinite(a.level))return {...INITIAL(),...a,musicOn:a.musicOn!==false,musicVolume:Number.isFinite(Number(a.musicVolume))?Math.max(0,Math.min(100,Number(a.musicVolume))):65,realism:Number.isFinite(Number(a.realism))?Math.max(0,Math.min(100,Number(a.realism))):30,walkPos:a.walkPos||{},avatar:{...INITIAL().avatar,...a.avatar}}}catch(e){}return INITIAL()}
 function save(){try{localStorage.setItem(SAVE_KEY,JSON.stringify(S))}catch(e){}}
 const el=()=>document.getElementById('app');const escapeHtml=(t)=>String(t??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const reasoning=()=>S.reasoning||(S.reasoning={tier:1,streak:0,misses:0,solved:0});
@@ -206,13 +324,20 @@ function unlocked(){return Math.min(ZONES.length-1,Math.floor(S.bossWins/5))}
 function tryFight(isPractice=false,pick=null){
  if(!isPractice&&!S.tutorialDone){S.screen='tutorial';render();return;}
  const boss=!isPractice&&(S.completed+1)%3===0,z=zoneInfo();
- const [name,emoji]=isPractice?['Training Slime','🫧']:boss?z.boss:(pick?.name? [pick.name,pick.emoji]:z.enemies[rand(0,z.enemies.length-1)]);
- const team=S.equipped.map(id=>S.pets.find(p=>p.id===id)).filter(Boolean),total=power()+team.reduce((n,p)=>n+Math.round(p.strength+S.level*14),0);
+ const [name,emoji]=isPractice?['Training Slime','🫧']:boss?z.boss:(pick?.name?[pick.name,pick.emoji]:z.enemies[rand(0,z.enemies.length-1)]);
+ const team=S.equipped.map(id=>S.pets.find(p=>p.id===id)).filter(Boolean);
+ const total=power()+team.reduce((n,p)=>n+Math.round(p.strength+S.level*14),0);
  const hp=isPractice?250:Math.min(4000000,Math.max(boss?1000:350,Math.round(total*(boss?6.9+S.zone*.24:3.0+S.zone*.13))));
- const attack=isPractice?14:Math.max(Math.ceil(S.maxHp*(boss?.28:.22))+S.armor,Math.floor(20+S.level*29+S.zone*30+(boss?S.level*6:0))); // percent of health means even strong heroes can lose
- S.battle={name,emoji,isBoss:boss,isPractice,hp,maxHp:hp,attack,turn:0,nextIndex:0,hits:[],activePet:null,fallenPets:[],petHp:0,petMaxHp:0,feed:`${emoji} ${name} makes the first move. Think through the puzzle and lead your team!`};
- S.tries=0;S.question=makeQuestion();S.screen='battle';opponentAttack(true);save();render();setTimeout(playEnemyAnimation,160);
+ const attack=isPractice?14:Math.max(Math.ceil(S.maxHp*(boss?.28:.22))+S.armor,Math.floor(20+S.level*29+S.zone*30+(boss?S.level*6:0)));
+ const choices=(z.enemies||[]).filter(e=>e[0]!==name);
+ const second=isPractice?['Training Imp','👿']:choices.length?choices[rand(0,choices.length-1)]:['Shadow Beast','👾'];
+ const eachHp=boss?hp:Math.max(isPractice?105:175,Math.round(hp*.54));
+ const enemies=[{id:'enemy-0',name,emoji,hp:boss?hp:eachHp,maxHp:boss?hp:eachHp,attack:boss?attack:Math.round(attack*.55)+S.armor,isBoss:boss}];
+ if(!boss)enemies.push({id:'enemy-1',name:second[0],emoji:second[1],hp:eachHp,maxHp:eachHp,attack:Math.round(attack*.55)+S.armor,isBoss:false});
+ S.battle={name,emoji,isBoss:boss,isPractice,hp:enemies.reduce((sum,e)=>sum+e.hp,0),maxHp:hp,attack,enemies,phase:'heroes',currentEnemy:null,turn:0,nextIndex:0,hits:[],activePet:null,fallenPets:[],petHp:0,petMaxHp:0,feed:`${boss?'The boss':'Two monsters'} ${boss?'challenges':'challenge'} your team! Your hero goes first, then each pet. Every enemy casts its OWN magic after your team.`};
+ S.tries=0;S.question=makeQuestion();S.screen='battle';save();render();
 }
+
 // NGAT-inspired original reasoning puzzles: adaptive steps within child-friendly elementary logic; no official test questions.
 // These are original practice problems, NOT copied NGAT test questions or a score prediction.
 function pic(shape,color){return {shape,color};}
@@ -329,7 +454,11 @@ function puzzleCard(){const q=S.question;if(!q||!q.choices)return `<div class="f
  const hint=S.tries>0?`<div class="puzzle-hint">💡 ${escapeHtml(S.tries>=3?q.hint2:q.hint1)} · Each mistake earns you another hint.</div>`:'';
  return `<div class="puzzle-card"><div class="puzzle-type">🧠 ${['addition','subtraction','word','difference','missing','numberbond','picturemath'].includes(q.kind)?'Math practice':'NGAT-inspired reasoning'} • ${escapeHtml(q.domain)} • ${skillLabels[reasoning().tier]}</div><div class="puzzle-heading">${escapeHtml(q.prompt)}</div>${top}<div class="puzzle-choices">${q.choices.map((v,i)=>`<button type="button" class="puzzle-choice ${S.tries>=4&&i!==q.answer?'weakened':''}" data-do="puzzle" data-value="${i}" aria-label="Choice ${i+1}"><span class="letter">${String.fromCharCode(65+i)}</span>${pictured(v,q.kind)}</button>`).join('')}</div>${hint}<div class="puzzle-note">Solve one puzzle for EACH fighter’s turn. Questions adapt gently; wrong guesses give hints without losing your turn.</div></div>`;
 }
-function miniAvatar(p,idx){const avatar={skin:idx%4,hair:(idx+2)%5,style:(idx+1)%4,robe:(idx+1)%5};return `<span class="sidekick ${S.screen==='battle'&&!currentActor()?.main&&currentActor()?.id===p.id?'is-turn':''}" id="sidekick-${idx}" title="${escapeHtml(p.name)} — ${escapeHtml(p.special)}">${avatarSVG(avatar,true)}<span class="sigil">${p.emoji}</span></span>`}
+function miniAvatar(p,idx){
+ const turn=S.screen==='battle'&&!currentActor()?.main&&currentActor()?.id===p.id;
+ return `<span class="sidekick ${turn?'is-turn':''}" id="sidekick-${idx}" title="${escapeHtml(p.name)} — ${escapeHtml(p.special)}"><span class="pet-art">${monsterSVG({...p,friend:true})}</span><span class="pet-name">${escapeHtml(p.name)}</span></span>`;
+}
+
 function creatureFamily(b){
  const n=String(b?.name||'').toLowerCase(),e=b?.emoji||'';
  if(/dragon|lizard|serpent|runner|armadillo/.test(n)||['🐲','🦎','🐍'].includes(e))return 'dragon';
@@ -383,19 +512,57 @@ function lostBattle(){
  S.notice='Your team was defeated! Your level, pets, rewards, and explored areas are still saved. Heal and try again.';
  save();
 }
-function opponentAttack(first=false){
+function ensureEnemies(){
  const b=S.battle;if(!b)return;
+ if(Array.isArray(b.enemies)&&b.enemies.length)return;
+ // Convert an older in-progress battle in place; do not lose saves or rewards.
+ const first={id:'enemy-0',name:b.name,emoji:b.emoji,hp:Math.max(0,Number(b.hp)||0),maxHp:Math.max(1,Number(b.maxHp)||1),attack:Number(b.attack)||10,isBoss:!!b.isBoss};
+ b.enemies=[first];
+ if(!b.isBoss){
+  const rest=(zoneInfo().enemies||[]).filter(e=>e[0]!==b.name);
+  const other=b.isPractice?['Training Imp','👿']:rest.length?rest[rand(0,rest.length-1)]:['Shadow Beast','👾'];
+  const hp=Math.max(b.isPractice?105:175,Math.round(first.maxHp*.5));
+  b.enemies.push({id:'enemy-1',name:other[0],emoji:other[1],hp,maxHp:hp,attack:Math.round((Number(b.attack)||10)*.55)+S.armor,isBoss:false});
+  first.attack=Math.round((Number(b.attack)||10)*.55)+S.armor;
+ }
+ b.phase='heroes';b.currentEnemy=null;b.nextIndex=0;
+}
+function opponentAttack(first=false,index=0){
+ const b=S.battle;if(!b)return;
+ ensureEnemies();const enemy=b.enemies[index];if(!enemy||enemy.hp<=0)return;
  const mega=Boolean(b.isBoss&&!first&&b.turn>0&&b.turn%4===0);
- // Bosses can charge up 100,000-power magic, but the shield caps real damage.
- const ordinary=Math.max(3,b.attack-(b.activePet?0:S.armor));
+ const ordinary=Math.max(3,enemy.attack-(b.activePet?0:S.armor));
  const activeHp=b.activePet?b.petMaxHp:S.maxHp;
  const damage=mega?Math.max(3,Math.min(ordinary*2,Math.ceil(activeHp*.44))):ordinary;
- const moveText=mega?`💥 ${b.name}'s 100,000-POWER MEGA STRIKE! Your magic shield absorbed most of it: ${damage.toLocaleString()} HP damage! `:'';
- if(b.activePet){b.petHp=Math.max(0,b.petHp-damage);if(b.petHp===0){b.fallenPets.push(b.activePet);b.activePet=null;activateNextPet();}else b.feed=moveText||`${b.name} attacks your rescue pet for ${damage.toLocaleString()} HP. Your pet can fight back!`;}
- else{S.hp=Math.max(0,S.hp-damage);if(S.hp===0)activateNextPet();else b.feed=moveText||(first?`${b.emoji} ${b.name} strikes for ${damage.toLocaleString()} damage! Your turn.`:`The monster hits back for ${damage.toLocaleString()} damage! Your turn again.`);}
- if(b.isBoss&&b.turn>0&&b.turn%4===3&&S.screen==='battle')b.feed+=' ⚠️ WARNING: A 100,000-power mega strike is charging for the next turn!';
- save();
+ const extra=mega?'💥 100,000-POWER MEGA STRIKE! Your shield blocks most of it. ':'';
+ if(b.activePet){
+  b.petHp=Math.max(0,b.petHp-damage);
+  if(b.petHp===0){b.fallenPets.push(b.activePet);b.activePet=null;const next=activateNextPet();if(next)b.feed=`${extra}${enemy.name} dealt ${damage.toLocaleString()} damage. Another pet takes over!`;}
+  else b.feed=`${extra}🪄 ${enemy.name} zaps your rescue pet for ${damage.toLocaleString()} HP!`;
+ }else{
+  S.hp=Math.max(0,S.hp-damage);
+  if(S.hp===0){const next=activateNextPet();if(next)b.feed=`${extra}🪄 ${enemy.name} hits for ${damage.toLocaleString()}. Your pet takes over!`;}
+  else b.feed=`${extra}🪄 ${enemy.name} casts a magical zap for ${damage.toLocaleString()} damage!`;
+ }
+ if(b.isBoss&&b.turn>0&&b.turn%4===3&&S.screen==='battle')b.feed+=' ⚠️ The boss is charging a giant spell for next round!';
 }
+async function runEnemyRound(){
+ const b=S.battle;if(!b||S.screen!=='battle')return;
+ ensureEnemies();b.phase='enemies';
+ for(let i=0;i<b.enemies.length;i++){
+  const enemy=b.enemies[i];if(enemy.hp<=0)continue;
+  b.currentEnemy=i;b.feed=`🪄 ${enemy.name}'s turn! Watch ${enemy.emoji} cast magic!`;render();
+  await playEnemyAnimation(i);
+  if(S.screen!=='battle'||S.battle!==b)return;
+  opponentAttack(false,i);if(S.screen!=='battle')return;
+  render();await new Promise(resolve=>setTimeout(resolve,200));
+ }
+ if(S.screen!=='battle'||S.battle!==b)return;
+ b.phase='heroes';b.currentEnemy=null;b.nextIndex=0;
+ b.feed+=' Your hero attacks again, followed by each pet with a new question.';
+ S.question=makeQuestion();save();render();
+}
+
 function currentActors(){
  const b=S.battle;if(!b)return [];
  const equipped=S.equipped.map(id=>S.pets.find(p=>p.id===id)).filter(Boolean);
@@ -409,109 +576,174 @@ async function answerPuzzle(i){
  S.totalAnswered++;
  const b=S.battle,actor=currentActor();if(!b||!actor)return;
  if(i!==q.answer){S.tries++;b.feed=`💡 ${actor.name}'s turn! Try another answer; you won't lose your turn.`;save();render();return;}
- animating=true;recordPuzzle(S.tries);S.tries=0;
+ animating=true;recordPuzzle(S.tries);S.tries=0;ensureEnemies();
  const dmg=actor.main?power():Math.max(1,Math.floor(actor.pet.strength+S.level*14));
- b.hp=Math.max(0,b.hp-dmg);
- if(actor.main)await new Promise(resolve=>playSpellAnimation(dmg,0,resolve));
- else await new Promise(resolve=>animateSidekick(S.equipped.indexOf(actor.id),dmg,resolve));
+ const targetIndex=b.enemies.findIndex(e=>e.hp>0);
+ if(targetIndex<0){animating=false;return;}
+ const target=b.enemies[targetIndex];target.hp=Math.max(0,target.hp-dmg);
+ b.hp=b.enemies.reduce((n,e)=>n+e.hp,0);
+ if(actor.main)await new Promise(resolve=>playSpellAnimation(dmg,0,resolve,targetIndex));
+ else await new Promise(resolve=>animateSidekick(S.equipped.indexOf(actor.id),dmg,resolve,targetIndex));
  b.hits=Array.isArray(b.hits)?b.hits:[];b.hits.push(`${actor.emoji} ${actor.name}: ${dmg.toLocaleString()} damage`);
- if(b.hp===0){const assists=b.hits.slice(1);wonBattle(assists,dmg,true);animating=false;render();return;}
+ if(b.enemies.every(e=>e.hp===0)){
+  const assists=b.hits.slice(1);wonBattle(assists,dmg,true);animating=false;render();return;
+ }
  b.nextIndex=(Number(b.nextIndex)||0)+1;
- if(b.nextIndex>=currentActors().length){
-   b.turn++;b.nextIndex=0;opponentAttack();
-   if(S.screen==='battle')b.feed=`🛡️ Enemy counterattack! ${b.feed} Now ${currentActor()?.name||'your team'} attacks.`;
- } else b.feed=`✨ ${actor.name} hit for ${dmg.toLocaleString()}! Next: ${currentActor().emoji} ${currentActor().name}'s OWN turn. Solve a new puzzle to attack!`;
- if(S.screen==='battle')S.question=makeQuestion();
- save();animating=false;render();
- if(S.screen==='battle'&&b.nextIndex===0)setTimeout(playEnemyAnimation,90);
+ if(b.nextIndex>=currentActors().length){b.turn++;b.nextIndex=0;await runEnemyRound();}
+ else{b.feed=`✨ ${actor.name} hit ${target.name} for ${dmg.toLocaleString()}! Next: ${currentActor().emoji} ${currentActor().name}'s OWN turn. Answer a NEW question!`;S.question=makeQuestion();save();render();}
+ animating=false;
 }
-function animateSidekick(idx,dmg,done){
- const pet=document.getElementById('sidekick-'+idx),pop=document.getElementById('battle-damage'),enemy=document.getElementById('enemy-actor');
+
+function animateSidekick(idx,dmg,done,targetIndex=0){
+ const pet=document.getElementById('sidekick-'+idx),pop=document.getElementById('battle-damage'),enemy=document.getElementById('enemy-actor-'+targetIndex);
  if(pet)pet.classList.add('attacking');if(enemy)enemy.classList.add('struck');
  if(pop){pop.textContent='−'+dmg.toLocaleString()+' 🐾';pop.className='arena-damage show';}
- playTone('cast');setTimeout(()=>{if(pet)pet.classList.remove('attacking');if(enemy)enemy.classList.remove('struck');if(pop)pop.className='arena-damage';done();},580);
+ playTone('cast');setTimeout(()=>{if(pet)pet.classList.remove('attacking');if(enemy)enemy.classList.remove('struck');if(pop)pop.className='arena-damage';done();},630);
 }
+
 function recruit(b){const pet={capturedHp:b.maxHp,id:Date.now().toString(36)+Math.random().toString(36).slice(2,6),name:b.name,emoji:b.emoji,level:S.level,strength:Math.round(power()*(b.isBoss?.95:.45)),special:b.isBoss?'Meteor Burst':(S.zone===0?'Leaf Beam':S.zone===1?'Flame Wave':S.zone===2?'Thunder Flash':'Star Storm')};S.pets.push(pet);if(S.equipped.length<2)S.equipped.push(pet.id);S.lastRecruit=pet;}
 function wonBattle(assists,hit,deferRender=false){const b=S.battle;S.completed+=b.isPractice?0:1;S.level+=b.isPractice?0:1;S.maxHp+=b.isPractice?0:100;S.hp=S.maxHp;S.notice=b.isPractice?`You passed training! Grandmaster Glimmer opens the forest gate.`:`Your attack hit for ${hit}! ${assists.join(' ')} Victory! +1 level and +100 maximum health!`;if(!b.isPractice){recruit(b);if(b.isBoss)S.bossWins++}else S.tutorialDone=true;S.battle=null;S.question=null;S.screen=b.isBoss?'reward':'victory';save();if(!deferRender)render();}
 function defeat(){return `<section class="panel"><span class="tag">💔 TEAM DEFEATED</span><div class="levelburst">🩹</div><h2>Time to regroup!</h2><p class="story">${escapeHtml(S.notice)}</p><div class="banner">⭐ Your Level ${S.level} is safe! All ${S.pets.length} pets and ${S.bossWins} boss victories are saved.</div><p>Your whole team can heal, then you can challenge the same monster again.</p><div class="buttonrow"><button class="btn" data-do="retry">❤️ Heal & Try Again</button><button class="btn ghost" data-do="recover">🏕️ Return to Camp</button></div></section>`}
 function turnRibbon(){
- const actors=currentActors(),idx=S.battle?.nextIndex||0;
- return `<div class="turn-strip" role="status" aria-label="Separate attack turns">${actors.map((a,i)=>`<span class="turn-pill ${i===idx?'active':''}">${i===idx?'▶ ':''}${a.emoji} ${escapeHtml(a.name)}${i===idx?' · YOUR TURN':''}</span>`).join('<span class="turn-arrow">→</span>')}<span class="turn-arrow">→</span><span class="turn-pill enemy-turn">😠 Enemy</span></div>`;
+ const b=S.battle,actors=currentActors(),idx=b?.nextIndex||0,enemies=b?.enemies||[];
+ const allies=actors.map((a,i)=>`<span class="turn-pill ${b.phase!=='enemies'&&i===idx?'active':''}">${b.phase!=='enemies'&&i===idx?'▶ ':''}${a.emoji} ${escapeHtml(a.name)}${b.phase!=='enemies'&&i===idx?' · YOUR TURN':''}</span>`);
+ const villains=enemies.map((e,i)=>`<span class="turn-pill enemy-turn ${b.phase==='enemies'&&i===b.currentEnemy?'active':''} ${e.hp===0?'finished':''}">🪄 ${escapeHtml(e.name)}${e.hp===0?' ✓':''}</span>`);
+ return `<div class="turn-strip" role="status" aria-label="Hero, pets, then each enemy attacks separately">${[...allies,...villains].join('<span class="turn-arrow">→</span>')}</div>`;
 }
 function battle(){
  const b=S.battle;if(!b){S.screen='adventure';save();return adventure();}
+ ensureEnemies();if(b.phase==='enemies'&&!animating){b.phase='heroes';b.nextIndex=0;}
  if(!S.question?.choices){S.question=makeQuestion();save();}
  const zoneClass=['forest','volcano','sky','forest','endless','volcano','forest','sky','forest','endless','forest'][S.zone]||'forest';
  const z=zoneInfo(),props=z.props||['🌿','🪨','🌲'];
  const team=S.equipped.map(id=>S.pets.find(p=>p.id===id)).filter(Boolean),lead=team.find(p=>p.id===b.activePet);
  const leadHP=lead?b.petHp:S.hp,leadMax=lead?b.petMaxHp:S.maxHp,actor=currentActor();
- return `<section class="panel wide battle-panel"><div class="battle-header"><div><span class="tag">${b.isPractice?'🕯️ PRACTICE':b.isBoss?'👑 BOSS BATTLE':'⚔️ ENCOUNTER '+(S.completed+1)}</span><h2>${b.isBoss?'Boss: ':''}${escapeHtml(b.name)}</h2></div><div class="tiny">⭐ Level ${S.level} · 🛡️ You keep your level if you lose</div></div>
+ const enemies=b.enemies.filter(e=>e.hp>0);
+ const enemyCards=b.enemies.map(e=>`<div class="hp-card"><div class="healthtxt"><span>❤️ ${escapeHtml(e.name)}</span><span>${e.hp.toLocaleString()}/${e.maxHp.toLocaleString()}</span></div><div class="progresswrap"><div class="progressfill" style="width:${Math.max(0,100*e.hp/e.maxHp)}%"></div></div></div>`).join('');
+ const enemyArt=b.enemies.map((e,i)=>`<div class="enemy-unit ${e.hp===0?'down':''} ${b.phase==='enemies'&&b.currentEnemy===i?'acting':''}" id="enemy-actor-${i}" aria-label="${escapeHtml(e.name)} with ${e.hp} HP"><span class="enemy-wand" aria-hidden="true">🪄</span>${monsterSVG(e)}<span class="unit-name">${e.emoji} ${escapeHtml(e.name)}</span></div>`).join('');
+ return `<section class="panel wide battle-panel"><div class="battle-header"><div><span class="tag">${b.isPractice?'🕯️ PRACTICE':b.isBoss?'👑 BOSS BATTLE':'⚔️ TWO-MONSTER ENCOUNTER '+(S.completed+1)}</span><h2>${b.isBoss?'Boss: '+escapeHtml(b.name):'Your team vs. '+enemies.length+' monster'+(enemies.length===1?'':'s')}</h2></div><div class="tiny">⭐ Level ${S.level} · 🛡️ Your progress is safe if you lose</div></div>
  <div class="battle-split"><div class="battle-stage">
- <div id="battle-arena" class="arena-scene ${zoneClass}" aria-label="Your hero and both pets facing ${escapeHtml(b.name)}">
+ <div id="battle-arena" class="arena-scene ${zoneClass}" aria-label="Your hero and two pet creatures facing ${b.isBoss?'one boss':'two different monsters'}">
  <div class="arena-scenery" aria-hidden="true"><span class="object">${props[0]}</span><span class="object">${props[1]}</span><span class="object">${props[2]}</span></div><div class="arena-vs">⚔️</div>
  <div id="player-actor" class="actor player-actor ${actor?.main?'is-turn':''}">${lead?monsterSVG({...lead,friend:true}):avatarSVG(S.avatar,true)}</div>
- <div id="battle-pets" class="arena-pets" aria-label="Your companions">${team.filter(p=>p.id!==b.activePet&&!b.fallenPets?.includes(p.id)).map(p=>miniAvatar(p,S.equipped.indexOf(p.id))).join('')}</div>
- <div id="enemy-actor" class="actor enemy-actor ${b.isBoss?'boss-actor':''}">${monsterSVG(b)}</div>
- <span class="arena-name left">${lead?lead.emoji+' '+escapeHtml(lead.name):'🧙 '+escapeHtml(S.avatar.name)}</span><span class="arena-name right">${b.emoji} ${escapeHtml(b.name)}</span>
+ <div id="battle-pets" class="arena-pets" aria-label="Your pet creatures standing beside you">${team.filter(p=>p.id!==b.activePet&&!b.fallenPets?.includes(p.id)).map(p=>miniAvatar(p,S.equipped.indexOf(p.id))).join('')}</div>
+ <div class="enemy-lineup ${b.isBoss?'solo':'duo'}">${enemyArt}</div>
+ <span class="arena-name left">${lead?lead.emoji+' '+escapeHtml(lead.name):'🧙 '+escapeHtml(S.avatar.name)}</span>
  <div id="spell-projectile" class="arena-projectile" aria-hidden="true"></div><div id="battle-damage" class="arena-damage" aria-live="polite"></div></div>
- <div class="battle-hp"><div class="hp-card"><div class="healthtxt"><span>❤️ ${lead?'RESCUE PET':'YOUR HEALTH'}</span><span>${leadHP.toLocaleString()}/${leadMax.toLocaleString()}</span></div><div class="progresswrap"><div class="progressfill" style="width:${Math.max(0,100*leadHP/leadMax)}%;background:linear-gradient(90deg,#7ee8ad,#a2f0ca)"></div></div></div>
- <div class="hp-card"><div class="healthtxt"><span>❤️ MONSTER HP</span><span>${b.hp.toLocaleString()}/${b.maxHp.toLocaleString()}</span></div><div class="progresswrap"><div class="progressfill" style="width:${100*b.hp/b.maxHp}%"></div></div></div></div>
+ <div class="battle-hp"><div class="hp-card"><div class="healthtxt"><span>❤️ ${lead?'RESCUE PET':'YOUR HEALTH'}</span><span>${leadHP.toLocaleString()}/${leadMax.toLocaleString()}</span></div><div class="progresswrap"><div class="progressfill" style="width:${Math.max(0,100*leadHP/leadMax)}%;background:linear-gradient(90deg,#7ee8ad,#a2f0ca)"></div></div></div>${enemyCards}</div>
  <div class="feedback battle-feedback" aria-live="polite">${escapeHtml(b.feed)}</div>
- </div><div class="battle-questions">${turnRibbon()}<div class="turn-heading">${actor?.emoji||'🧙'} ${escapeHtml(actor?.name||'Hero')}'s turn — solve to attack!</div>${puzzleCard()}
- <p class="tiny">Separate turns: hero → first pet → second pet → enemy. After each answer, a different fighter moves. Bosses can use a shielded 100,000-power strike. NGAT-inspired puzzles and math adapt to your thinking.</p></div></div></section>`;
+ </div><div class="battle-questions">${turnRibbon()}<div class="turn-heading">${b.phase==='enemies'?'🪄 ENEMIES ATTACKING — watch their magical animations!':`${actor?.emoji||'🧙'} ${escapeHtml(actor?.name||'Hero')}'s turn — solve to attack!`}</div>${b.phase==='enemies'?'<div class="enemy-wait">⚡ Watch the enemies take their separate turns!</div>':puzzleCard()}
+ <p class="tiny">Turn order: hero question → pet 1 question → pet 2 question → monster 1 magic → monster 2 magic. Boss battles have only one boss.</p></div></div></section>`;
 }
-function playSpellAnimation(damage,withPets,done){
+function playSpellAnimation(damage,withPets,done,targetIndex=0){
  const arena=document.getElementById('battle-arena'),hero=document.getElementById('player-actor');
  if(!arena||!hero){done();return;}
- const enemy=document.getElementById('enemy-actor'),orb=document.getElementById('spell-projectile'),pop=document.getElementById('battle-damage');
- document.getElementById('answer')?.setAttribute('disabled','disabled');document.querySelector('#math-form button')?.setAttribute('disabled','disabled');
+ const enemy=document.getElementById('enemy-actor-'+targetIndex),orb=document.getElementById('spell-projectile'),pop=document.getElementById('battle-damage');
  hero.classList.add('casting');orb?.classList.add('flying');arena.classList.add('spell-flash');
  if(withPets)document.getElementById('battle-pets')?.classList.add('helping');
- setTimeout(()=>{enemy?.classList.add('struck');if(pop){pop.textContent='−'+damage.toLocaleString()+' ✨';pop.classList.add('show')}playTone('cast')},230);
+ setTimeout(()=>{enemy?.classList.add('struck');if(pop){pop.textContent='−'+damage.toLocaleString()+' ✨';pop.classList.add('show');}playTone('cast');},230);
  setTimeout(done,920);
 }
-function playEnemyAnimation(){
- const arena=document.getElementById('battle-arena');if(!arena)return;
- const e=document.getElementById('enemy-actor'),p=document.getElementById('player-actor');
- const orb=document.getElementById('spell-projectile'),pop=document.getElementById('battle-damage');
- e?.classList.add('lunging');if(orb)orb.classList.add('enemybolt');
- setTimeout(()=>{p?.classList.add('hurt');if(pop){pop.textContent='⚡';pop.classList.add('incoming','show')}},260);
- setTimeout(()=>{e?.classList.remove('lunging');p?.classList.remove('hurt');orb?.classList.remove('enemybolt');pop?.classList.remove('incoming','show')},820)
+function playEnemyAnimation(index=0){
+ return new Promise(resolve=>{
+  const e=document.getElementById('enemy-actor-'+index),p=document.getElementById('player-actor');
+  const orb=document.getElementById('spell-projectile'),pop=document.getElementById('battle-damage');
+  if(!e){resolve();return;}
+  e.classList.add('lunging','waving');
+  if(orb){orb.classList.add('enemybolt');orb.style.left=(index===0?'68%':'84%');}
+  setTimeout(()=>{p?.classList.add('hurt');if(pop){pop.textContent='⚡ ZAP!';pop.classList.add('incoming','show');}playTone('cast');},275);
+  setTimeout(()=>{e?.classList.remove('lunging','waving');p?.classList.remove('hurt');orb?.classList.remove('enemybolt');if(orb)orb.style.left='';pop?.classList.remove('incoming','show');resolve();},865);
+ });
 }
-// Original procedural soundtrack: entirely offline and starts only after user interaction.
-let scoreCtx=null,scoreMaster=null,scoreTimer=null,scoreStep=0,scoreScene='',scoreActive=false;
-const MUSIC_MODES={travel:{root:57,pace:270,notes:[0,4,7,12,7,4,2,4,5,9,12,16,12,9,7,5,0,7,9,12,14,12,9,7,5,4,2,0,2,4,7,9],bass:[0,5,9,7]},battle:{root:52,pace:210,notes:[0,7,3,7,10,7,3,7,2,9,5,9,12,9,5,9,3,10,7,10,12,10,7,10,2,9,5,9,7,5,3,2],bass:[0,3,5,2]},boss:{root:48,pace:185,notes:[0,0,12,7,3,7,10,7,2,2,14,9,5,9,12,9,0,7,0,10,12,10,7,3,5,12,5,14,12,7,3,0],bass:[0,2,3,5]}};
-function getScoreScene(){return S.screen==='battle'?(S.battle?.isBoss?'boss':'battle'):(S.screen==='defeat'?'travel':'travel');}
+
+// Expanded original adaptive soundtrack: multi-minute evolving compositions, completely offline.
+let scoreCtx=null,scoreMaster=null,scoreLimiter=null,scoreTimer=null,scorePace=0,scoreStep=0,scoreScene='',scoreActive=false;
+// Each setting has 8 harmonic bars and four contrasting phrases, with evolving arrangements.
+// At ~216 ms per eighth-step, 32 bars of phrasing and sections run well over a minute before any near-repeat.
+const MUSIC_MODES={
+ travel:{root:60,pace:236,scale:[0,2,4,5,7,9,11],chords:[0,5,3,4,1,5,3,4],
+   phrases:[[0,2,4,5,7,5,4,2],[2,4,5,7,9,7,5,4],[4,5,7,9,11,9,7,5],[7,5,4,2,0,2,4,0]],
+   echo:[7,9,11,12,9,7,5,4],light:true},
+ battle:{root:57,pace:196,scale:[0,2,3,5,7,8,10],chords:[0,5,3,4,0,6,3,4],
+   phrases:[[0,0,4,3,7,5,4,2],[3,4,5,7,8,7,5,4],[0,2,3,7,5,3,2,4],[5,7,8,7,5,3,2,0]],
+   echo:[7,10,8,7,12,8,7,5],light:false},
+ boss:{root:53,pace:180,scale:[0,1,3,5,7,8,10],chords:[0,6,3,4,5,1,4,0],
+   phrases:[[0,0,7,3,5,7,8,7],[3,5,7,10,8,7,5,3],[0,3,5,7,12,10,8,7],[7,5,3,1,0,7,3,0]],
+   echo:[12,10,8,7,5,3,1,0],light:false}
+};
+function getScoreScene(){return S.screen==='battle'?(S.battle?.isBoss?'boss':'battle'):'travel';}
+function musicVolume(){return Math.max(0,Math.min(100,Number(S.musicVolume??65)))/100;}
+function scorePitch(cfg,degree,octave=0){
+ const i=((degree%7)+7)%7;
+ return cfg.root+cfg.scale[i]+12*(Math.floor(degree/7)+octave);
+}
 function synthNote(midi,seconds=.2,voice='lead',when){
  if(!scoreCtx||!scoreMaster)return;
- const now=when??scoreCtx.currentTime;const freq=440*Math.pow(2,(midi-69)/12);
- const o=scoreCtx.createOscillator(),g=scoreCtx.createGain();o.type=voice==='bass'?'sine':'triangle';o.frequency.setValueAtTime(freq,now);
- g.gain.setValueAtTime(.0001,now);g.gain.exponentialRampToValueAtTime(voice==='bass'?.12:.075,now+.019);g.gain.exponentialRampToValueAtTime(.0001,now+seconds);
- o.connect(g).connect(scoreMaster);o.start(now);o.stop(now+seconds+.02);
+ const now=when??scoreCtx.currentTime,freq=440*Math.pow(2,(midi-69)/12);
+ const osc=scoreCtx.createOscillator(),gain=scoreCtx.createGain();
+ const timbres={lead:'triangle',bass:'sine',bell:'sine',pluck:'triangle',pad:'sine'};
+ const amplitudes={lead:.155,bass:.18,bell:.095,pluck:.095,pad:.078};
+ osc.type=timbres[voice]||'triangle';osc.frequency.setValueAtTime(freq,now);
+ const attack=voice==='pad'?.12:.018,release=Math.max(.08,seconds-attack);
+ gain.gain.setValueAtTime(.0001,now);
+ gain.gain.exponentialRampToValueAtTime(amplitudes[voice]||.1,now+attack);
+ gain.gain.exponentialRampToValueAtTime(.0001,now+attack+release);
+ osc.connect(gain).connect(scoreMaster);osc.start(now);osc.stop(now+seconds+.045);
 }
 function musicTick(){
- if(!S.musicOn||!S.started||document.hidden)return;
- if(!scoreCtx||scoreCtx.state!=='running')return;
+ if(!S.musicOn||!S.started||document.hidden||!scoreCtx||scoreCtx.state!=='running')return;
  const scene=getScoreScene();if(scene!==scoreScene){scoreScene=scene;scoreStep=0;}
- const cfg=MUSIC_MODES[scene],step=scoreStep++;
- const note=cfg.notes[step%cfg.notes.length],chord=Math.floor(step/8)%4;
- if(step%2===0)synthNote(cfg.root+note+(scene==='boss'?-2:0),cfg.pace/1000*.83,'lead');
- if(step%4===0)synthNote(cfg.root-12+cfg.bass[chord],cfg.pace/1000*3.4,'bass');
- if(step%16===12&&scene==='travel')synthNote(cfg.root+12+cfg.bass[chord],cfg.pace/1000*1.8,'lead');
+ const cfg=MUSIC_MODES[scene],step=scoreStep++,bar=Math.floor(step/16),beat=step%16;
+ const harmony=cfg.chords[bar%cfg.chords.length];
+ const chapter=Math.floor(bar/8),phrase=cfg.phrases[(bar+Math.floor(bar/4))%cfg.phrases.length];
+ // Four complementary instruments, with variation across bars and chapters.
+ if(beat===0){
+  synthNote(scorePitch(cfg,harmony,-2),cfg.pace/1000*3.7,'bass');
+  if(bar%2===0)synthNote(scorePitch(cfg,harmony+4,-1),cfg.pace/1000*3.7,'pad');
+ }
+ if(beat===8)synthNote(scorePitch(cfg,harmony+4,-2),cfg.pace/1000*3.2,'bass');
+ if(beat%2===0){
+  let d=phrase[Math.floor(beat/2)];
+  if(chapter%4===1 && beat===10)d+=2;
+  if(chapter%4===2 && beat===14)d-=2;
+  if(chapter%4===3 && beat===6)d+=4;
+  // Space between phrases lets other instruments shine instead of perpetual beeping.
+  if(beat!==14||bar%3!==1)synthNote(scorePitch(cfg,d),cfg.pace/1000*1.7,scene==='boss'?'pluck':'lead');
+ }
+ if(beat%4===2 && (bar+chapter)%3!==0){
+  const arpeggio=[0,2,4,6][Math.floor(beat/4)];
+  synthNote(scorePitch(cfg,harmony+arpeggio,chapter%3===2?1:0),cfg.pace/1000*1.22,'pluck');
+ }
+ if(beat===12 && (bar+chapter)%2===0){
+  synthNote(scorePitch(cfg,cfg.echo[(bar+chapter)%cfg.echo.length],1),cfg.pace/1000*2.9,'bell');
+ }
+ if(beat===6 && chapter%4===3){
+  synthNote(scorePitch(cfg,harmony+2,0),cfg.pace/1000*2.6,'pad');
+ }
 }
-function musicVolume(){return Math.min(100,Math.max(0,Number(S.musicVolume??45))) /100;}
 function syncMusic(){
- if(scoreMaster&&scoreCtx){scoreMaster.gain.setTargetAtTime(S.musicOn?musicVolume()*.43:0,scoreCtx.currentTime,.055);}
+ if(scoreMaster&&scoreCtx)scoreMaster.gain.setTargetAtTime(S.musicOn?musicVolume()*.82:0,scoreCtx.currentTime,.07);
  if(!S.musicOn||!S.started){if(scoreTimer){clearInterval(scoreTimer);scoreTimer=null;}return;}
- if(scoreCtx?.state==='running'&&!scoreTimer){scoreScene='';scoreStep=0;musicTick();scoreTimer=setInterval(musicTick,210);}
+ if(scoreCtx?.state==='running'&&!scoreTimer){
+  scoreScene='';musicTick();scorePace=MUSIC_MODES[getScoreScene()].pace;scoreTimer=setInterval(musicTick,scorePace);
+ }
+ if(scoreCtx?.state==='running'&&scoreTimer){
+  const currentPace=MUSIC_MODES[getScoreScene()].pace;
+  if(scorePace!==currentPace){clearInterval(scoreTimer);scorePace=currentPace;scoreTimer=setInterval(musicTick,scorePace);}
+ }
 }
 function beginMusicFromGesture(){
  if(!S.started||!S.musicOn||document.hidden)return;
  try{
-  if(!scoreCtx){const C=window.AudioContext||window.webkitAudioContext;if(!C)return;scoreCtx=new C();scoreMaster=scoreCtx.createGain();scoreMaster.gain.value=musicVolume()*.43;scoreMaster.connect(scoreCtx.destination);}
+  if(!scoreCtx){
+   const C=window.AudioContext||window.webkitAudioContext;if(!C)return;
+   scoreCtx=new C();scoreMaster=scoreCtx.createGain();scoreMaster.gain.value=musicVolume()*.82;
+   scoreLimiter=scoreCtx.createDynamicsCompressor();scoreLimiter.threshold.value=-18;scoreLimiter.knee.value=14;scoreLimiter.ratio.value=7;
+   scoreMaster.connect(scoreLimiter).connect(scoreCtx.destination);
+  }
   if(scoreCtx.state==='suspended')scoreCtx.resume().then(syncMusic).catch(()=>{});
   else syncMusic();
- }catch(e){}
+ }catch(e){console.warn('Optional soundtrack unavailable',e);}
 }
 function shutMusicOff(){syncMusic();}
 window.addEventListener('pagehide',()=>{if(scoreTimer)clearInterval(scoreTimer);scoreTimer=null;scoreCtx?.close?.().catch(()=>{});scoreCtx=null;scoreMaster=null});
@@ -532,7 +764,7 @@ function adventure(){
  <div class="explore-scene"><canvas id="explore-canvas" width="960" height="520" tabindex="0" aria-label="Explore ${escapeHtml(z.name)} using your keyboard arrow keys. Tap or click creatures to challenge them when nearby."></canvas><div class="explore-hud" id="explore-hud">🎮 Arrow keys move • Tap a nearby creature to battle</div></div>
  <div class="explore-ui"><div class="miniquest"><strong>${isBoss?'👑 Boss encounter next!':'🔎 Your mission: discover a creature'}</strong><div class="explore-help">Use the keyboard arrow keys or the arrows here. Move close to a creature, then click or tap it to challenge it. Your two pets follow beside you.</div></div>
  <div class="move-pad" aria-label="Move your character"><button class="up" data-move="ArrowUp" aria-label="Move up">↑</button><button class="left" data-move="ArrowLeft" aria-label="Move left">←</button><button class="down" data-move="ArrowDown" aria-label="Move down">↓</button><button class="right" data-move="ArrowRight" aria-label="Move right">→</button></div></div>
- <div class="buttonrow"><button class="btn teal" data-do="map">🗺️ World Map</button><button class="btn ghost" data-do="pets">🐾 Choose Companions</button></div>
+ <div class="buttonrow"><button class="btn teal" data-do="map">🗺️ World Map</button><button class="btn ghost" data-do="pets">🐾 Choose Companions</button><button class="btn" data-do="fight">⚔️ Start a Battle</button></div>
  <p class="tiny">This world is yours to roam: enemies do not attack until you choose a battle. Every third victory is a boss. Enemy strength grows with your level, while puzzles adjust gradually to how you're doing. You can lose a fight without losing your level.</p></section>`;
 }
 const worldKeys=new Set();let worldFrame=null,worldCanvas=null,worldEntities=[],worldLast=0,worldSaveClock=0,worldPosition=null;
@@ -565,11 +797,21 @@ function exploreFrame(t){if(S.screen!=='adventure'||!worldCanvas){stopExplore();
  let dx=(worldKeys.has('ArrowRight')||worldKeys.has('KeyD')?1:0)-(worldKeys.has('ArrowLeft')||worldKeys.has('KeyA')?1:0),dy=(worldKeys.has('ArrowDown')||worldKeys.has('KeyS')?1:0)-(worldKeys.has('ArrowUp')||worldKeys.has('KeyW')?1:0);
  if(dx||dy){const n=Math.hypot(dx,dy);worldPosition.x=Math.max(75,Math.min(WORLD_W-60,worldPosition.x+dx/n*255*dt));worldPosition.y=Math.max(255,Math.min(WORLD_H-66,worldPosition.y+dy/n*255*dt));}
  worldSaveClock+=dt;if(worldSaveClock>1.8){rememberWalk();worldSaveClock=0;}
- drawWorld(t,!!(dx||dy));worldFrame=requestAnimationFrame(exploreFrame);
+ try{drawWorld(t,!!(dx||dy));}catch(error){
+  const hud=document.getElementById('explore-hud');if(hud)hud.textContent='Map graphics unavailable on this browser. Use World Map to explore.';
+  console.warn('Canvas fallback:',error);stopExplore();return;
+ }
+ worldFrame=requestAnimationFrame(exploreFrame);
 }
-function rounded(ctx,x,y,w,h,r,fill,stroke=null,lw=1){ctx.beginPath();ctx.roundRect(x,y,w,h,r);ctx.fillStyle=fill;ctx.fill();if(stroke){ctx.strokeStyle=stroke;ctx.lineWidth=lw;ctx.stroke();}}
+function canvasRoundRect(ctx,x,y,w,h,r){
+ if(typeof ctx.roundRect==='function'){ctx.roundRect(x,y,w,h,r);return;}
+ const rr=Math.max(0,Math.min(r,w/2,h/2));ctx.moveTo(x+rr,y);ctx.lineTo(x+w-rr,y);ctx.quadraticCurveTo(x+w,y,x+w,y+rr);
+ ctx.lineTo(x+w,y+h-rr);ctx.quadraticCurveTo(x+w,y+h,x+w-rr,y+h);ctx.lineTo(x+rr,y+h);
+ ctx.quadraticCurveTo(x,y+h,x,y+h-rr);ctx.lineTo(x,y+rr);ctx.quadraticCurveTo(x,y,x+rr,y);
+}
+function rounded(ctx,x,y,w,h,r,fill,stroke=null,lw=1){ctx.beginPath();canvasRoundRect(ctx,x,y,w,h,r);ctx.fillStyle=fill;ctx.fill();if(stroke){ctx.strokeStyle=stroke;ctx.lineWidth=lw;ctx.stroke();}}
 function drawTree(ctx,x,y,s,leaf,stroke){ctx.save();ctx.translate(x,y);ctx.scale(s,s);
- ctx.fillStyle='#705849';ctx.strokeStyle='#303e39';ctx.lineWidth=6;ctx.beginPath();ctx.roundRect(-10,-20,20,75,6);ctx.fill();ctx.stroke();
+ ctx.fillStyle='#705849';ctx.strokeStyle='#303e39';ctx.lineWidth=6;ctx.beginPath();canvasRoundRect(ctx,-10,-20,20,75,6);ctx.fill();ctx.stroke();
  for(const [a,b,r] of [[-29,-49,36],[23,-43,40],[1,-82,43]]){ctx.beginPath();ctx.arc(a,b,r,0,Math.PI*2);ctx.fillStyle=leaf;ctx.fill();ctx.strokeStyle=stroke;ctx.lineWidth=5;ctx.stroke();ctx.beginPath();ctx.ellipse(a-11,b-13,11,6,-.4,0,Math.PI*2);ctx.fillStyle='#ffffff55';ctx.fill();}ctx.restore();}
 function drawWorld(t,walking){const c=worldCanvas,ctx=c?.getContext('2d');if(!ctx)return;
  const z=zoneInfo(),cs=z.colors||['#b0dabb','#81b7a7','#568c84'],cam=worldCamera();ctx.clearRect(0,0,960,520);
@@ -655,7 +897,7 @@ function realismPreviews(){const demo=[{name:'Twig Dragon',emoji:'🐲'},{name:'
 function settings(){return `<section class="panel"><span class="tag">⚙️ PREFERENCES</span><h2>Game Settings & Save Safety</h2><p>Your adventure automatically saves on this website in this browser. Download a backup before changing files, browsers, or computers.</p>
  <div class="banner">⭐ Level ${S.level} • ⚔️ ${S.completed} battles • 🐾 ${S.pets.length} pets • 👑 ${S.bossWins} bosses</div>
  <section id="look-lab" class="look-lab" aria-label="Realisticness Bar"><h3>🎨 Realisticness Bar <span id="realism-number">${Math.round(S.realism??30)}%</span></h3><p class="small" style="margin:6px 0;color:#d7eef1">Slide it to change how the monsters look. From simple cartoons to shaded fantasy creatures — never too scary!</p><input id="realisticness-bar" class="real-range" aria-label="Realisticness" type="range" min="0" max="100" step="5" value="${Math.round(S.realism??30)}"><div class="look-labels"><span>0% 🎨 Cartoon</span><span>50% 📖 Storybook</span><span>100% 🪄 Detailed fantasy</span></div><div class="look-state" id="look-state">${realismLabel()}</div><div class="look-previews" id="look-previews">${realismPreviews()}</div><p class="look-note">Try the bar as much as you want. It only changes artwork. Levels, HP, puzzles, pets and equipment stay exactly the same.</p></section>
- <section class="music-controls"><h3>🎵 Adventure Soundtrack</h3><p class="small">Original music changes while exploring, battling, and fighting bosses. Starts after you click or press a key.</p><button class="btn teal smallbtn" data-do="music">${S.musicOn?'🎶 Turn Music Off':'▶ Play Music'}</button><label class="formlabel" for="music-volume">Music volume: <span id="music-volume-number">${S.musicVolume??45}%</span></label><input type="range" id="music-volume" min="0" max="100" step="5" value="${S.musicVolume??45}" aria-label="Music volume" /></section>
+ <section class="music-controls"><h3>🎵 Adventure Soundtrack</h3><p class="small">Original music changes while exploring, battling, and fighting bosses. Starts after you click or press a key.</p><button class="btn teal smallbtn" data-do="music">${S.musicOn?'🎶 Turn Music Off':'▶ Play Music'}</button><label class="formlabel" for="music-volume">Music volume: <span id="music-volume-number">${S.musicVolume??65}%</span></label><input type="range" id="music-volume" min="0" max="100" step="5" value="${S.musicVolume??65}" aria-label="Music volume" /></section>
  <section class="safe-box"><h3>💾 Back Up Your Adventure</h3><p>This downloads a small save file containing your level, pets, equipment, and character. Keep it safe with your dad.</p><div class="row"><button class="btn teal" data-do="export">⬇️ Download My Save</button><label for="import-file" class="btn purple" style="cursor:pointer;display:inline-flex;align-items:center">⬆️ Restore a Save</label><input id="import-file" class="filepick" type="file" accept=".json,application/json"/></div>
  <p class="backup-status">✅ Works with your original Magic Battles save. Importing never deletes the backup file.</p>
  <details><summary style="cursor:pointer;font-weight:850;padding:8px 0">Have save text from the original Chrome tab?</summary><p>Paste the saved JSON below. Ask Dad for help if needed.</p><textarea class="save-paste" id="save-paste" placeholder="Paste the original save JSON here"></textarea><button class="btn teal smallbtn" data-do="paste-save">✨ Restore Pasted Save</button></details>
