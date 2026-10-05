@@ -572,6 +572,12 @@ body{width:100%;overflow-x:hidden;min-width:0}
 .battle-stage .sidekick.is-turn{box-shadow:none!important;filter:drop-shadow(0 0 8px #fff2a9)}
 .battle-stage .enemy-unit{background:none!important}
 .battle-stage .enemy-unit .unit-name{border:none!important}
+
+/* Adventure heading stays on one row when there is room. */
+.adventure-headline{display:flex;align-items:baseline;gap:12px 18px;flex-wrap:wrap;margin:0 0 9px}
+.adventure-headline h2{margin:0!important;flex:0 1 auto;line-height:1.12}
+.adventure-headline .story{margin:0!important;flex:1 1 208px;font-size:13px!important;line-height:1.32!important;color:#d9e5f1!important}
+@media (max-width:660px){.adventure-headline{gap:3px;margin-bottom:10px}.adventure-headline h2{width:100%}.adventure-headline .story{flex-basis:100%;font-size:12px!important}}
 </style>
 </head>
 <body><div id="app" class="shell"><section style="max-width:600px;margin:8vh auto;padding:24px;background:#263653;border:2px solid #9bdfca;border-radius:22px;color:#fff8e7;font-family:system-ui"><h1 style="margin:0 0 12px;font-size:28px">✨ The Infinite Adventures</h1><p>Loading your adventure…</p><p style="font-size:14px;opacity:.85">If the game stays on this message, reload the page. Your saved levels and pets will not be reset.</p><button onclick="location.reload()" style="padding:12px 24px;border:0;border-radius:12px;font-weight:bold;background:#ffe3aa;color:#27314b">↻ Reload game</button></section></div><div id="toast" role="status" aria-live="polite"></div>
@@ -693,25 +699,45 @@ function ensureBattlePacing(){
 }
 // Nine visible map checkpoints per region. Each stage has two normal encounters then a boss.
 const DEFAULT_QUEST_POSITIONS=[[230,370],[380,340],[540,315],[720,330],[900,355],[1080,340],[1240,320],[1380,355],[1490,430]];
+// Hand-traced from each actual 1600x900 illustration, NOT a reusable sine wave.
+// Each coordinate denotes a patch of solid trail, deck, stonework or snow.
+// Foes use the same path coordinates for rendering, clicking and proximity checks.
 const QUEST_POSITIONS_BY_ZONE={
- 0:[[145,205],[305,260],[485,320],[675,300],[865,400],[1045,475],[1210,395],[1365,455],[1490,500]],
- 1:[[135,250],[310,300],[485,365],[665,285],[845,245],[1015,305],[1185,370],[1360,305],[1490,260]],
- 2:[[130,345],[300,315],[470,280],[655,310],[840,275],[1020,305],[1195,270],[1370,300],[1490,320]],
- 3:[[125,345],[300,325],[480,300],[665,270],[850,310],[1030,340],[1210,290],[1385,320],[1490,360]],
- 4:[[150,235],[320,225],[500,280],[690,365],[875,455],[1055,405],[1220,510],[1380,560],[1490,470]],
- 5:[[140,240],[320,215],[500,260],[690,360],[875,430],[1060,355],[1235,265],[1400,220],[1490,255]],
- 6:[[140,325],[310,330],[485,290],[660,325],[835,370],[1010,320],[1185,265],[1360,300],[1490,330]],
- 7:[[140,470],[315,420],[500,375],[690,330],[875,290],[1060,250],[1235,230],[1405,255],[1490,300]],
- 8:[[120,200],[300,190],[475,195],[655,215],[840,240],[1020,220],[1200,210],[1375,200],[1490,210]],
- 9:[[135,315],[315,295],[495,285],[675,300],[855,325],[1035,290],[1215,255],[1395,270],[1490,320]],
- 10:[[220,595],[355,540],[520,490],[705,430],[890,380],[1075,340],[1250,305],[1395,285],[1490,315]]
+ 0:[[150,255],[305,302],[475,347],[640,393],[795,415],[950,455],[1120,475],[1315,507],[1455,538]], // wooded root bridge
+ 1:[[145,350],[305,427],[470,512],[630,538],[800,510],[965,477],[1130,407],[1310,334],[1460,315]], // volcano basalt bridge
+ 2:[[150,388],[315,438],[485,469],[650,481],[820,512],[990,512],[1150,462],[1335,385],[1460,336]], // sky marble skyway
+ 3:[[150,406],[310,445],[470,485],[630,480],[805,460],[975,444],[1145,423],[1320,386],[1465,358]], // harbor boardwalks
+ 4:[[155,306],[330,347],[490,413],[650,462],[815,481],[985,459],[1145,421],[1315,362],[1465,321]], // crystal stone ledges
+ 5:[[150,298],[315,352],[485,373],[655,421],[825,434],[995,416],[1165,362],[1325,324],[1470,267]], // canyon arch bridge
+ 6:[[150,284],[310,321],[470,374],[630,399],[795,427],[965,452],[1175,415],[1320,423],[1460,370]], // sandbars, boardwalks and islands
+ 7:[[150,253],[305,339],[475,405],[645,454],[810,469],[985,498],[1155,516],[1325,503],[1460,446]], // snowy bridge to glacier portal
+ 8:[[150,323],[305,424],[475,464],[650,488],[820,493],[990,485],[1160,471],[1325,416],[1460,358]], // ancient stone viaduct
+ 9:[[145,326],[305,334],[465,411],[625,449],[790,548],[965,527],[1135,466],[1315,363],[1460,342]], // moonlit fairground promenades
+ 10:[[200,700],[355,626],[515,526],[670,456],[830,406],[990,379],[1150,364],[1310,341],[1455,326]] // open road from foreground
 };
 const START_POSITIONS_BY_ZONE={
- 0:{x:70,y:195},1:{x:70,y:250},2:{x:70,y:345},3:{x:70,y:345},4:{x:85,y:235},5:{x:80,y:245},6:{x:85,y:330},7:{x:85,y:470},8:{x:80,y:205},9:{x:90,y:320},10:{x:95,y:610}
+ 0:{x:78,y:241},1:{x:78,y:330},2:{x:80,y:380},3:{x:80,y:397},4:{x:80,y:300},5:{x:80,y:298},6:{x:80,y:278},7:{x:80,y:238},8:{x:80,y:322},9:{x:80,y:324},10:{x:85,y:738}
 };
 const PORTAL_POSITIONS_BY_ZONE={
- 0:{x:1545,y:530},1:{x:1535,y:265},2:{x:1530,y:330},3:{x:1530,y:375},4:{x:1530,y:485},5:{x:1530,y:270},6:{x:1535,y:340},7:{x:1530,y:310},8:{x:1535,y:225},9:{x:1530,y:330},10:{x:1530,y:325}
+ 0:{x:1540,y:550},1:{x:1540,y:309},2:{x:1540,y:329},3:{x:1540,y:352},4:{x:1540,y:309},5:{x:1540,y:243},6:{x:1540,y:354},7:{x:1540,y:430},8:{x:1540,y:338},9:{x:1540,y:340},10:{x:1540,y:312}
 };
+function pathAnchorPoints(zone=S.zone){
+ const start=START_POSITIONS_BY_ZONE[zone]||{x:78,y:410},gate=PORTAL_POSITIONS_BY_ZONE[zone]||{x:1540,y:410};
+ return [[start.x,start.y],...(QUEST_POSITIONS_BY_ZONE[zone]||DEFAULT_QUEST_POSITIONS),[gate.x,gate.y]];
+}
+// The path guidance is deliberately invisible. It keeps the player's feet near
+// the illustrated walkways (rather than over lava, open air or the ocean).
+function guideOntoPath(pos,zone=S.zone,maxDistance=82){
+ const points=pathAnchorPoints(zone);let best={x:pos.x,y:pos.y,d2:Infinity};
+ for(let i=0;i<points.length-1;i++){
+  const a=points[i],b=points[i+1],dx=b[0]-a[0],dy=b[1]-a[1];
+  const t=Math.max(0,Math.min(1,((pos.x-a[0])*dx+(pos.y-a[1])*dy)/Math.max(1,dx*dx+dy*dy)));
+  const x=a[0]+t*dx,y=a[1]+t*dy,d2=(pos.x-x)**2+(pos.y-y)**2;
+  if(d2<best.d2)best={x,y,d2};
+ }
+ if(best.d2<=maxDistance*maxDistance)return pos;
+ const d=Math.sqrt(best.d2);return {x:best.x+(pos.x-best.x)*maxDistance/d,y:best.y+(pos.y-best.y)*maxDistance/d};
+}
 const QUEST_ALL=Array.from({length:9},(_,i)=>'node-'+i);
 const JACK_TRANSFER_KEY='jackNextRegionTransfer20261004';
 migrateRegionProgress(S);
@@ -1806,7 +1832,7 @@ function playTone(type){
 function hint(){const q=S.question;return q.op==='+'?'Hint: Try starting with the bigger number and counting up.':q.op==='-'?'Hint: Count backwards from the first number.':'Hint: Multiplication means equal groups. Try counting groups!'}
 function adventure(){
  const z=zoneInfo(),available=nextQuest(),complete=questStage()===3;
- return `<section class="panel"><span class="tag">${z.emoji} REGION ${S.zone+1} ${S.zone===10?' • ENDLESS CHAPTERS':''}</span><h2>Explore ${escapeHtml(z.name)}!</h2><p class="story">${escapeHtml(z.desc)}</p>
+ return `<section class="panel"><span class="tag">${z.emoji} REGION ${S.zone+1} ${S.zone===10?' • ENDLESS CHAPTERS':''}</span><div class="adventure-headline"><h2>Explore ${escapeHtml(z.name)}!</h2><p class="story">${escapeHtml(z.desc)}</p></div>
  ${S[JACK_TRANSFER_KEY]&&S[JACK_TRANSFER_KEY].to===S.zone?'<div class="banner" role="status">🏆 THIRD BOSS DEFEATED! 🚪 The portal carried you to your next region. Your pets, gear, and Learning Level are safe!</div>':''}
  ${questProgressPanel()}
  ${S.battle?`<div class="paused-battle-banner" role="status"><span>⏸️ Battle paused: <strong>${escapeHtml(S.battle.name)}</strong>. Progress saved.</span><button type="button" class="btn teal smallbtn" data-do="resume-battle">⚔️ Resume Battle</button></div>`:''}
@@ -1828,7 +1854,8 @@ let battleIntroTimer=null;
 function seeded(i){const t=Math.sin(i*12.9898+S.zone*88.61)*43758.5453;return t-Math.floor(t)}
 function worldActors(){return questSlots();}
 function startExplore(){stopExplore();const c=document.getElementById('explore-canvas');if(!c)return;
- worldCanvas=c;const previous=(S.walkPos||{})[S.zone],spawn=START_POSITIONS_BY_ZONE[S.zone]||{x:235,y:465};worldPosition={x:Math.max(60,Math.min(WORLD_W-80,previous?.x??spawn.x)),y:Math.max(120,Math.min(WORLD_H-66,previous?.y??spawn.y))};
+ worldCanvas=c;const previous=(S.walkPos||{})[S.zone],spawn=START_POSITIONS_BY_ZONE[S.zone]||{x:235,y:465};
+ worldPosition=guideOntoPath({x:Math.max(60,Math.min(WORLD_W-80,previous?.x??spawn.x)),y:Math.max(120,Math.min(WORLD_H-66,previous?.y??spawn.y))});
  worldEntities=worldActors().map(m=>{
   if(m.status==='cleared')return m; // defeated foes are truly gone, not gray ghosts
   try{
@@ -1862,7 +1889,7 @@ function worldCamera(){const x=Math.max(0,Math.min(WORLD_W-960,(worldPosition?.x
 function worldPortal(){return PORTAL_POSITIONS_BY_ZONE[S.zone]||{x:1490,y:452}}
 function exploreFrame(t){if(S.screen!=='adventure'||!worldCanvas){stopExplore();return;}const dt=worldLast?Math.min(.04,(t-worldLast)/1000):0;worldLast=t;
  let dx=(worldKeys.has('ArrowRight')||worldKeys.has('KeyD')?1:0)-(worldKeys.has('ArrowLeft')||worldKeys.has('KeyA')?1:0),dy=(worldKeys.has('ArrowDown')||worldKeys.has('KeyS')?1:0)-(worldKeys.has('ArrowUp')||worldKeys.has('KeyW')?1:0);
- if(dx||dy){const n=Math.hypot(dx,dy);worldPosition.x=Math.max(60,Math.min(WORLD_W-60,worldPosition.x+dx/n*255*dt));worldPosition.y=Math.max(120,Math.min(WORLD_H-66,worldPosition.y+dy/n*255*dt));}
+ if(dx||dy){const n=Math.hypot(dx,dy);worldPosition=guideOntoPath({x:Math.max(60,Math.min(WORLD_W-60,worldPosition.x+dx/n*255*dt)),y:Math.max(120,Math.min(WORLD_H-66,worldPosition.y+dy/n*255*dt))});}
  worldSaveClock+=dt;if(worldSaveClock>1.8){rememberWalk();worldSaveClock=0;}
  try{drawWorld(t,!!(dx||dy));}catch(error){
   const hud=document.getElementById('explore-hud');if(hud)hud.textContent='Map graphics unavailable on this browser. Use World Map to explore.';
@@ -1883,7 +1910,7 @@ function drawTree(ctx,x,y,s,leaf,stroke){ctx.save();ctx.translate(x,y);ctx.scale
 function drawWorld(t,walking){const c=worldCanvas,ctx=c?.getContext('2d');if(!ctx)return;
  const z=zoneInfo(),cs=z.colors||['#b0dabb','#81b7a7','#568c84'],cam=worldCamera();ctx.clearRect(0,0,960,520);
  const scenic=zoneBackdropImage(S.zone);
- if(scenic?.complete){drawCoverImage(ctx,scenic,0,0,960,520);ctx.fillStyle='rgba(8,11,24,.14)';ctx.fillRect(0,0,960,520);ctx.save();ctx.translate(-cam.x*.08,0);ctx.fillStyle='rgba(255,255,255,.12)';ctx.beginPath();ctx.moveTo(-100,322);for(let x=-100;x<=2000;x+=95)ctx.lineTo(x,244+Math.sin(x*.011+S.zone*2.7)*18+Math.sin(x*.019)*14);ctx.lineTo(2000,700);ctx.lineTo(-100,700);ctx.fill();ctx.restore();}
+ if(scenic?.complete){ctx.fillStyle='#132b3a';ctx.fillRect(0,0,960,520);}
  else{let sky=ctx.createLinearGradient(0,0,0,520);sky.addColorStop(0,cs[0]);sky.addColorStop(1,cs[1]);ctx.fillStyle=sky;ctx.fillRect(0,0,960,520);ctx.save();ctx.translate(-cam.x*.16,0);ctx.fillStyle=cs[2]+'88';ctx.beginPath();ctx.moveTo(-100,355);for(let x=-100;x<=2000;x+=80)ctx.lineTo(x,242+Math.sin(x*.012+S.zone*3)*28+Math.sin(x*.023)*25);ctx.lineTo(2000,700);ctx.lineTo(-100,700);ctx.fill();ctx.restore();}
  ctx.save();ctx.translate(-cam.x,-cam.y);
  // The open world is larger than the canvas; a wandering camera follows the party.
