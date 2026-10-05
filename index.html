@@ -661,40 +661,69 @@ function creator(){return `<div class="panel wide"><span class="tag">🪄 STEP 1
 function tutorial(){return `<section class="panel"><span class="tag">🕯️ THE BEGINNING</span><h2>Welcome to the Magic Cave!</h2><p class="story">A tiny lantern flickers. A friendly wizard appears in front of you...</p><div class="avatararea" style="background:radial-gradient(circle,#6453a880,transparent 60%),linear-gradient(150deg,#2b293d,#151a34)"><span class="star">✧</span><span class="star">✦</span><img src="${CHARACTER_ART.grandmaster_glimmer}" class="tutorial-mentor" alt="Grandmaster Glimmer, your wizard mentor"></div><div class="banner"><strong>Grandmaster Glimmer:</strong> “Hello, ${escapeHtml(S.avatar.name)}! To cast a spell, solve a math problem. You can try as many times as you want, and mistakes help me find what to teach you next. Let's practice!”</div><div class="buttonrow"><button class="btn" data-do="practice">🪄 Try a practice battle</button></div></section>`}
 function power(){return Math.floor(125+S.level*73+S.attackBonus)}
 // Slightly longer encounters. Counts are correct answers, not wrong attempts.
-const BATTLE_QUESTIONS={practice:5,normal:16,boss:22,gatekeeper:24};
-function battleQuestionLimit(b){return b.isPractice?BATTLE_QUESTIONS.practice:b.isBoss?(b.isFinalBoss?BATTLE_QUESTIONS.gatekeeper:BATTLE_QUESTIONS.boss):BATTLE_QUESTIONS.normal;}
+// The Chapter 1 finale is intentionally epic; the imaginary infinite chapters can grow beyond it.
+const BATTLE_QUESTIONS={practice:5,normal:16,boss:22,gatekeeper:24,chapterFinal:30,endlessGatekeeper:30};
+function battleRegionIndex(b){
+ const key=String(b?.regionKey??'');const n=parseInt(key.split(':')[0],10);
+ return Number.isFinite(n)?n:Math.max(0,Number(S.zone)||0);
+}
+function battleEndlessChapter(b){
+ const key=String(b?.regionKey??'');const parts=key.split(':');const n=Number(parts[1]);
+ return Number.isFinite(n)&&n>=1?n:Math.max(1,Number(S.openRoadChapter)||1);
+}
+function isChapterOneFinalBattle(b){return !!(b?.isBoss&&b?.isFinalBoss&&battleRegionIndex(b)===9);}
+function isInfiniteBattle(b){return battleRegionIndex(b)===10;}
+function battleQuestionLimit(b){
+ if(b.isPractice)return BATTLE_QUESTIONS.practice;
+ if(!b.isBoss)return BATTLE_QUESTIONS.normal;
+ if(isChapterOneFinalBattle(b))return BATTLE_QUESTIONS.chapterFinal;
+ if(b.isFinalBoss&&isInfiniteBattle(b))return BATTLE_QUESTIONS.endlessGatekeeper;
+ return b.isFinalBoss?BATTLE_QUESTIONS.gatekeeper:BATTLE_QUESTIONS.boss;
+}
 function projectedPartyDamage(team,questions){
  const attacks=[power(),...team.map(p=>Math.max(1,Math.floor(Number(p.strength||0)+S.level*14)))];
  let sum=0;for(let i=0;i<questions;i++)sum+=attacks[i%attacks.length];return Math.max(1,sum);
 }
-function plannedEnemyHp(boss,final,team,practice){
+function plannedEnemyHp(boss,final,team,practice,zone=S.zone,chapter=S.openRoadChapter){
  if(practice)return 250;
  if(!boss)return Math.max(400,Math.round(projectedPartyDamage(team,BATTLE_QUESTIONS.normal)*.99));
+ zone=Math.max(0,Math.min(10,Number(zone)||0));chapter=Math.max(1,Number(chapter)||1);
  const teamPower=power()+team.reduce((n,p)=>n+Math.max(1,Math.floor(Number(p.strength||0)+S.level*14)),0);
- // At Jack's level (~46), return bosses to roughly 380,000+ HP.
- // Scale up in later worlds and at higher levels, with stronger final Gatekeepers.
  const scaledLegacy=Math.round(380000*Math.pow(Math.max(1,S.level)/46,1.05));
- const scaledTeam=Math.round(teamPower*(31.5+S.zone*1.1));
- return Math.min(4000000,Math.max(1000,Math.round(Math.max(scaledLegacy,scaledTeam)*(final?1.38:1))));
+ const scaledTeam=Math.round(teamPower*(31.5+zone*1.1));
+ const ordinary=Math.max(1000,Math.round(Math.max(scaledLegacy,scaledTeam)*(final?1.38:1)));
+ // Midnight Carnival's final Gatekeeper closes Chapter 1: exactly ten million HP.
+ if(zone===9&&final)return 10000000;
+ // The Open Road is the imaginary infinite adventure. Bosses start above Chapter 1
+ // and rise by chapter until the long-term ceiling reaches fifty million HP.
+ if(zone===10){
+  const base=final?12000000:8000000;
+  const chapterHp=Math.round(base*Math.pow(1.18,chapter-1));
+  return Math.min(50000000,Math.max(ordinary,chapterHp));
+ }
+ // Earlier Chapter 1 bosses are allowed well beyond the former 4M ceiling,
+ // while leaving the ten-million finale as the biggest normal-world showdown.
+ return Math.min(9000000,ordinary);
 }
 function ensureBattlePacing(){
  const b=S.battle;if(!b)return;
  if(!Array.isArray(b.enemies)||!b.enemies.length)return;
  if(!Number.isFinite(b.questionsAnswered))b.questionsAnswered=Array.isArray(b.hits)?b.hits.length:0;
  b.questionLimit=battleQuestionLimit(b);
- if(b.balanceV2)return;
+ if(b.balanceV3)return;
  const team=S.equipped.map(id=>S.pets.find(p=>p.id===id)).filter(Boolean);
  if(b.isBoss&&!b.isPractice){
-  // An ongoing boss keeps the same percentage of health already removed.
+  // Existing/paused bosses are upgraded too, while preserving the percentage already defeated.
   const oldMax=Math.max(1,Number(b.enemies[0].maxHp)||Number(b.maxHp)||1);
   const remaining=Math.max(0,Math.min(1,(Number(b.enemies[0].hp)||0)/oldMax));
-  const newMax=plannedEnemyHp(true,!!b.isFinalBoss,team,false);
+  const region=battleRegionIndex(b),chapter=battleEndlessChapter(b);
+  const newMax=plannedEnemyHp(true,!!b.isFinalBoss,team,false,region,chapter);
   b.enemies[0].maxHp=newMax;b.enemies[0].hp=Math.max(1,Math.round(newMax*remaining));
   b.maxHp=newMax;b.hp=b.enemies[0].hp;
  }
  const expected=projectedPartyDamage(team,b.questionLimit);
  b.damageScale=b.isBoss&&!b.isPractice?Math.max(1,Number(b.maxHp||1)/expected*1.01):1;
- b.balanceV2=true;
+ b.balanceV2=true;b.balanceV3=true;
  save();
 }
 // Nine visible map checkpoints per region. Each stage has two normal encounters then a boss.
@@ -836,8 +865,8 @@ function tryFight(isPractice=false,pick=null){
  const boss=Boolean(node?.boss);
  const [name,emoji]=isPractice?['Training Slime','🫧']:[node.name,node.emoji];
  const team=S.equipped.map(id=>S.pets.find(p=>p.id===id)).filter(Boolean);
- const hp=plannedEnemyHp(boss,!!node?.final,team,isPractice);
- const limit=isPractice?BATTLE_QUESTIONS.practice:boss?(node.final?BATTLE_QUESTIONS.gatekeeper:BATTLE_QUESTIONS.boss):BATTLE_QUESTIONS.normal;
+ const hp=plannedEnemyHp(boss,!!node?.final,team,isPractice,S.zone,S.openRoadChapter);
+ const limit=isPractice?BATTLE_QUESTIONS.practice:boss?(node.final?(S.zone===9?BATTLE_QUESTIONS.chapterFinal:S.zone===10?BATTLE_QUESTIONS.endlessGatekeeper:BATTLE_QUESTIONS.gatekeeper):BATTLE_QUESTIONS.boss):BATTLE_QUESTIONS.normal;
  const damageScale=boss&&!isPractice?Math.max(1,hp/projectedPartyDamage(team,limit)*1.01):1;
  const attack=isPractice?14:Math.round(Math.max(Math.ceil(S.maxHp*(boss?.28:.22))+S.armor,Math.floor(20+S.level*29+S.zone*30+(boss?S.level*6:0)))*(node?.final?1.22:1));
  const choices=(z.enemies||[]).filter(e=>e[0]!==name);
@@ -845,7 +874,7 @@ function tryFight(isPractice=false,pick=null){
  const eachHp=boss?hp:Math.max(isPractice?105:175,Math.round(hp/2));
  const enemies=[{id:'enemy-0',name,emoji,hp:boss?hp:eachHp,maxHp:boss?hp:eachHp,attack:boss?attack:Math.round(attack*.55)+S.armor,isBoss:boss}];
  if(!boss)enemies.push({id:'enemy-1',name:second[0],emoji:second[1],hp:eachHp,maxHp:eachHp,attack:Math.round(attack*.55)+S.armor,isBoss:false});
- S.battle={name,emoji,nodeId:node?.id||null,regionKey:questKey(),isFinalBoss:!!node?.final,isBoss:boss,isPractice,balanceV2:true,questionsAnswered:0,questionLimit:limit,damageScale,hp:enemies.reduce((sum,e)=>sum+e.hp,0),maxHp:hp,attack,enemies,petHealth:Object.fromEntries(team.map(p=>[p.id,capturedHealth(p)])),phase:'heroes',currentEnemy:null,turn:0,nextIndex:0,hits:[],activePet:null,fallenPets:[],petHp:0,petMaxHp:0,feed:`${boss?'The boss':'Two monsters'} ${boss?'challenges':'challenge'} your team! Your hero goes first, then each pet. Every enemy casts its OWN magic after your team.`};
+ S.battle={name,emoji,nodeId:node?.id||null,regionKey:questKey(),isFinalBoss:!!node?.final,isBoss:boss,isPractice,balanceV2:true,balanceV3:true,questionsAnswered:0,questionLimit:limit,damageScale,hp:enemies.reduce((sum,e)=>sum+e.hp,0),maxHp:hp,attack,enemies,petHealth:Object.fromEntries(team.map(p=>[p.id,capturedHealth(p)])),phase:'heroes',currentEnemy:null,turn:0,nextIndex:0,hits:[],activePet:null,fallenPets:[],petHp:0,petMaxHp:0,feed:`${boss?'The boss':'Two monsters'} ${boss?'challenges':'challenge'} your team! Your hero goes first, then each pet. Every enemy casts its OWN magic after your team.`};
  const l=learning();l.battleSolved=0;l.battleMisses=0;
  S.tries=0;S.question=makeQuestion();S.screen='battle';save();render();
 }
@@ -1618,7 +1647,11 @@ async function answerPuzzle(i){
  const normalDamage=Math.max(1,Math.round(rawDamage*(b.damageScale||1)));
  const remainingHp=b.enemies.reduce((n,e)=>n+e.hp,0);
  const finalQuestion=b.questionsAnswered>=b.questionLimit;
- const dmg=finalQuestion?Math.max(normalDamage,remainingHp):normalDamage;
+ const epicFinale=(isChapterOneFinalBattle(b)||(b.isFinalBoss&&isInfiniteBattle(b)));
+ // Epic Gatekeepers hold on at 1 HP until the finale question, so the huge HP total
+ // creates a real showdown instead of disappearing early because Jack's team is powerful.
+ const pacedDamage=epicFinale&&!finalQuestion?Math.min(normalDamage,Math.max(1,remainingHp-1)):normalDamage;
+ const dmg=finalQuestion?Math.max(normalDamage,remainingHp):pacedDamage;
  if(finalQuestion){
   // Give Jack a dramatic finishing blow; never require more than the limit.
   let remainingDamage=dmg;
